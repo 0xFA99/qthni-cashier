@@ -22,11 +22,14 @@ find_package(Qt5Gui     CONFIG REQUIRED)
 set(INCLUDE_FILES
     include/hmaterialflatbutton.h
     include/hmaterialflatbutton_p.h
-    include/hmaterialflatbutton_internal.h)
-
+    include/hmaterialflatbutton_internal.h
+    include/hmaterialraisedbutton.h
+    include/hmaterialraisedbutton_p.h)
+    
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
-    src/hmaterialflatbutton_internal.cpp)
+    src/hmaterialflatbutton_internal.cpp
+    src/hmaterialraisedbutton.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}
