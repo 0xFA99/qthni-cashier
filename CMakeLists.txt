@@ -24,12 +24,15 @@ set(INCLUDE_FILES
     include/hmaterialflatbutton_p.h
     include/hmaterialflatbutton_internal.h
     include/hmaterialraisedbutton.h
-    include/hmaterialraisedbutton_p.h)
+    include/hmaterialraisedbutton_p.h
+    include/hmaterialiconbutton.h
+    include/hmaterialiconbutton_p.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
     src/hmaterialflatbutton_internal.cpp
-    src/hmaterialraisedbutton.cpp)
+    src/hmaterialraisedbutton.cpp
+    src/hmaterialiconbutton.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}
