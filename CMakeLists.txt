@@ -29,7 +29,10 @@ set(INCLUDE_FILES
     include/hmaterialiconbutton_p.h
     include/hmaterialtextfield.h
     include/hmaterialtextfield_p.h
-    include/hmaterialtextfield_internal.h)
+    include/hmaterialtextfield_internal.h
+    include/hmaterialautocomplete.h
+    include/hmaterialautocomplete_p.h
+    include/hmaterialautocomplete_internal.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
@@ -37,7 +40,9 @@ set(SOURCE_FILES
     src/hmaterialraisedbutton.cpp
     src/hmaterialiconbutton.cpp
     src/hmaterialtextfield.cpp
-    src/hmaterialtextfield_internal.cpp)
+    src/hmaterialtextfield_internal.cpp
+    src/hmaterialautocomplete.cpp
+    src/hmaterialautocomplete_internal.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}
