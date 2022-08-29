@@ -26,13 +26,18 @@ set(INCLUDE_FILES
     include/hmaterialraisedbutton.h
     include/hmaterialraisedbutton_p.h
     include/hmaterialiconbutton.h
-    include/hmaterialiconbutton_p.h)
+    include/hmaterialiconbutton_p.h
+    include/hmaterialtextfield.h
+    include/hmaterialtextfield_p.h
+    include/hmaterialtextfield_internal.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
     src/hmaterialflatbutton_internal.cpp
     src/hmaterialraisedbutton.cpp
-    src/hmaterialiconbutton.cpp)
+    src/hmaterialiconbutton.cpp
+    src/hmaterialtextfield.cpp
+    src/hmaterialtextfield_internal.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}

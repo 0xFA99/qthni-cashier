@@ -1,0 +1,121 @@
+#ifndef HMATERIALTEXTFIELD_INTERNAL_H
+#define HMATERIALTEXTFIELD_INTERNAL_H
+
+#include <QStateMachine>
+#include <QWidget>
+
+#include "hmaterialtextfield.h"
+
+class QPropertyAnimation;
+class HMaterialTextFieldLabel;
+
+class HMaterialTextFieldStateMachine : public QStateMachine
+{
+    Q_OBJECT
+
+    Q_PROPERTY(qreal progress WRITE setProgress READ progress)
+
+public:
+    HMaterialTextFieldStateMachine(HMaterialTextField *parent = nullptr);
+    ~HMaterialTextFieldStateMachine();
+
+    void setLabel(HMaterialTextFieldLabel *label);
+
+    inline void setProgress(qreal progress);
+    inline qreal progress() const;
+
+public slots:
+    void setupProperties();
+
+private:
+    Q_DISABLE_COPY(HMaterialTextFieldStateMachine);
+
+    HMaterialTextField      *const m_textField;
+    QState                  *const m_normalState;
+    QState                  *const m_focusedState;
+    HMaterialTextFieldLabel *m_label;
+    QPropertyAnimation      *m_offsetAnimation;
+    QPropertyAnimation      *m_colorAnimation;
+    qreal                    m_progress;
+};
+
+inline void HMaterialTextFieldStateMachine::setProgress(qreal progress)
+{
+    m_progress = progress;
+    m_textField->update();
+}
+
+inline qreal HMaterialTextFieldStateMachine::progress() const
+{
+    return m_progress;
+}
+
+class HMaterialTextFieldLabel : public QWidget
+{
+    Q_OBJECT
+
+    Q_PROPERTY(qreal scale WRITE setScale READ scale)
+    Q_PROPERTY(QPointF offset WRITE setOffset READ offset)
+    Q_PROPERTY(QColor color WRITE setColor READ color)
+
+public:
+    HMaterialTextFieldLabel(HMaterialTextField *parent = nullptr);
+    ~HMaterialTextFieldLabel();
+
+    inline void setScale(qreal scale);
+    inline qreal scale() const;
+
+    inline void setOffset(const QPointF &pos);
+    inline QPointF offset() const;
+
+    inline void setColor(const QColor &color);
+    inline QColor color() const;
+
+protected:
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
+private:
+    Q_DISABLE_COPY(HMaterialTextFieldLabel)
+
+    HMaterialTextField *const   m_textField;
+    qreal                       m_scale;
+    qreal                       m_posX;
+    qreal                       m_posY;
+    QColor                      m_color;
+};
+
+inline void HMaterialTextFieldLabel::setScale(qreal scale)
+{
+    m_scale = scale;
+    update();
+}
+
+inline qreal HMaterialTextFieldLabel::scale() const
+{
+    return m_scale;
+}
+
+inline void HMaterialTextFieldLabel::setOffset(const QPointF &pos)
+{
+    m_posX = pos.x();
+    m_posY = pos.y();
+    update();
+}
+
+inline QPointF HMaterialTextFieldLabel::offset() const
+{
+    return QPointF(m_posX, m_posY);
+}
+
+inline void HMaterialTextFieldLabel::setColor(const QColor &color)
+{
+    m_color = color;
+    update();
+}
+
+inline QColor HMaterialTextFieldLabel::color() const
+{
+    return m_color;
+}
+
+#endif
