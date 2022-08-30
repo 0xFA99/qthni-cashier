@@ -32,7 +32,10 @@ set(INCLUDE_FILES
     include/hmaterialtextfield_internal.h
     include/hmaterialautocomplete.h
     include/hmaterialautocomplete_p.h
-    include/hmaterialautocomplete_internal.h)
+    include/hmaterialautocomplete_internal.h
+    include/hmaterialtabs.h
+    include/hmaterialtabs_p.h
+    include/hmaterialtabs_internal.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
