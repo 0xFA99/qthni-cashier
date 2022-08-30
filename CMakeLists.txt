@@ -45,7 +45,9 @@ set(SOURCE_FILES
     src/hmaterialtextfield.cpp
     src/hmaterialtextfield_internal.cpp
     src/hmaterialautocomplete.cpp
-    src/hmaterialautocomplete_internal.cpp)
+    src/hmaterialautocomplete_internal.cpp
+    src/hmaterialtabs.cpp
+    src/hmaterialtabs_internal.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}

@@ -29,7 +29,7 @@ public:
     QColor                  textColor;
     int                     tab;
     bool                    showHalo;
-    bool                    useThemeColor;
+    bool                    useThemeColors;
 };
 
 #endif

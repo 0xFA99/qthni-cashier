@@ -29,7 +29,7 @@ protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    Q_DISABLE_COPY(HMAterialTabsInkBar)
+    Q_DISABLE_COPY(HMaterialTabsInkBar)
 
     HMaterialTabs       *const  m_tabs;
     QPropertyAnimation  *const  m_animation;

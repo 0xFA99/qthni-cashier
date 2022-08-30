@@ -7,7 +7,7 @@
 #include "hmaterialtheme.h"
 
 class HMaterialTabsPrivate;
-class HMaterialTabsTab;
+class HMaterialTab;
 
 class HMaterialTabs : public QWidget
 {
