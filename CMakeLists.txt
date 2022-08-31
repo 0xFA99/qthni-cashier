@@ -35,7 +35,9 @@ set(INCLUDE_FILES
     include/hmaterialautocomplete_internal.h
     include/hmaterialtabs.h
     include/hmaterialtabs_p.h
-    include/hmaterialtabs_internal.h)
+    include/hmaterialtabs_internal.h
+    include/hmaterialavatar.h
+    include/hmaterialavatar_p.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
@@ -47,7 +49,8 @@ set(SOURCE_FILES
     src/hmaterialautocomplete.cpp
     src/hmaterialautocomplete_internal.cpp
     src/hmaterialtabs.cpp
-    src/hmaterialtabs_internal.cpp)
+    src/hmaterialtabs_internal.cpp
+    src/hmaterialavatar.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}
