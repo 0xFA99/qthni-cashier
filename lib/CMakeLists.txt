@@ -25,7 +25,7 @@ find_package(Qt5Core    CONFIG REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
 find_package(Qt5Gui     CONFIG REQUIRED)
 
-add_library(hmateriallib STATIC ${SOURCE_FILES} ${INCLUDE_FILES})
+add_library(hmateriallib SHARED ${SOURCE_FILES} ${INCLUDE_FILES})
 
 target_link_libraries(hmateriallib
     Qt5::Core
