@@ -39,7 +39,10 @@ set(INCLUDE_FILES
     include/hmaterialavatar.h
     include/hmaterialavatar_p.h
     include/hmaterialbadge.h
-    include/hmaterialbadge_p.h)
+    include/hmaterialbadge_p.h
+    include/hmaterialsnackbar.h
+    include/hmaterialsnackbar_p.h
+    include/hmaterialsnackbar_internal.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
@@ -53,7 +56,9 @@ set(SOURCE_FILES
     src/hmaterialtabs.cpp
     src/hmaterialtabs_internal.cpp
     src/hmaterialavatar.cpp
-    src/hmaterialbadge.cpp)
+    src/hmaterialbadge.cpp
+    src/hmaterialsnackbar.cpp
+    src/hmaterialsnackbar_internal.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}
