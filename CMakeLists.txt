@@ -19,6 +19,9 @@ find_package(Qt5Core    CONFIG REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
 find_package(Qt5Gui     CONFIG REQUIRED)
 
+set(RESOURCE_FILE
+    resources/hni_sources.qrc)
+
 set(INCLUDE_FILES
     include/hmaterialflatbutton.h
     include/hmaterialflatbutton_p.h
@@ -62,7 +65,8 @@ set(SOURCE_FILES
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}
-    ${SOURCE_FILES})
+    ${SOURCE_FILES}
+    ${RESOURCE_FILE})
 
 target_include_directories(hni-lib PUBLIC
     include lib)
