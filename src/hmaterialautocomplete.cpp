@@ -82,7 +82,7 @@ void HMaterialAutoComplete::updateResults(QString text)
     }
 
     const int diff = results.length() - d->menuLayout->count();
-    QFont font("Roboto", 12, QFont::Normal);
+    QFont font("ProductSans", 12, QFont::Normal);
 
     if (diff > 0) {
         for (int i = 0; i < diff; i++) {

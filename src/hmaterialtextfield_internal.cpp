@@ -130,7 +130,7 @@ HMaterialTextFieldLabel::HMaterialTextFieldLabel(HMaterialTextField *parent)
 {
     Q_ASSERT(parent);
 
-    QFont font("Roboto", parent->labelFontSize(), QFont::Medium);
+    QFont font("ProductSans", parent->labelFontSize(), QFont::Medium);
     font.setLetterSpacing(QFont::PercentageSpacing, 102);
     setFont(font);
 }

@@ -31,7 +31,7 @@ void HMaterialSnackbarPrivate::init()
 
     q->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    QFont font("Roboto", 10, QFont::Medium);
+    QFont font("ProductSans", 10, QFont::Medium);
     font.setCapitalization(QFont::AllUppercase);
     q->setFont(font);
 

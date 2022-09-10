@@ -34,7 +34,7 @@ void HMaterialTextFieldPrivate::init()
     q->setMouseTracking(true);
     q->setTextMargins(0, 2, 0, 4);
 
-    q->setFont(QFont("Roboto", 11, QFont::Normal));
+    q->setFont(QFont("ProductSans", 11, QFont::Normal));
 
     stateMachine->start();
     QCoreApplication::processEvents();
