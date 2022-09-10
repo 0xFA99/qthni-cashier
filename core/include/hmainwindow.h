@@ -8,7 +8,7 @@ class HMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit HMainWindow(HMainWindow *parent = nullptr);
+    explicit HMainWindow(QWidget *parent = nullptr);
     ~HMainWindow();
 };
 

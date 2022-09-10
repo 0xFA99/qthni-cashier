@@ -8,13 +8,23 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5Core    CONFIG REQUIRED)
-find_package(Qt5Widget  CONFIG REQUIRED)
+find_package(Qt5Widgets CONFIG REQUIRED)
 find_package(Qt5Gui     CONFIG REQUIRED)
+
+set(INCLUDE_FILES
+    include/hmainwindow.h
+    include/hmaterialframe.h
+    include/hframebuttonsetting.h)
+
+set(SOURCE_FILES
+    src/hmainwindow.cpp
+    src/hmaterialframe.cpp
+    src/hframebuttonsetting.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp
-    src/HMainWindow.cpp
-    include/HMainWindow.h)
+    ${SOURCE_FILES}
+    ${INCLUDE_FILES})
 
 target_include_directories(qthni-cashier PUBLIC
     include)
