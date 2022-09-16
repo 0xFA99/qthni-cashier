@@ -14,6 +14,8 @@
         <file alias="ProductSans-ThinItalic">fonts/ProductSans/ProductSans-ThinItalic.ttf</file>
     </qresource>
     <qresource prefix="/icons">
+        <file>icons/sun.svg</file>
+        <file>icons/moon.svg</file>
         <file>icons/communication/svg/production/ic_message_24px.svg</file>
         <file>icons/toggle/svg/production/ic_check_box_24px.svg</file>
         <file>icons/toggle/svg/production/ic_check_box_outline_blank_24px.svg</file>

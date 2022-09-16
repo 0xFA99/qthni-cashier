@@ -16,7 +16,8 @@ public:
 
     static HFrameButtonSetting *getFrameSetting();
 
-    void addFrameWidget(HMaterialFrame *widget);
+    void addFrameWidget(QWidget *widget);
+    void addButtonWidget(HMaterialFlatButton *widget);
     void changeFrameMode();
 
 protected:
@@ -24,7 +25,8 @@ protected:
 
     static HFrameButtonSetting *m_hFrameButtonSetting;
 
-    QVector<HMaterialFrame *> m_frameList;
+    QVector<QWidget *> m_frameList;
+    QVector<HMaterialFlatButton *> m_buttonList;
 };
 
 #endif

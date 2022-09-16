@@ -1,51 +1,80 @@
 #include <QPainter>
 #include <QPainterPath>
-#include <QDebug>
-#include "hmaterialframe.h"
-#include "hframebuttonsetting.h"
 
-HMaterialFrame::HMaterialFrame(ThemeColors theme, LevelColors level, QWidget *parent)
+#include "hmaterialframe.h"
+#include "hthemecontrol.h"
+
+HMaterialFrame::HMaterialFrame(QWidget *parent)
     : QWidget(parent)
-    , m_theme(theme)
+{
+    m_level = LevelColor::Level1;
+    m_roundCorner = 8;
+
+    m_darkColors    = { QColor(32, 34, 37), QColor(41, 43, 47), QColor(47, 49, 54), QColor(54, 57, 63) };
+    m_lightColors   = { QColor(227, 229, 232), QColor(235, 237, 239), QColor(242, 243, 245), QColor(255, 255, 255) };
+
+    HThemeControl *themeControl = HThemeControl::getThemeControl();
+    themeControl->addControlWidget(this);
+
+    if (themeControl->m_theme == ThemeMode::Dark) {
+        setDarkTheme();
+    } else {
+        setLightTheme();
+    }
+}
+
+HMaterialFrame::HMaterialFrame(LevelColor level, QWidget *parent)
+    : QWidget(parent)
     , m_level(level)
 {
     m_roundCorner = 8;
 
-    m_darkColors  = { QColor("#202225"), QColor("#292b2f"), QColor("#2f3136"), QColor("#36393f") };
-    m_lightColors = { QColor("#e3e5e8"), QColor("#ebedef"), QColor("#f2f3f5"), QColor("#ffffff") };
+    m_darkColors    = { QColor(32, 34, 37), QColor(41, 43, 47), QColor(47, 49, 54), QColor(54, 57, 63) };
+    m_lightColors   = { QColor(227, 229, 232), QColor(235, 237, 239), QColor(242, 243, 245), QColor(255, 255, 255) };
 
-    if (m_theme == ThemeColors::Dark) {
-        setDarkMode();
+    HThemeControl *themeControl = HThemeControl::getThemeControl();
+    themeControl->addControlWidget(this);
+
+    if (themeControl->m_theme == ThemeMode::Dark) {
+        setDarkTheme();
     } else {
-        setLightMode();
+        setLightTheme();
     }
-
-    update();
-
-    HFrameButtonSetting *frameSetting = HFrameButtonSetting::getFrameSetting();
-    frameSetting->addFrameWidget(this);
 }
 
 HMaterialFrame::~HMaterialFrame()
 {
 }
 
-void HMaterialFrame::setCorner(qreal corner)
+void HMaterialFrame::setDarkTheme()
 {
-    m_roundCorner = corner;
+    m_backgroundColor = m_darkColors[m_level];
+
     update();
 }
 
-void HMaterialFrame::changeMode()
+void HMaterialFrame::setLightTheme()
 {
-    m_theme = (m_theme == ThemeColors::Dark)
-            ?  m_theme = ThemeColors::Light : m_theme = ThemeColors::Dark;
+    m_backgroundColor = m_lightColors[m_level];
 
-    if (m_theme == ThemeColors::Dark) {
-        m_backgroundColor = m_darkColors[m_level];
+    update();
+}
+
+void HMaterialFrame::setLevelColor(LevelColor level)
+{
+    m_level = level;
+
+    HThemeControl *themeControl = HThemeControl::getThemeControl();
+    if (themeControl->m_theme == ThemeMode::Dark) {
+        setDarkTheme();
     } else {
-        m_backgroundColor = m_lightColors[m_level];
+        setLightTheme();
     }
+}
+
+void HMaterialFrame::setCornerRadius(qreal radius)
+{
+    m_roundCorner = radius;
 
     update();
 }
@@ -59,11 +88,13 @@ void HMaterialFrame::paintEvent(QPaintEvent *event)
 
     const qreal cr = m_roundCorner;
 
-    QPainterPath path;
-    path.addRoundedRect(rect(), cr, cr);
+    if (cr > 0 ) {
+        QPainterPath path;
+        path.addRoundedRect(rect(), cr, cr);
 
-    painter.setClipPath(path);
-    painter.setClipping(true);
+        painter.setClipPath(path);
+        painter.setClipping(true);
+    }
 
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);

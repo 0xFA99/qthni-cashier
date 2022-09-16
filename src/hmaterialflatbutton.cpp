@@ -39,7 +39,7 @@ void HMaterialFlatButtonPrivate::init()
     fixedRippleRadius    = 64;
     cornerRadius         = 3;
     baseOpacity          = 0.13;
-    fontSize             = 10;        
+    fontSize             = 12;        
     useThemeColors       = true;
     useFixedRippleRadius = false;
     haloVisible          = true;
@@ -49,7 +49,6 @@ void HMaterialFlatButtonPrivate::init()
     q->setMouseTracking(true);
 
     QFont font("ProductSans", fontSize, QFont::Medium);
-    font.setCapitalization(QFont::AllUppercase);
     q->setFont(font);
 
     QPainterPath path;

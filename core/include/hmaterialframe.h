@@ -5,19 +5,24 @@
 #include <QColor>
 #include <QWidget>
 
-enum ThemeColors { Dark, Light };
-enum LevelColors { Level1, Level2, Level3, Level4 };
+#include "hinterfacewidget.h"
 
-class HMaterialFrame : public QWidget
+enum LevelColor { Level1, Level2, Level3, Level4 };
+
+class HMaterialFrame : public QWidget, public HInterfaceWidget
 {
     Q_OBJECT
 
 public:
-    HMaterialFrame(ThemeColors theme, LevelColors level, QWidget *parent = nullptr);
+    HMaterialFrame(QWidget *parent = nullptr);
+    HMaterialFrame(LevelColor level, QWidget *parent = nullptr);
     ~HMaterialFrame();
-    
-    void changeMode();
-    void setCorner(qreal corner);
+
+    void setDarkTheme() override;
+    void setLightTheme() override;
+
+    void setLevelColor(LevelColor level);
+    void setCornerRadius(qreal radius);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -26,8 +31,7 @@ private:
     QColor m_backgroundColor;
     qreal m_roundCorner;
 
-    ThemeColors m_theme;
-    LevelColors m_level;
+    LevelColor m_level;
 
     QList<QColor> m_darkColors;
     QList<QColor> m_lightColors;
