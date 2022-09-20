@@ -1,54 +1,44 @@
 #include "hmainwindow.h"
 
-#include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-#include "hthemecontrol.h"
-#include "hmateriallabel.h"
-#include "hmaterialframe.h"
-#include "hmaterialbutton.h"
+#include "hanalysicpage.h"
+#include "hpurchasepage.h"
+#include "haddproductpage.h"
+#include "haddmemberpage.h"
+#include "hoptionpage.h"
 
 HMainWindow::HMainWindow(QWidget *parent)
     : QMainWindow(parent)
+    , m_centralWidget(new HMaterialFrame(LevelColor::Level1, this))
+    , m_panel(new HMaterialPanel(m_centralWidget))
+    , m_stack(new QStackedWidget(m_centralWidget))
 {
-    QWidget *widget = new QWidget(this);
-    QHBoxLayout *layout = new QHBoxLayout(widget);
+    QHBoxLayout *layout = new QHBoxLayout(m_centralWidget);
 
-    HThemeControl *control = HThemeControl::getThemeControl();
+    m_centralWidget->setCornerRadius(0);
 
-    HMaterialFrame *frame1 = new HMaterialFrame(LevelColor::Level1, widget);
-    HMaterialFrame *frame2 = new HMaterialFrame(LevelColor::Level3, widget);
+    // Create all pages
+    HAnalysicPage *page1 = new HAnalysicPage(m_centralWidget);
+    HPurchasePage *page2 = new HPurchasePage(m_centralWidget);
+    HAddProductPage *page3 = new HAddProductPage(m_centralWidget);
+    HAddMemberPage *page4 = new HAddMemberPage(m_centralWidget);
+    HOptionPage *page5 = new HOptionPage(m_centralWidget);
 
-    HMaterialLabel *label1 = new HMaterialLabel("Heading Label", LabelStyle::Heading, frame1);
-    HMaterialLabel *label2 = new HMaterialLabel("Subheading Label", LabelStyle::Subheading, frame1);
-    HMaterialLabel *label3 = new HMaterialLabel("Body Label", LabelStyle::Body, frame2);
-    HMaterialLabel *label4 = new HMaterialLabel("Caption Label", LabelStyle::Caption, frame2);
-    
-    HMaterialButton *button1 = new HMaterialButton("Button 1", frame1);
-    HMaterialButton *button2 = new HMaterialButton(QIcon(":/icons/icons/sun.svg"), "Button1", frame1);
-    HMaterialButton *button3 = new HMaterialButton("Button 2", frame2);
-    HMaterialButton *button4 = new HMaterialButton(QIcon(":/icons/icons/moon.svg"), "Button2", frame2);
-   
-    QVBoxLayout *layout1 = new QVBoxLayout(frame1);
-    QVBoxLayout *layout2 = new QVBoxLayout(frame2);
+    m_stack->addWidget(page1);
+    m_stack->addWidget(page2);
+    m_stack->addWidget(page3);
+    m_stack->addWidget(page4);
+    m_stack->addWidget(page5);
 
-    layout1->addWidget(label1);
-    layout1->addWidget(label2);
-    layout1->addWidget(button1);
-    layout1->addWidget(button2);
+    layout->addWidget(m_panel);
+    layout->addWidget(m_stack);
 
-    layout2->addWidget(label3);
-    layout2->addWidget(label4);
-    layout2->addWidget(button3);
-    layout2->addWidget(button4);
+    setCentralWidget(m_centralWidget);
 
-    layout->addWidget(control);
-    layout->addWidget(frame1);
-    layout->addWidget(frame2);
-    layout->setContentsMargins(0, 0, 0, 0);
-
-    setCentralWidget(widget);
+    QObject::connect(m_panel, &HMaterialPanel::changingPageIndex,
+            [=](int index) { m_stack->setCurrentIndex(index); });
 }
 
 HMainWindow::~HMainWindow()

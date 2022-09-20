@@ -652,6 +652,23 @@ void HMaterialFlatButton::paintForeground(QPainter *painter)
         painter->setPen(disabledForegroundColor());
     }
 
+    if (HMaterial::CenterIcon == d->iconPlacement) {
+        QRect square = QRect(0, 0, width(), height());
+        square.moveCenter(rect().center());
+
+        QRect iconGeometry(0, 0, iconSize().width(), iconSize().height());
+        iconGeometry.moveCenter(square.center());
+
+        QPixmap pixmap = icon().pixmap(iconSize());
+        QPainter icon(&pixmap);
+        icon.setCompositionMode(QPainter::CompositionMode_SourceIn);
+        icon.fillRect(pixmap.rect(), painter->pen().color());
+
+        painter->drawPixmap(iconGeometry, pixmap);
+
+        return;
+    }
+
     if (icon().isNull())  {
         if (Qt::AlignLeft == d->textAlignment) {
             painter->drawText(rect().adjusted(12, 0, 0, 0), Qt::AlignLeft | Qt::AlignVCenter, text());
@@ -661,6 +678,7 @@ void HMaterialFlatButton::paintForeground(QPainter *painter)
         return;
     }
 
+    
     QSize textSize(fontMetrics().size(Qt::TextSingleLine, text()));
     QSize base(size()-textSize);
 
@@ -676,13 +694,15 @@ void HMaterialFlatButton::paintForeground(QPainter *painter)
         iconGeometry.translate(textSize.width() + IconPadding, 0);
     }
 
-    painter->drawText(textGeometry, Qt::AlignCenter, text());
+    painter->drawText(textGeometry, Qt::AlignCenter, text()); 
 
     QPixmap pixmap = icon().pixmap(iconSize());
     QPainter icon(&pixmap);
     icon.setCompositionMode(QPainter::CompositionMode_SourceIn);
     icon.fillRect(pixmap.rect(), painter->pen().color());
+
     painter->drawPixmap(iconGeometry, pixmap);
+
 }
 
 void HMaterialFlatButton::updateClipPath()

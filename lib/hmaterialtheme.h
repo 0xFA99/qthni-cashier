@@ -33,7 +33,8 @@ namespace HMaterial
 
     enum ButtonIconPlacement {
         LeftIcon,
-        RightIcon
+        RightIcon,
+        CenterIcon
     };
 
     enum ProgressType {

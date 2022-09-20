@@ -30,7 +30,7 @@ HMaterialFrame::HMaterialFrame(LevelColor level, QWidget *parent)
     m_roundCorner = 8;
 
     m_darkColors    = { QColor(32, 34, 37), QColor(41, 43, 47), QColor(47, 49, 54), QColor(54, 57, 63) };
-    m_lightColors   = { QColor(227, 229, 232), QColor(235, 237, 239), QColor(242, 243, 245), QColor(255, 255, 255) };
+    m_lightColors   = { QColor(255, 255, 255), QColor(242, 243, 245), QColor(235, 237, 239), QColor(227, 229, 232) };
 
     HThemeControl *themeControl = HThemeControl::getThemeControl();
     themeControl->addControlWidget(this);

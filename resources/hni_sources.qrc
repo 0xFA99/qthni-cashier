@@ -16,6 +16,11 @@
     <qresource prefix="/icons">
         <file>icons/sun.svg</file>
         <file>icons/moon.svg</file>
+        <file>icons/analysic.svg</file>
+        <file>icons/purchase.svg</file>
+        <file>icons/addProduct.svg</file>
+        <file>icons/addMember.svg</file>
+        <file>icons/option.svg</file>
         <file>icons/communication/svg/production/ic_message_24px.svg</file>
         <file>icons/toggle/svg/production/ic_check_box_24px.svg</file>
         <file>icons/toggle/svg/production/ic_check_box_outline_blank_24px.svg</file>

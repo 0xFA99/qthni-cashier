@@ -9,13 +9,11 @@ HThemeControl::HThemeControl(QIcon icon, QWidget *parent)
     , m_theme(ThemeMode::Light)
 {
     setIcon(icon);
-    setBackgroundMode(Qt::OpaqueMode);
     setHaloVisible(false);
-    setText("Change Mode");
     setOverlayStyle(HMaterial::TintedOverlay);
 
     connect(this, &QPushButton::clicked, [=]() { changeTheme(); });
-    setForegroundColor(QColor(46, 51, 56));
+    setForegroundColor(QColor(171, 168, 188));
     setBackgroundColor(QColor(255, 255, 255));
 }
 
@@ -43,10 +41,14 @@ void HThemeControl::changeTheme()
 
     if (m_theme == ThemeMode::Dark) {
         for (itr = m_widgetList.begin(); itr != m_widgetList.end(); ++itr) {
+			if ((*itr)->locked == true)
+                continue;
             (*itr)->setDarkTheme();
         }
     } else {
         for (itr = m_widgetList.begin(); itr != m_widgetList.end(); ++itr) {
+			if ((*itr)->locked == true)
+                continue;
             (*itr)->setLightTheme();
         }
     }
@@ -55,14 +57,12 @@ void HThemeControl::changeTheme()
 void HThemeControl::changeColor()
 {
     if (m_theme == ThemeMode::Dark) {
-        setForegroundColor(QColor(46, 51, 56));
-        setBackgroundColor(QColor(255, 255, 255));
+        setForegroundColor(QColor(171, 168, 188));
         setIcon(QIcon(":/icons/icons/sun.svg"));
 
         m_theme = ThemeMode::Light;
     } else {
         setForegroundColor(QColor(255, 255, 255));
-        setBackgroundColor(QColor(66, 70, 77));
         setIcon(QIcon(":/icons/icons/moon.svg"));
 
         m_theme = ThemeMode::Dark;

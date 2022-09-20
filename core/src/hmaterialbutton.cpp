@@ -59,6 +59,6 @@ void HMaterialButton::setDarkTheme()
 
 void HMaterialButton::setLightTheme()
 {
-    setForegroundColor(QColor(46, 51, 56));
+    setForegroundColor(QColor(171, 168, 188));
 }
 

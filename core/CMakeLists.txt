@@ -17,14 +17,29 @@ set(INCLUDE_FILES
     include/hthemecontrol.h
     include/hmateriallabel.h
     include/hmaterialframe.h
-    include/hmaterialbutton.h)
+    include/hmaterialbutton.h
+    include/hmaterialframe.h
+    include/hmaterialpanel.h
+    include/hanalysicpage.h
+    include/hpurchasepage.h
+    include/haddproductpage.h
+    include/haddmemberpage.h
+    include/hoptionpage.h)
+
 
 set(SOURCE_FILES
     src/hmainwindow.cpp
     src/hmaterialframe.cpp
     src/hmateriallabel.cpp
     src/hthemecontrol.cpp
-    src/hmaterialbutton.cpp)
+    src/hmaterialbutton.cpp
+    src/hmaterialframe.cpp
+    src/hmaterialpanel.cpp
+    src/hanalysicpage.cpp
+    src/hpurchasepage.cpp
+    src/haddproductpage.cpp
+    src/haddmemberpage.cpp
+    src/hoptionpage.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp
