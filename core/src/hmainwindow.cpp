@@ -1,25 +1,27 @@
 #include "hmainwindow.h"
 #include <QHBoxLayout>
 
-#include "hmateriallabel.h"
+#include "hmaterialframe.h"
 #include "hmaterialtheme.h"
 
 HMainWindow::HMainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , m_centralWidget(new HMaterialFrame(0, this))
+    , m_centralWidget(new HMaterialFrame(this))
 {
     setCentralWidget(m_centralWidget);
 
     QHBoxLayout *layout = new QHBoxLayout(m_centralWidget);
 
-    HMaterialLabel *label = new HMaterialLabel("Nama Saya", m_centralWidget);
-    HMaterialLabel *label2 = new HMaterialLabel("Nur Fajar Hidayatullah", m_centralWidget);
 
-    label->setLabelStyle(HMaterial::Heading);
+    HMaterialFrame *frame1 = new HMaterialFrame(m_centralWidget);
+    HMaterialFrame *frame2 = new HMaterialFrame(HMaterial::Level2, m_centralWidget);
+    HMaterialFrame *frame3 = new HMaterialFrame(HMaterial::Level3, m_centralWidget);
+    HMaterialFrame *frame4 = new HMaterialFrame(HMaterial::Level4, m_centralWidget);
 
-    layout->addWidget(label);
-    layout->addWidget(label2);
-
+    layout->addWidget(frame1);
+    layout->addWidget(frame2);
+    layout->addWidget(frame3);
+    layout->addWidget(frame4);
 }
 
 HMainWindow::~HMainWindow()

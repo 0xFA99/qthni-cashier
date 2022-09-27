@@ -3,6 +3,8 @@
 
 #include <QColor>
 
+#include "hmaterialtheme.h"
+
 class HMaterialFrame;
 
 class HMaterialFramePrivate
@@ -17,6 +19,7 @@ public:
     void init();
 
     HMaterialFrame *const   q_ptr;
+    HMaterial::FrameStyle   m_frameStyle;
     QColor                  m_backgroundColor;
     qreal                   m_roundCorner;
     QList<QColor>           m_darkColors;

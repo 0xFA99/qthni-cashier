@@ -4,6 +4,7 @@
 #include <QList>
 #include <QWidget>
 
+#include "hmaterialtheme.h"
 #include "hinterfacewidget.h"
 
 class HMaterialFramePrivate;
@@ -14,14 +15,11 @@ class HMaterialFrame : public QWidget, HInterfaceWidget
 
 public:
     explicit HMaterialFrame(QWidget *parent = nullptr);
-    explicit HMaterialFrame(int level = 1, QWidget *parent = nullptr);
+    explicit HMaterialFrame(HMaterial::FrameStyle style, QWidget *parent = nullptr);
     ~HMaterialFrame();
 
     void setDarkTheme() override;
     void setLightTheme() override;
-
-    void setLevelColor(int level);
-    int getLevelColor() const;
 
     void setCornerRadius(qreal radius);
     qreal getCornerRadius() const;
@@ -34,6 +32,9 @@ public:
 
     void setBackgroundColor(const QColor &color);
     QColor backgroundColor() const;
+
+    void setFrameStyle(HMaterial::FrameStyle style);
+    HMaterial::FrameStyle frameStyle() const;
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
