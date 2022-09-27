@@ -27,7 +27,7 @@ void HMaterialFramePrivate::init()
     m_lightColors       = {
         QColor(227, 229, 232), QColor(235, 237, 239), QColor(242, 243, 245), QColor(255, 255, 255)
     };
-    m_colorLevel        = 1;
+    m_colorLevel        = 0;
     m_followTheme       = true;
 }
 
@@ -137,6 +137,10 @@ void HMaterialFrame::setFollowTheme(bool value)
     Q_D(HMaterialFrame);
 
     d->m_followTheme = value;
+    if (d->m_followTheme) {
+        HThemeControl *themeControl = HThemeControl::getThemeControl();
+        (themeControl->m_theme == ThemeMode::Dark) ? setDarkTheme() : setLightTheme();
+    }
 }
 
 bool HMaterialFrame::isFollowTheme() const

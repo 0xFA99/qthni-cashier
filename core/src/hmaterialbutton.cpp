@@ -105,6 +105,11 @@ void HMaterialButton::setFollowTheme(bool value)
     Q_D(HMaterialButton);
 
     d->m_followTheme = value;
+    if (d->m_followTheme) {
+        HThemeControl *themeControl = HThemeControl::getThemeControl();
+        (themeControl->m_theme == ThemeMode::Dark) ? setDarkTheme() : setLightTheme();
+    }
+
 }
 
 bool HMaterialButton::isFollowTheme() const

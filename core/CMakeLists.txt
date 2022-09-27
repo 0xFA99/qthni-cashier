@@ -17,14 +17,17 @@ set(INCLUDE_FILES
     include/hmaterialframe.h
     include/hmaterialframe_p.h
     include/hmaterialbutton.h
-    include/hmaterialbutton_p.h)
+    include/hmaterialbutton_p.h
+    include/hmateriallabel.h
+    include/hmateriallabel_p.h)
     
 
 set(SOURCE_FILES
     src/hmainwindow.cpp
     src/hthemecontrol.cpp
     src/hmaterialframe.cpp
-    src/hmaterialbutton.cpp)
+    src/hmaterialbutton.cpp
+    src/hmateriallabel.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp
