@@ -2,9 +2,7 @@
 #define HMAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
-#include <QStackedWidget>
 
-#include "hmaterialpanel.h"
 #include "hmaterialframe.h"
 
 class HMainWindow : public QMainWindow
@@ -17,8 +15,6 @@ public:
 
 private:
     HMaterialFrame *m_centralWidget;
-    HMaterialPanel *m_panel;
-    QStackedWidget *m_stack;
 };
 
 #endif

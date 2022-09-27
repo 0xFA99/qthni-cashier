@@ -41,14 +41,10 @@ void HThemeControl::changeTheme()
 
     if (m_theme == ThemeMode::Dark) {
         for (itr = m_widgetList.begin(); itr != m_widgetList.end(); ++itr) {
-			if ((*itr)->locked == true)
-                continue;
             (*itr)->setDarkTheme();
         }
     } else {
         for (itr = m_widgetList.begin(); itr != m_widgetList.end(); ++itr) {
-			if ((*itr)->locked == true)
-                continue;
             (*itr)->setLightTheme();
         }
     }

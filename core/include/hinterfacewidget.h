@@ -8,8 +8,6 @@ public:
 
     virtual void setLightTheme() = 0;
     virtual void setDarkTheme() = 0;
-
-    bool locked = false;
 };
 
 #endif

@@ -1,45 +1,52 @@
+#include "hmaterialframe.h"
+#include "hmaterialframe_p.h"
+
 #include <QPainter>
 #include <QPainterPath>
 
-#include "hmaterialframe.h"
 #include "hthemecontrol.h"
+
+HMaterialFramePrivate::HMaterialFramePrivate(HMaterialFrame *q)
+    : q_ptr(q)
+{
+}
+
+HMaterialFramePrivate::~HMaterialFramePrivate()
+{
+}
+
+void HMaterialFramePrivate::init()
+{
+    Q_Q(HMaterialFrame);
+
+    m_backgroundColor   = QColor(Qt::white);
+    m_roundCorner       = 8;
+    m_darkColors        = {
+        QColor(32, 24, 27), QColor(41, 43, 47), QColor(47, 49, 54), QColor(54, 57, 63)
+    };
+    m_lightColors       = {
+        QColor(227, 229, 232), QColor(235, 237, 239), QColor(242, 243, 245), QColor(255, 255, 255)
+    };
+    m_colorLevel        = 1;
+    m_followTheme       = true;
+}
 
 HMaterialFrame::HMaterialFrame(QWidget *parent)
     : QWidget(parent)
+    , d_ptr(new HMaterialFramePrivate(this))
 {
-    m_level = LevelColor::Level1;
-    m_roundCorner = 8;
+    d_func()->init();
 
-    m_darkColors    = { QColor(32, 34, 37), QColor(41, 43, 47), QColor(47, 49, 54), QColor(54, 57, 63) };
-    m_lightColors   = { QColor(227, 229, 232), QColor(235, 237, 239), QColor(242, 243, 245), QColor(255, 255, 255) };
-
-    HThemeControl *themeControl = HThemeControl::getThemeControl();
-    themeControl->addControlWidget(this);
-
-    if (themeControl->m_theme == ThemeMode::Dark) {
-        setDarkTheme();
-    } else {
-        setLightTheme();
-    }
+    setLevelColor(0);
 }
 
-HMaterialFrame::HMaterialFrame(LevelColor level, QWidget *parent)
+HMaterialFrame::HMaterialFrame(int level, QWidget *parent)
     : QWidget(parent)
-    , m_level(level)
+    , d_ptr(new HMaterialFramePrivate(this))
 {
-    m_roundCorner = 8;
+    d_func()->init();
 
-    m_darkColors    = { QColor(32, 34, 37), QColor(41, 43, 47), QColor(47, 49, 54), QColor(54, 57, 63) };
-    m_lightColors   = { QColor(255, 255, 255), QColor(242, 243, 245), QColor(235, 237, 239), QColor(227, 229, 232) };
-
-    HThemeControl *themeControl = HThemeControl::getThemeControl();
-    themeControl->addControlWidget(this);
-
-    if (themeControl->m_theme == ThemeMode::Dark) {
-        setDarkTheme();
-    } else {
-        setLightTheme();
-    }
+    setLevelColor(level);
 }
 
 HMaterialFrame::~HMaterialFrame()
@@ -48,23 +55,33 @@ HMaterialFrame::~HMaterialFrame()
 
 void HMaterialFrame::setDarkTheme()
 {
-    m_backgroundColor = m_darkColors[m_level];
+    Q_D(HMaterialFrame);
 
-    update();
+    if (d->m_followTheme) {
+        d->m_backgroundColor = d->m_darkColors[d->m_colorLevel];
+        update();
+    }
 }
 
 void HMaterialFrame::setLightTheme()
 {
-    m_backgroundColor = m_lightColors[m_level];
+    Q_D(HMaterialFrame);
 
-    update();
+    if (d->m_followTheme) {
+        d->m_backgroundColor = d->m_lightColors[d->m_colorLevel];
+        update();
+    }
 }
 
-void HMaterialFrame::setLevelColor(LevelColor level)
+void HMaterialFrame::setLevelColor(int level)
 {
-    m_level = level;
+    Q_D(HMaterialFrame);
+
+    d->m_colorLevel = level;
 
     HThemeControl *themeControl = HThemeControl::getThemeControl();
+    themeControl->addControlWidget(this);
+
     if (themeControl->m_theme == ThemeMode::Dark) {
         setDarkTheme();
     } else {
@@ -72,23 +89,90 @@ void HMaterialFrame::setLevelColor(LevelColor level)
     }
 }
 
+int HMaterialFrame::getLevelColor() const
+{
+    Q_D(const HMaterialFrame);
+
+    return d->m_colorLevel;
+}
+
 void HMaterialFrame::setCornerRadius(qreal radius)
 {
-    m_roundCorner = radius;
+    Q_D(HMaterialFrame);
 
+    d->m_roundCorner = radius;
     update();
+}
+
+qreal HMaterialFrame::getCornerRadius() const
+{
+    Q_D(const HMaterialFrame);
+
+    return d->m_roundCorner;
+}
+
+void HMaterialFrame::paintBackground(QPainter *painter)
+{
+    Q_D(HMaterialFrame);
+
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(d->m_backgroundColor);
+
+    painter->setOpacity(1);
+    painter->setBrush(brush);
+    painter->setPen(Qt::NoPen);
+    painter->drawRect(rect());
+}
+
+QColor HMaterialFrame::getBackground() const
+{
+    Q_D(const HMaterialFrame);
+
+    return d->m_backgroundColor;
+}
+
+void HMaterialFrame::setFollowTheme(bool value)
+{
+    Q_D(HMaterialFrame);
+
+    d->m_followTheme = value;
+}
+
+bool HMaterialFrame::isFollowTheme() const
+{
+    Q_D(const HMaterialFrame);
+
+    return d->m_followTheme;
+}
+
+void HMaterialFrame::setBackgroundColor(const QColor &color)
+{
+    Q_D(HMaterialFrame);
+
+    d->m_backgroundColor = color;
+    d->m_followTheme = false;
+    update();
+}
+
+QColor HMaterialFrame::backgroundColor() const
+{
+    Q_D(const HMaterialFrame);
+
+    return d->m_backgroundColor;
 }
 
 void HMaterialFrame::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
+    Q_D(HMaterialFrame);
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    const qreal cr = m_roundCorner;
+    const qreal cr = d->m_roundCorner;
 
-    if (cr > 0 ) {
+    if (cr > 0) {
         QPainterPath path;
         path.addRoundedRect(rect(), cr, cr);
 
@@ -96,12 +180,5 @@ void HMaterialFrame::paintEvent(QPaintEvent *event)
         painter.setClipping(true);
     }
 
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(m_backgroundColor);
-
-    painter.setOpacity(1);
-    painter.setBrush(brush);
-    painter.setPen(Qt::NoPen);
-    painter.drawRect(rect());
+    paintBackground(&painter);
 }

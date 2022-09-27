@@ -1,15 +1,39 @@
 #include "hmaterialbutton.h"
+#include "hmaterialbutton_p.h"
+
 #include "hthemecontrol.h"
-#include "hmaterialtheme.h"
+
+HMaterialButtonPrivate::HMaterialButtonPrivate(HMaterialButton *q)
+    : q_ptr(q)
+{
+}
+
+HMaterialButtonPrivate::~HMaterialButtonPrivate()
+{
+}
+
+void HMaterialButtonPrivate::init()
+{
+    Q_Q(HMaterialButton);
+
+    m_lightColor  = QColor(255, 255, 255);
+    m_darkColor   = QColor(171, 168, 188);
+
+    m_followTheme = true;
+}
 
 HMaterialButton::HMaterialButton(QWidget *parent)
     : HMaterialFlatButton(parent)
+    , d_ptr(new HMaterialButtonPrivate(this))
 {
+    d_func()->init();
+
     setHaloVisible(false);
     setOverlayStyle(HMaterial::TintedOverlay);
 
     HThemeControl *themeControl = HThemeControl::getThemeControl();
     themeControl->addControlWidget(this);
+
     if (themeControl->m_theme == ThemeMode::Dark) {
         setDarkTheme();
     } else {
@@ -19,12 +43,16 @@ HMaterialButton::HMaterialButton(QWidget *parent)
 
 HMaterialButton::HMaterialButton(const QString &text, QWidget *parent)
     : HMaterialFlatButton(text, parent)
+    , d_ptr(new HMaterialButtonPrivate(this))
 {
+    d_func()->init();
+
     setHaloVisible(false);
     setOverlayStyle(HMaterial::TintedOverlay);
 
     HThemeControl *themeControl = HThemeControl::getThemeControl();
     themeControl->addControlWidget(this);
+
     if (themeControl->m_theme == ThemeMode::Dark) {
         setDarkTheme();
     } else {
@@ -34,13 +62,17 @@ HMaterialButton::HMaterialButton(const QString &text, QWidget *parent)
 
 HMaterialButton::HMaterialButton(QIcon icon, const QString &text, QWidget *parent)
     : HMaterialFlatButton(text, parent)
+    , d_ptr(new HMaterialButtonPrivate(this))
 {
+    d_func()->init();
+
     setIcon(icon);
     setHaloVisible(false);
     setOverlayStyle(HMaterial::TintedOverlay);
 
     HThemeControl *themeControl = HThemeControl::getThemeControl();
     themeControl->addControlWidget(this);
+
     if (themeControl->m_theme == ThemeMode::Dark) {
         setDarkTheme();
     } else {
@@ -54,11 +86,38 @@ HMaterialButton::~HMaterialButton()
 
 void HMaterialButton::setDarkTheme()
 {
-    setForegroundColor(QColor(255, 255, 255));
+    Q_D(HMaterialButton);
+
+    if (d->m_followTheme)
+        setForegroundColor(d->m_lightColor);
 }
 
 void HMaterialButton::setLightTheme()
 {
-    setForegroundColor(QColor(171, 168, 188));
+    Q_D(HMaterialButton);
+
+    if (d->m_followTheme)
+        setBackgroundColor(d->m_darkColor);
 }
 
+void HMaterialButton::setFollowTheme(bool value)
+{
+    Q_D(HMaterialButton);
+
+    d->m_followTheme = value;
+}
+
+bool HMaterialButton::isFollowTheme() const
+{
+    Q_D(const HMaterialButton);
+
+    return d->m_followTheme;
+}
+
+void HMaterialButton::setColor(const QColor &color)
+{
+    Q_D(HMaterialButton);
+
+    d->m_followTheme = false;
+    setForegroundColor(color);
+}
