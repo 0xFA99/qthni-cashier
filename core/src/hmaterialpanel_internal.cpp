@@ -2,6 +2,7 @@
 #include "hmaterialpanel.h"
 
 #include <QPainter>
+#include <QPainterPath>
 
 HMaterialPanelItem::HMaterialPanelItem(HMaterialPanel *parent)
     : HMaterialButton(parent)
@@ -51,7 +52,14 @@ void HMaterialPanelItem::paintForeground(QPainter *painter)
 
         QBrush overlay;
         overlay.setStyle(Qt::SolidPattern);
-        overlay.setColor(QColor("#1060ff"));
+        overlay.setColor(foregroundColor());
+
+        QPainterPath path;
+        path.addRoundedRect(rect(), 8, 8);
+
+        painter->setRenderHint(QPainter::Antialiasing);
+        painter->setClipPath(path);
+        painter->setClipping(true);
         painter->setOpacity(0.36);
         painter->fillRect(rect(), overlay);
     }

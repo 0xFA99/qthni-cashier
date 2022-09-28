@@ -28,6 +28,7 @@ HMaterialButton::HMaterialButton(QWidget *parent)
 {
     d_func()->init();
 
+    setCornerRadius(8);
     setHaloVisible(false);
     setOverlayStyle(HMaterial::TintedOverlay);
 
@@ -47,6 +48,7 @@ HMaterialButton::HMaterialButton(const QString &text, QWidget *parent)
 {
     d_func()->init();
 
+    setCornerRadius(8);
     setHaloVisible(false);
     setOverlayStyle(HMaterial::TintedOverlay);
 
@@ -66,6 +68,7 @@ HMaterialButton::HMaterialButton(QIcon icon, const QString &text, QWidget *paren
 {
     d_func()->init();
 
+    setCornerRadius(8);
     setIcon(icon);
     setHaloVisible(false);
     setOverlayStyle(HMaterial::TintedOverlay);
