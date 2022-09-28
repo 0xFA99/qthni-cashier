@@ -13,7 +13,7 @@ HThemeControl::HThemeControl(QIcon icon, QWidget *parent)
     setOverlayStyle(HMaterial::TintedOverlay);
 
     connect(this, &QPushButton::clicked, [=]() { changeTheme(); });
-    setForegroundColor(QColor(171, 168, 188));
+    setForegroundColor(QColor(34, 34, 34));
     setBackgroundColor(QColor(255, 255, 255));
 }
 
@@ -53,7 +53,7 @@ void HThemeControl::changeTheme()
 void HThemeControl::changeColor()
 {
     if (m_theme == ThemeMode::Dark) {
-        setForegroundColor(QColor(171, 168, 188));
+        setForegroundColor(QColor(34, 34, 34));
         setIcon(QIcon(":/icons/icons/sun.svg"));
 
         m_theme = ThemeMode::Light;

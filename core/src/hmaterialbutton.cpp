@@ -17,7 +17,7 @@ void HMaterialButtonPrivate::init()
     Q_Q(HMaterialButton);
 
     m_lightColor  = QColor(255, 255, 255);
-    m_darkColor   = QColor(171, 168, 188);
+    m_darkColor   = QColor(34, 34, 34);
 
     m_followTheme = true;
 }
@@ -97,7 +97,7 @@ void HMaterialButton::setLightTheme()
     Q_D(HMaterialButton);
 
     if (d->m_followTheme)
-        setBackgroundColor(d->m_darkColor);
+        setForegroundColor(d->m_darkColor);
 }
 
 void HMaterialButton::setFollowTheme(bool value)

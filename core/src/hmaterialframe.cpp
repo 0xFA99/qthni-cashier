@@ -45,6 +45,9 @@ HMaterialFrame::HMaterialFrame(QWidget *parent)
     d_func()->init();
 
     setFrameStyle(HMaterial::Level1);
+
+    HThemeControl *themeControl = HThemeControl::getThemeControl();
+    themeControl->addControlWidget(this);
 }
 
 HMaterialFrame::HMaterialFrame(HMaterial::FrameStyle style, QWidget *parent)
@@ -54,6 +57,9 @@ HMaterialFrame::HMaterialFrame(HMaterial::FrameStyle style, QWidget *parent)
     d_func()->init();
 
     setFrameStyle(style);
+
+    HThemeControl *themeControl = HThemeControl::getThemeControl();
+    themeControl->addControlWidget(this);
 }
 
 HMaterialFrame::~HMaterialFrame()

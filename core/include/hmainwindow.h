@@ -12,7 +12,8 @@ class HMainWindow : public QMainWindow
 public:
     explicit HMainWindow(QWidget *parent = nullptr);
     ~HMainWindow();
-
+public slots:
+    void test(int);
 private:
     HMaterialFrame *m_centralWidget;
 };
