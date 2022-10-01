@@ -60,7 +60,7 @@ void HMaterialPanelItem::paintForeground(QPainter *painter)
         painter->setRenderHint(QPainter::Antialiasing);
         painter->setClipPath(path);
         painter->setClipping(true);
-        painter->setOpacity(0.36);
+        painter->setOpacity(0.15);
         painter->fillRect(rect(), overlay);
     }
 }

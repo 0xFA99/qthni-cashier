@@ -6,13 +6,16 @@
 #include "hmaterialpanel.h"
 
 #include <QSizePolicy>
+
+#include <QStackedWidget>
 #include <QDebug>
 
 HMainWindow::HMainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , m_centralWidget(new HMaterialFrame(this))
+    , m_centralWidget(new HMaterialFrame(HMaterial::Level2, this))
 {
     setCentralWidget(m_centralWidget);
+    m_centralWidget->setCornerRadius(0);
 
     QHBoxLayout *layout = new QHBoxLayout(m_centralWidget);
 
@@ -27,13 +30,32 @@ HMainWindow::HMainWindow(QWidget *parent)
 
     panel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 
-    HMaterialButton *button = new HMaterialButton(m_centralWidget);
-    button->setIcon(QIcon(":/icons/icons/moon.svg"));
+    // HMaterialButton *button = new HMaterialButton(m_centralWidget);
+    // button->setIcon(QIcon(":/icons/icons/moon.svg"));
 
     layout->addWidget(panel);
-    layout->addWidget(button);
 
-    QObject::connect(panel, &HMaterialPanel::currentChanged, this, &HMainWindow::test);
+    // QObject::connect(panel, &HMaterialPanel::currentChanged, this, &HMainWindow::test);
+
+
+
+    // test
+    QStackedWidget *stack = new QStackedWidget(m_centralWidget);
+    
+    // Widget Collection
+    HMaterialFrame *w1 = new HMaterialFrame(HMaterial::Level1, stack);
+    HMaterialFrame *w2 = new HMaterialFrame(HMaterial::Level2, stack);
+    HMaterialFrame *w3 = new HMaterialFrame(HMaterial::Level3, stack);
+    HMaterialFrame *w4 = new HMaterialFrame(HMaterial::Level4, stack);
+
+    stack->addWidget(w1);
+    stack->addWidget(w2);
+    stack->addWidget(w3);
+    stack->addWidget(w4);
+
+    QObject::connect(panel, &HMaterialPanel::currentChanged, stack, &QStackedWidget::setCurrentIndex);
+    layout->addWidget(stack);
+    layout->setSpacing(10);
 }
 
 HMainWindow::~HMainWindow()

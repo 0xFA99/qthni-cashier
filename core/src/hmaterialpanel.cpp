@@ -5,6 +5,7 @@
 #include "hmaterialpanel_internal.h"
 
 #include "hmaterialstyle.h"
+#include "hmaterialtheme.h"
 #include "hthemecontrol.h"
 
 HMaterialPanelPrivate::HMaterialPanelPrivate(HMaterialPanel *q)
@@ -29,7 +30,7 @@ void HMaterialPanelPrivate::HMaterialPanelPrivate::init()
 }
 
 HMaterialPanel::HMaterialPanel(QWidget *parent)
-    : HMaterialFrame(parent)
+    : HMaterialFrame(HMaterial::Level2, parent)
     , d_ptr(new HMaterialPanelPrivate(this))
 {
     d_func()->init();
