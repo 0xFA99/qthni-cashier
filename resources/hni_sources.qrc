@@ -13,8 +13,12 @@
         <file alias="ProductSans-Thin">fonts/ProductSans/ProductSans-Thin.ttf</file>
         <file alias="ProductSans-ThinItalic">fonts/ProductSans/ProductSans-ThinItalic.ttf</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>images/ANDRO.png</file>
+    </qresource>
     <qresource prefix="/icons">
         <file>icons/bag.svg</file>
+        <file>icons/camera.svg</file>
         <file>icons/sun.svg</file>
         <file>icons/moon.svg</file>
         <file>icons/analysic.svg</file>

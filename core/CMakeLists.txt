@@ -23,7 +23,9 @@ set(INCLUDE_FILES
     include/hmaterialpanel.h
     include/hmaterialpanel_p.h
     include/hmaterialpanel_internal.h
-    include/hmaterialflowlayout.h)
+    include/hmaterialflowlayout.h
+    include/hmaterialimage.h
+    include/hmaterialimage_p.h)
     
 
 set(SOURCE_FILES
@@ -34,7 +36,8 @@ set(SOURCE_FILES
     src/hmateriallabel.cpp
     src/hmaterialpanel.cpp
     src/hmaterialpanel_internal.cpp
-    src/hmaterialflowlayout.cpp)
+    src/hmaterialflowlayout.cpp
+    src/hmaterialimage.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp
