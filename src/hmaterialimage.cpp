@@ -16,8 +16,8 @@ void HMaterialImagePrivate::init()
 {
     Q_Q(HMaterialImage);
 
-    m_width     = 100;
-    m_height    = 100;
+    m_size = 40;
+    m_image = QImage(":/images/images/ANDRO.png");
 }
 
 HMaterialImage::HMaterialImage(QWidget *parent)
@@ -45,61 +45,30 @@ void HMaterialImage::setImage(const QImage &image)
     Q_D(HMaterialImage);
 
     d->m_image = image;
+    d->m_pixmap = QPixmap::fromImage(d->m_image.scaled(d->m_size, d->m_size,
+                                    Qt::KeepAspectRatio,
+                                    Qt::SmoothTransformation));
+
     update();
 }
 
-QImage HMaterialImage::getImage() const
-{
-    Q_D(const HMaterialImage);
-
-    return d->m_image;
-}
-
-void HMaterialImage::setImageSize(QSize size)
+void HMaterialImage::setSize(int size)
 {
     Q_D(HMaterialImage);
 
-    d->m_width  = size.width();
-    d->m_height = size.height();
+    d->m_size = size;
+    d->m_pixmap = QPixmap::fromImage(d->m_image.scaled(d->m_size, d->m_size,
+                                    Qt::KeepAspectRatio,
+                                    Qt::SmoothTransformation));
 
     update();
 }
 
-QSize HMaterialImage::imageSize() const
+int HMaterialImage::size() const
 {
     Q_D(const HMaterialImage);
 
-    return QSize(d->m_width, d->m_height);
-}
-
-void HMaterialImage::setImageWidth(int width)
-{
-    Q_D(HMaterialImage);
-
-    d->m_width = width;
-    update();
-}
-
-int HMaterialImage::imageWidth() const
-{
-    Q_D(const HMaterialImage);
-
-    return d->m_width;
-}
-
-void HMaterialImage::setImageHeight(int height)
-{
-    Q_D(HMaterialImage);
-
-    d->m_height = height;
-    update();
-}
-
-int HMaterialImage::imageHeight() const
-{
-    Q_D(const HMaterialImage);
-
-    return d->m_height;
+    return d->m_size;
 }
 
 void HMaterialImage::paintEvent(QPaintEvent *event)
@@ -107,11 +76,8 @@ void HMaterialImage::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
     Q_D(HMaterialImage);
 
-    d->m_pixmap = QPixmap::fromImage(d->m_image.scaled(
-                d->m_width, d->m_height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
+
     painter.drawPixmap((rect().bottomRight() - d->m_pixmap.rect().bottomRight()) / 2, d->m_pixmap);
-    // painter.drawPixmap(QRect(width() / 2, height() / 2, d->m_width, d->m_height), d->m_pixmap);
 }

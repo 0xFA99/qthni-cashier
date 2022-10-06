@@ -7,22 +7,17 @@ class HMaterialImagePrivate;
 
 class HMaterialImage : public QWidget
 {
+    Q_OBJECT
+
 public:
-    HMaterialImage(QWidget *parent = nullptr);
-    HMaterialImage(const QImage &image, QWidget *parent = nullptr);
+    explicit HMaterialImage(QWidget *parent = nullptr);
+    explicit HMaterialImage(const QImage &image, QWidget *parent = nullptr);
     ~HMaterialImage();
 
     void setImage(const QImage &image);
-    QImage getImage() const;
 
-    void setImageSize(QSize size);
-    QSize imageSize() const;
-
-    void setImageWidth(int width);
-    int imageWidth() const;
-
-    void setImageHeight(int height);
-    int imageHeight() const;
+    void setSize(int size);
+    int size() const;
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

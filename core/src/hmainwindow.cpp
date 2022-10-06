@@ -1,9 +1,11 @@
 #include "hmainwindow.h"
+#include <QWidget>
 #include <QHBoxLayout>
+#include <QLabel>
 
 #include "hmaterialtheme.h"
-#include "hmaterialbutton.h"
 #include "hmaterialpanel.h"
+#include "hmaterialsmallproduct.h"
 #include "hmaterialimage.h"
 
 #include <QSizePolicy>
@@ -20,9 +22,9 @@ HMainWindow::HMainWindow(QWidget *parent)
 
     QHBoxLayout *layout = new QHBoxLayout(m_centralWidget);
 
-    HMaterialPanel *panel = new HMaterialPanel(m_centralWidget);
+    //HMaterialPanel *panel = new HMaterialPanel(m_centralWidget);
 
-    panel->addItem(QIcon(":/icons/icons/sun.svg"));
+    /*panel->addItem(QIcon(":/icons/icons/sun.svg"));
     panel->addItem(QIcon(":/icons/icons/moon.svg"));
     panel->addItem(QIcon(":/icons/icons/bag.svg"));
     panel->addItem(QIcon(":/icons/icons/option.svg"));
@@ -31,14 +33,8 @@ HMainWindow::HMainWindow(QWidget *parent)
 
     panel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 
-    // HMaterialButton *button = new HMaterialButton(m_centralWidget);
-    // button->setIcon(QIcon(":/icons/icons/moon.svg"));
-
-    layout->addWidget(panel);
-
-    // QObject::connect(panel, &HMaterialPanel::currentChanged, this, &HMainWindow::test);
-
-
+    // 
+    // layout->addWidget(panel);
 
     // test
     QStackedWidget *stack = new QStackedWidget(m_centralWidget);
@@ -48,27 +44,33 @@ HMainWindow::HMainWindow(QWidget *parent)
     HMaterialFrame *w2 = new HMaterialFrame(HMaterial::Level2, stack);
     HMaterialFrame *w3 = new HMaterialFrame(HMaterial::Level3, stack);
     HMaterialFrame *w4 = new HMaterialFrame(HMaterial::Level4, stack);
+    */
 
     /*
      * W3 Product List
      */
-    QHBoxLayout *w3Layout = new QHBoxLayout(w3);
-    HMaterialImage *image = new HMaterialImage(m_centralWidget);
+    //QHBoxLayout *w3Layout = new QHBoxLayout(w3);
 
-    HMaterialImage *image2 = new HMaterialImage(QImage(":/images/images/ANDRO.png"), m_centralWidget);
-    image2->setImageSize(QSize(300, 300));
+    HMaterialImage *image = new HMaterialImage(QImage(":/images/images/ANDRO.png"));
+    image->setSize(300);
+    //HMaterialImage *i1 = new HMaterialImage(QImage(":/images/images/ANDRO.png"), QSize(300, 300));
 
-    w3Layout->addWidget(image);
-    w3Layout->addWidget(image2);
+    //w3Layout->addWidget(i1);
     // ------------------------------
-    stack->addWidget(w1);
-    stack->addWidget(w2);
-    stack->addWidget(w3);
-    stack->addWidget(w4);
+    //stack->addWidget(w1);
+    //stack->addWidget(w2);
+    //stack->addWidget(w3);
+    //stack->addWidget(w4);
 
-    QObject::connect(panel, &HMaterialPanel::currentChanged, stack, &QStackedWidget::setCurrentIndex);
-    layout->addWidget(stack);
-    layout->setSpacing(10);
+    //QObject::connect(panel, &HMaterialPanel::currentChanged, stack, &QStackedWidget::setCurrentIndex);
+    //layout->addWidget(stack);
+    //layout->setSpacing(10);
+    //
+    //HMaterialImage *image = new HMaterialImage(QImage(":/images/images/ANDRO.png"), QSize(300, 300), m_centralWidget);
+    //image->setImageSize(QSize(200, 200));
+    
+
+    layout->addWidget(image);
 }
 
 HMainWindow::~HMainWindow()

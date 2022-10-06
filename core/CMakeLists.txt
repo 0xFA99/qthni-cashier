@@ -13,31 +13,15 @@ find_package(Qt5Gui     CONFIG REQUIRED)
 
 set(INCLUDE_FILES
     include/hmainwindow.h
-    include/hthemecontrol.h
-    include/hmaterialframe.h
-    include/hmaterialframe_p.h
-    include/hmaterialbutton.h
-    include/hmaterialbutton_p.h
-    include/hmateriallabel.h
-    include/hmateriallabel_p.h
     include/hmaterialpanel.h
     include/hmaterialpanel_p.h
-    include/hmaterialpanel_internal.h
-    include/hmaterialflowlayout.h
-    include/hmaterialimage.h
-    include/hmaterialimage_p.h)
+    include/hmaterialpanel_internal.h)
     
 
 set(SOURCE_FILES
     src/hmainwindow.cpp
-    src/hthemecontrol.cpp
-    src/hmaterialframe.cpp
-    src/hmaterialbutton.cpp
-    src/hmateriallabel.cpp
     src/hmaterialpanel.cpp
-    src/hmaterialpanel_internal.cpp
-    src/hmaterialflowlayout.cpp
-    src/hmaterialimage.cpp)
+    src/hmaterialpanel_internal.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp

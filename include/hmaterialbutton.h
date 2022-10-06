@@ -16,8 +16,8 @@ public:
     HMaterialButton(QIcon icon, const QString &text, QWidget *parent = nullptr);
     ~HMaterialButton();
     
-    void setLightTheme();
-    void setDarkTheme();
+    void setLightTheme() override;
+    void setDarkTheme() override;
 
     void setFollowTheme(bool value);
     bool isFollowTheme() const;

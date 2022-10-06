@@ -31,7 +31,10 @@ HMaterialLabel::HMaterialLabel(QWidget *parent)
     setForegroundRole(QPalette::WindowText);
     setFont(QFont("ProductSans", 12));
 
-    setFollowTheme(true);
+    HThemeControl *themeControl = HThemeControl::getThemeControl();
+    themeControl->addControlWidget(this);
+
+    (themeControl->m_theme == ThemeMode::Dark) ? setDarkTheme() : setLightTheme();
 }
 
 HMaterialLabel::HMaterialLabel(const QString &text, QWidget *parent)
@@ -44,7 +47,10 @@ HMaterialLabel::HMaterialLabel(const QString &text, QWidget *parent)
     setForegroundRole(QPalette::WindowText);
     setFont(QFont("ProductSans", 12));
 
-    setFollowTheme(true);
+    HThemeControl *themeControl = HThemeControl::getThemeControl();
+    themeControl->addControlWidget(this);
+
+    (themeControl->m_theme == ThemeMode::Dark) ? setDarkTheme() : setLightTheme();
 }
 
 HMaterialLabel::~HMaterialLabel()
