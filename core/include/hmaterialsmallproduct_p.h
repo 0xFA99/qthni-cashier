@@ -2,6 +2,7 @@
 #define HMATERIALSMALLPRODUCT_PRIVATE_H
 
 #include "hmateriallabel.h"
+#include "hmaterialimage.h"
 
 class QLabel;
 class QGridLayout;
@@ -21,7 +22,7 @@ public:
 
     HMaterialSmallProduct *const    q_ptr;
     QGridLayout                     *m_layout;
-    QLabel                          *m_image;
+    HMaterialImage                  *m_image;
     HMaterialLabel                  *m_title;
     HMaterialLabel                  *m_price;
     HMaterialLabel                  *m_amount;

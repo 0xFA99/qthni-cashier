@@ -10,12 +10,11 @@ class HMaterialSmallProduct : public HMaterialFrame
     Q_OBJECT
 
 public:
-    HMaterialSmallProduct(QWidget *parent = nullptr);
-    HMaterialSmallProduct(const QString &image, const QString &title, int price, QWidget *parent); 
+    explicit HMaterialSmallProduct(QWidget *parent = nullptr);
+    explicit HMaterialSmallProduct(const QString &title, QWidget *parent = nullptr);
     ~HMaterialSmallProduct();
 
-    void setImage(const QString &image);
-    QPixmap image() const;
+    void setImage(const QImage &image);
 
     void setTitle(const QString &text);
     QString title() const;

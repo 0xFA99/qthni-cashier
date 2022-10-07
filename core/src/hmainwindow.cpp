@@ -6,7 +6,6 @@
 #include "hmaterialtheme.h"
 #include "hmaterialpanel.h"
 #include "hmaterialsmallproduct.h"
-#include "hmaterialimage.h"
 
 #include <QSizePolicy>
 
@@ -51,12 +50,14 @@ HMainWindow::HMainWindow(QWidget *parent)
      */
     //QHBoxLayout *w3Layout = new QHBoxLayout(w3);
 
-    HMaterialImage *image = new HMaterialImage(QImage(":/images/images/ANDRO.png"));
-    image->setSize(300);
     //HMaterialImage *i1 = new HMaterialImage(QImage(":/images/images/ANDRO.png"), QSize(300, 300));
 
     //w3Layout->addWidget(i1);
     // ------------------------------
+    HMaterialSmallProduct *image = new HMaterialSmallProduct("Android", m_centralWidget);
+    image->setImage(QImage(":/images/images/ANDRO.png"));
+    HMaterialSmallProduct *image2 = new HMaterialSmallProduct("Android", m_centralWidget);
+    image2->setImage(QImage(":/images/images/ANDRO.png"));
     //stack->addWidget(w1);
     //stack->addWidget(w2);
     //stack->addWidget(w3);
@@ -71,6 +72,7 @@ HMainWindow::HMainWindow(QWidget *parent)
     
 
     layout->addWidget(image);
+    layout->addWidget(image2);
 }
 
 HMainWindow::~HMainWindow()

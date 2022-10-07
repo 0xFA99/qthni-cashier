@@ -3,7 +3,6 @@
 
 #include <QGridLayout>
 #include <QSizePolicy>
-#include <QLabel>
 
 #include "hmaterialtheme.h"
 
@@ -20,13 +19,17 @@ void HMaterialSmallProductPrivate::init()
 {
     Q_Q(HMaterialSmallProduct);
 
-    m_layout = new QGridLayout(q);
-    m_image = new QLabel(q);
-    m_title = new HMaterialLabel("Unknown", q);
-    m_price = new HMaterialLabel("0", q);
-    m_amount = new HMaterialLabel("x1", q);
+    m_layout    = new QGridLayout(q);
+    m_image     = new HMaterialImage(QImage(":/images/images/ANDRO.png"), q);
+    m_title     = new HMaterialLabel("Unknown", q);
+    m_price     = new HMaterialLabel("0", q);
+    m_amount    = new HMaterialLabel("x1", q);
 
+    m_image->setFixedSize(QSize(50, 50));
     m_price->setAlignment(Qt::AlignRight);
+
+    m_price->setLabelRole(HMaterial::Secondary);
+    m_amount->setLabelRole(HMaterial::Secondary);
 
     m_layout->addWidget(m_image, 0, 0, 2, 1);
     m_layout->addWidget(m_title, 0, 1, 1, 2);
@@ -39,20 +42,17 @@ HMaterialSmallProduct::HMaterialSmallProduct(QWidget *parent)
     , d_ptr(new HMaterialSmallProductPrivate(this))
 {
     d_func()->init();
-    
+
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 }
 
-HMaterialSmallProduct::HMaterialSmallProduct(const QString &image, const QString &title, int price, QWidget *parent)
+HMaterialSmallProduct::HMaterialSmallProduct(const QString &title, QWidget *parent)
     : HMaterialFrame(HMaterial::Level1, parent)
     , d_ptr(new HMaterialSmallProductPrivate(this))
 {
     d_func()->init();
     
-    setImage(image);
     setTitle(title);
-    setPrice(price);
-
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 }
 
@@ -60,18 +60,12 @@ HMaterialSmallProduct::~HMaterialSmallProduct()
 {
 }
 
-void HMaterialSmallProduct::setImage(const QString &path)
+void HMaterialSmallProduct::setImage(const QImage &image)
 {
     Q_D(HMaterialSmallProduct);
 
-    d->m_image->setPixmap(QPixmap(path).scaled(100, 100, Qt::KeepAspectRatio));
-}
-
-QPixmap HMaterialSmallProduct::image() const
-{
-    Q_D(const HMaterialSmallProduct);
-
-    return d->m_image->pixmap();
+    d->m_image->setImage(image);
+    d->m_image->setSize(50);
 }
 
 void HMaterialSmallProduct::setTitle(const QString &text)

@@ -16,7 +16,7 @@ void HMaterialImagePrivate::init()
 {
     Q_Q(HMaterialImage);
 
-    m_size = 40;
+    m_size = 50;
     m_image = QImage(":/images/images/ANDRO.png");
 }
 
