@@ -17,10 +17,10 @@ void HMaterialNormalProductPrivate::init()
     Q_D(HMaterialNormalProduct);
 
     m_layout = new QGridLayout(q);
-    m_image = new HMaterialImage(q);
-    m_title = new HMaterialLabel(q);
-    m_price = new HMaterialLabel(q);
-    m_amount = new HMaterialLabel(q);
+    m_image = new HMaterialImage(QImage(":/images/images/ANDRO.png"), q);
+    m_title = new HMaterialLabel("Untitle", q);
+    m_price = new HMaterialLabel(0, q);
+    m_amount = new HMaterialLabel(0, q);
 
 }
 

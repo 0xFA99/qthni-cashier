@@ -2,6 +2,7 @@
 #define HMATERIALSMALLPRODUCT_PRIVATE_H
 
 #include "hmateriallabel.h"
+#include "hmaterialcurrency.h"
 #include "hmaterialimage.h"
 
 class QLabel;
@@ -24,7 +25,7 @@ public:
     QGridLayout                     *m_layout;
     HMaterialImage                  *m_image;
     HMaterialLabel                  *m_title;
-    HMaterialLabel                  *m_price;
+    HMaterialCurrency               *m_price;
     HMaterialLabel                  *m_amount;
 };
 

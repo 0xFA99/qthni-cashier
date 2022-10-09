@@ -225,6 +225,16 @@ void HMaterialAvatar::paintEvent(QPaintEvent *event)
         return ;
     }
 
+    if (HMaterial::ImageAvatar != d->type) {
+        QBrush brush;
+        brush.setStyle(Qt::SolidPattern);
+        brush.setColor(backgroundColor());
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(brush);
+        painter.drawEllipse(QRectF((width() - d->size) / 2, (height() - d->size) / 2,
+                    d->size, d->size));
+    }
+
     switch (d->type) {
         case HMaterial::ImageAvatar: {
             QPainterPath path;

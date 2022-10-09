@@ -1,15 +1,10 @@
 #include "hmainwindow.h"
 #include <QWidget>
 #include <QHBoxLayout>
-#include <QLabel>
 
-#include "hmaterialtheme.h"
-#include "hmaterialpanel.h"
-#include "hmaterialsmallproduct.h"
+#include "hmaterialavatar.h"
+#include "hmaterialprofile.h"
 
-#include <QSizePolicy>
-
-#include <QStackedWidget>
 #include <QDebug>
 
 HMainWindow::HMainWindow(QWidget *parent)
@@ -54,10 +49,6 @@ HMainWindow::HMainWindow(QWidget *parent)
 
     //w3Layout->addWidget(i1);
     // ------------------------------
-    HMaterialSmallProduct *image = new HMaterialSmallProduct("Android", m_centralWidget);
-    image->setImage(QImage(":/images/images/ANDRO.png"));
-    HMaterialSmallProduct *image2 = new HMaterialSmallProduct("Android", m_centralWidget);
-    image2->setImage(QImage(":/images/images/ANDRO.png"));
     //stack->addWidget(w1);
     //stack->addWidget(w2);
     //stack->addWidget(w3);
@@ -66,13 +57,10 @@ HMainWindow::HMainWindow(QWidget *parent)
     //QObject::connect(panel, &HMaterialPanel::currentChanged, stack, &QStackedWidget::setCurrentIndex);
     //layout->addWidget(stack);
     //layout->setSpacing(10);
-    //
-    //HMaterialImage *image = new HMaterialImage(QImage(":/images/images/ANDRO.png"), QSize(300, 300), m_centralWidget);
-    //image->setImageSize(QSize(200, 200));
-    
+  
+    HMaterialProfile *avatar = new HMaterialProfile("Margaretha", "12098321", m_centralWidget);
 
-    layout->addWidget(image);
-    layout->addWidget(image2);
+    layout->addWidget(avatar);
 }
 
 HMainWindow::~HMainWindow()

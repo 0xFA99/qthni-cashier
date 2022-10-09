@@ -2,15 +2,18 @@
 #define HMATERIALCURRENCY_H
 
 #include "hmateriallabel.h"
+#include "hmaterialtheme.h"
 
 class HMaterialCurrencyPrivate;
 
 class HMaterialCurrency : public HMaterialLabel
 {
 public:
-    explicit HMaterialCurrency(QWidget *parent);
-    explicit HMaterialCurrency(int money, QWidget *parent);
+    explicit HMaterialCurrency(QWidget *parent = nullptr);
+    explicit HMaterialCurrency(int value, QWidget *parent = nullptr);
     ~HMaterialCurrency();
+
+    void setRole(HMaterial::Role role);
 
     void setMoney(int value);
     void increaseMoney(int value);

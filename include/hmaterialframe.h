@@ -9,7 +9,7 @@
 
 class HMaterialFramePrivate;
 
-class HMaterialFrame : public QWidget, HInterfaceWidget
+class HMaterialFrame : public QWidget, public HInterfaceWidget
 {
     Q_OBJECT
 

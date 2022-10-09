@@ -17,14 +17,19 @@ set(INCLUDE_FILES
     include/hmaterialpanel_p.h
     include/hmaterialpanel_internal.h
     include/hmaterialsmallproduct.h
-    include/hmaterialsmallproduct_p.h)
-    
+    include/hmaterialsmallproduct_p.h
+    include/hmaterialorderprice.h
+    include/hmaterialorderprice_p.h
+    include/hmaterialprofile.h
+    include/hmaterialprofile_p.h)
 
 set(SOURCE_FILES
     src/hmainwindow.cpp
     src/hmaterialpanel.cpp
     src/hmaterialpanel_internal.cpp
-    src/hmaterialsmallproduct.cpp)
+    src/hmaterialsmallproduct.cpp
+    src/hmaterialorderprice.cpp
+    src/hmaterialprofile.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp

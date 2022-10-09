@@ -12,6 +12,8 @@ HMaterialCurrencyPrivate::~HMaterialCurrencyPrivate()
 
 void HMaterialCurrencyPrivate::init()
 {
+    Q_Q(HMaterialCurrency);
+
     m_money = 0;
     m_locale = QLocale("id_ID");
 }
@@ -23,6 +25,7 @@ HMaterialCurrency::HMaterialCurrency(QWidget *parent)
     d_func()->init();
 
     setMoney(0);
+    setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 }
 
 HMaterialCurrency::HMaterialCurrency(int value, QWidget *parent)
@@ -32,6 +35,18 @@ HMaterialCurrency::HMaterialCurrency(int value, QWidget *parent)
     d_func()->init();
 
     setMoney(value);
+    setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+}
+
+HMaterialCurrency::~HMaterialCurrency()
+{
+}
+
+void HMaterialCurrency::setRole(HMaterial::Role role)
+{
+    Q_D(HMaterialCurrency);
+
+    setLabelRole(role);
 }
 
 void HMaterialCurrency::setMoney(int value)

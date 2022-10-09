@@ -22,19 +22,20 @@ void HMaterialSmallProductPrivate::init()
     m_layout    = new QGridLayout(q);
     m_image     = new HMaterialImage(QImage(":/images/images/ANDRO.png"), q);
     m_title     = new HMaterialLabel("Unknown", q);
-    m_price     = new HMaterialLabel("0", q);
+    m_price     = new HMaterialCurrency(100000, q);
     m_amount    = new HMaterialLabel("x1", q);
 
     m_image->setFixedSize(QSize(50, 50));
-    m_price->setAlignment(Qt::AlignRight);
 
-    m_price->setLabelRole(HMaterial::Secondary);
+    m_price->setRole(HMaterial::Secondary);
     m_amount->setLabelRole(HMaterial::Secondary);
 
     m_layout->addWidget(m_image, 0, 0, 2, 1);
     m_layout->addWidget(m_title, 0, 1, 1, 2);
     m_layout->addWidget(m_amount, 1, 1);
     m_layout->addWidget(m_price, 1, 2);
+
+    m_price->increaseMoney(500000);
 }
 
 HMaterialSmallProduct::HMaterialSmallProduct(QWidget *parent)
@@ -86,14 +87,14 @@ void HMaterialSmallProduct::setPrice(int price)
 {
     Q_D(HMaterialSmallProduct);
 
-    d->m_price->setText(QString::number(price));
+    d->m_price->setMoney(price);
 }
 
 int HMaterialSmallProduct::price() const
 {
     Q_D(const HMaterialSmallProduct);
 
-    return d->m_price->text().toInt();
+    return d->m_price->money();
 }
 
 void HMaterialSmallProduct::increaseAmount()
