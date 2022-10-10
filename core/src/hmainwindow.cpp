@@ -2,8 +2,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 
-#include "hmaterialavatar.h"
-#include "hmaterialprofile.h"
+#include "hmaterialnormalproduct.h"
 
 #include <QDebug>
 
@@ -57,8 +56,8 @@ HMainWindow::HMainWindow(QWidget *parent)
     //QObject::connect(panel, &HMaterialPanel::currentChanged, stack, &QStackedWidget::setCurrentIndex);
     //layout->addWidget(stack);
     //layout->setSpacing(10);
-  
-    HMaterialProfile *avatar = new HMaterialProfile("Margaretha", "12098321", m_centralWidget);
+
+    HMaterialNormalProduct *avatar = new HMaterialNormalProduct(m_centralWidget);
 
     layout->addWidget(avatar);
 }

@@ -28,6 +28,10 @@ protected:
 private:
     Q_DISABLE_COPY(HMaterialNormalProduct)
     Q_DECLARE_PRIVATE(HMaterialNormalProduct)
+
+    void swapMode();
+
+    bool mode;
 };
 
 #endif

@@ -18,6 +18,8 @@ set(INCLUDE_FILES
     include/hmaterialpanel_internal.h
     include/hmaterialsmallproduct.h
     include/hmaterialsmallproduct_p.h
+    include/hmaterialnormalproduct.h
+    include/hmaterialnormalproduct_p.h
     include/hmaterialorderprice.h
     include/hmaterialorderprice_p.h
     include/hmaterialprofile.h
@@ -28,6 +30,7 @@ set(SOURCE_FILES
     src/hmaterialpanel.cpp
     src/hmaterialpanel_internal.cpp
     src/hmaterialsmallproduct.cpp
+    src/hmaterialnormalproduct.cpp
     src/hmaterialorderprice.cpp
     src/hmaterialprofile.cpp)
 
