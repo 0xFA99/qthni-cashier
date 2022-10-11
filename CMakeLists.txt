@@ -60,7 +60,10 @@ set(INCLUDE_FILES
     include/hmaterialcurrency.h
     include/hmaterialcurrency_p.h
     include/hmaterialsperator.h
-    include/hmaterialsperator_p.h)
+    include/hmaterialsperator_p.h
+    include/hmaterialdialog.h
+    include/hmaterialdialog_p.h
+    include/hmaterialdialog_internal.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
@@ -84,7 +87,9 @@ set(SOURCE_FILES
     src/hmaterialflowlayout.cpp
     src/hmaterialimage.cpp
     src/hmaterialcurrency.cpp
-    src/hmaterialsperator.cpp)
+    src/hmaterialsperator.cpp
+    src/hmaterialdialog.cpp
+    src/hmaterialdialog_internal.cpp)
 
 add_library(hni-lib STATIC
     ${INCLUDE_FILES}
