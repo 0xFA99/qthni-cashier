@@ -14,7 +14,6 @@ public:
     ~HMaterialNormalProduct();
 
     void setImage(const QImage &image);
-    QImage image() const;
 
     void setTitle(const QString &text);
     QString title() const;

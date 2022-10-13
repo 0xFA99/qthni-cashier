@@ -15,6 +15,7 @@ public:
     ~HMaterialImage();
 
     void setImage(const QImage &image);
+    QImage getImage() const;
 
     void setSize(int size);
     int size() const;

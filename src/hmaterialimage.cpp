@@ -52,6 +52,13 @@ void HMaterialImage::setImage(const QImage &image)
     update();
 }
 
+QImage HMaterialImage::getImage() const
+{
+    Q_D(const HMaterialImage);
+
+    return d->m_image;
+}
+
 void HMaterialImage::setSize(int size)
 {
     Q_D(HMaterialImage);

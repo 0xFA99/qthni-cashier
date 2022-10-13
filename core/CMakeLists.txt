@@ -23,7 +23,9 @@ set(INCLUDE_FILES
     include/hmaterialorderprice.h
     include/hmaterialorderprice_p.h
     include/hmaterialprofile.h
-    include/hmaterialprofile_p.h)
+    include/hmaterialprofile_p.h
+    include/hproductdetail.h
+    include/hproductdetail_p.h)
 
 set(SOURCE_FILES
     src/hmainwindow.cpp
@@ -32,7 +34,8 @@ set(SOURCE_FILES
     src/hmaterialsmallproduct.cpp
     src/hmaterialnormalproduct.cpp
     src/hmaterialorderprice.cpp
-    src/hmaterialprofile.cpp)
+    src/hmaterialprofile.cpp
+    src/hproductdetail.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp

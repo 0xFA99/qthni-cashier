@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QPainter>
+#include <QLocale>
 #include <QDebug>
 
 #include "hmaterialtextfield.h"
@@ -27,6 +28,7 @@ void HMaterialTextFieldPrivate::init()
     showLabel       = false;
     showInputLine   = true;
     useThemeColors  = true;
+    currencyFormat  = false;
 
     q->setFrame(false);
     q->setStyle(&HMaterialStyle::instance());
@@ -34,7 +36,7 @@ void HMaterialTextFieldPrivate::init()
     q->setMouseTracking(true);
     q->setTextMargins(0, 2, 0, 4);
 
-    q->setFont(QFont("ProductSans", 11, QFont::Normal));
+    q->setFont(QFont("ProductSans", 11, QFont::Medium));
 
     stateMachine->start();
     QCoreApplication::processEvents();
@@ -302,4 +304,29 @@ void HMaterialTextField::paintEvent(QPaintEvent *event)
             painter.drawRect(w + 2.5, height() - 2, wd - w * 2, 2);
         }
     }
+}
+
+void HMaterialTextField::setCurrencyFormat(bool status)
+{
+    Q_D(HMaterialTextField);
+
+    if (status) {
+        setText("Rp 0");
+        QObject::connect(this, &QLineEdit::textChanged, [=](const QString &string) {
+            QLocale indo("id_ID");
+
+            QString temp = string.split(" ")[1];
+            temp.replace('.', "");
+
+            int value = temp.toInt();
+            setText("Rp " + indo.toString(value));
+        });
+    }
+}
+
+bool HMaterialTextField::isCurrencyFormat() const
+{
+    Q_D(const HMaterialTextField);
+
+    return d->currencyFormat;
 }

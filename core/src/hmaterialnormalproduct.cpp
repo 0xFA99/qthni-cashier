@@ -83,11 +83,6 @@ void HMaterialNormalProduct::setImage(const QImage &image)
     d->m_image->setImage(image);
 }
 
-QImage HMaterialNormalProduct::image() const
-{
-    Q_D(const HMaterialNormalProduct);
-}
-
 void HMaterialNormalProduct::setTitle(const QString &text)
 {
     Q_D(HMaterialNormalProduct);

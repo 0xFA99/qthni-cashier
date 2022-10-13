@@ -31,6 +31,7 @@ public:
     bool                            showLabel;
     bool                            showInputLine;
     bool                            useThemeColors;
+    bool                            currencyFormat;
 };
 
 #endif

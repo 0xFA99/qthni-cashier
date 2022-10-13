@@ -45,6 +45,9 @@ public:
     void setShowInputLine(bool value);
     bool hasInputLine() const;
 
+    void setCurrencyFormat(bool status);
+    bool isCurrencyFormat() const;
+
 protected:
     HMaterialTextField(HMaterialTextFieldPrivate &d, QWidget *parent = nullptr);
 

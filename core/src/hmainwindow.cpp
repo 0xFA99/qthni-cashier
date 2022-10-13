@@ -4,6 +4,7 @@
 
 #include "hmaterialdialog.h"
 #include "hmaterialflatbutton.h"
+#include "hproductdetail.h"
 
 #include <QDebug>
 
@@ -66,28 +67,16 @@ HMainWindow::HMainWindow(QWidget *parent)
     QHBoxLayout *dialogLayout = new QHBoxLayout;
 
     // fill the dialog
-    QWidget *dialogWidget = new QWidget;
-    QHBoxLayout *dialogWidgetLayout = new QHBoxLayout;
-    dialogWidget->setLayout(dialogWidgetLayout);
-
-    HMaterialFlatButton *closeButton = new HMaterialFlatButton("Close");
-    dialogWidgetLayout->addWidget(closeButton);
-    dialogWidgetLayout->setAlignment(closeButton, Qt::AlignBottom | Qt::AlignCenter);
-
-    closeButton->setMaximumWidth(150);
-    dialogWidget->setMinimumHeight(300);
+    HProductDetail *productDetail = new HProductDetail(m_centralWidget); 
 
     dialog->setWindowLayout(dialogLayout);
 
-    dialogLayout->addWidget(dialogWidget);
+    dialogLayout->addWidget(productDetail);
 
     QObject::connect(showButton, &QPushButton::pressed, [=]() {
         dialog->showDialog();
     });
 
-    QObject::connect(closeButton, &QPushButton::pressed, [=]() {
-        dialog->hideDialog();
-    });
 }
 
 HMainWindow::~HMainWindow()
