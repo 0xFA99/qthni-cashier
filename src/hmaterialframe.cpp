@@ -22,16 +22,21 @@ void HMaterialFramePrivate::init()
     m_backgroundColor   = QColor(Qt::white);
     m_roundCorner       = 8;
     m_darkColors        = {
-        QColor(17, 20, 24),
-        QColor(25, 31, 36),
-        QColor(35, 42, 49),
-        QColor(56, 67, 79)
+        QColor(18, 18, 18),
+        QColor(30, 30, 30),
+        QColor(36, 36, 36),
+        QColor(34, 34, 34),
+        QColor(44, 44, 44),
+        QColor(50, 50, 50)
     };
     m_lightColors       = {
         QColor(255, 255, 255),
-        QColor(249, 249, 250),
-        QColor(239, 240, 242),
-        QColor(219, 222, 225)
+        QColor(237, 237, 237),
+        QColor(225, 225, 225),
+        QColor(219, 219, 219),
+        QColor(221, 221, 221),
+        QColor(211, 211, 211)
+        // QColor(205, 205, 205)
     };
     m_colorLevel        = 0;
     m_followTheme       = true;

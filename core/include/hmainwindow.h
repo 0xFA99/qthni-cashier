@@ -3,8 +3,7 @@
 
 #include <QtWidgets/QMainWindow>
 
-#include "hmaterialframe.h"
-
+class QWidget;
 class HMainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -12,10 +11,8 @@ class HMainWindow : public QMainWindow
 public:
     explicit HMainWindow(QWidget *parent = nullptr);
     ~HMainWindow();
-public slots:
-    void test(int);
 private:
-    HMaterialFrame *m_centralWidget;
+    QWidget *m_centralWidget;
 };
 
 #endif

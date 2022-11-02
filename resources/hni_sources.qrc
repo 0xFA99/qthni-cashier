@@ -1,31 +1,34 @@
 <RCC>
     <qresource prefix="/fonts">
-        <file alias="ProductSans-Black">fonts/ProductSans/ProductSans-Black.ttf</file>
-        <file alias="ProductSans-BlackItalic">fonts/ProductSans/ProductSans-BlackItalic.ttf</file>
-        <file alias="ProductSans-Bold">fonts/ProductSans/ProductSans-Bold.ttf</file>
-        <file alias="ProductSans-BoldItalic">fonts/ProductSans/ProductSans-BoldItalic.ttf</file>
-        <file alias="ProductSans-Italic">fonts/ProductSans/ProductSans-Italic.ttf</file>
-        <file alias="ProductSans-Light">fonts/ProductSans/ProductSans-Light.ttf</file>
-        <file alias="ProductSans-LightItalic">fonts/ProductSans/ProductSans-LightItalic.ttf</file>
-        <file alias="ProductSans-Medium">fonts/ProductSans/ProductSans-Medium.ttf</file>
-        <file alias="ProductSans-MediumItalic">fonts/ProductSans/ProductSans-MediumItalic.ttf</file>
-        <file alias="ProductSans-Regular">fonts/ProductSans/ProductSans-Regular.ttf</file>
-        <file alias="ProductSans-Thin">fonts/ProductSans/ProductSans-Thin.ttf</file>
-        <file alias="ProductSans-ThinItalic">fonts/ProductSans/ProductSans-ThinItalic.ttf</file>
+        <file alias="Roboto-Black">fonts/Roboto/Roboto-Black.ttf</file>
+        <file alias="Roboto-BlackItalic">fonts/Roboto/Roboto-BlackItalic.ttf</file>
+        <file alias="Roboto-Bold">fonts/Roboto/Roboto-Bold.ttf</file>
+        <file alias="Roboto-BoldItalic">fonts/Roboto/Roboto-BoldItalic.ttf</file>
+        <file alias="Roboto-Italic">fonts/Roboto/Roboto-Italic.ttf</file>
+        <file alias="Roboto-Light">fonts/Roboto/Roboto-Light.ttf</file>
+        <file alias="Roboto-LightItalic">fonts/Roboto/Roboto-LightItalic.ttf</file>
+        <file alias="Roboto-Medium">fonts/Roboto/Roboto-Medium.ttf</file>
+        <file alias="Roboto-MediumItalic">fonts/Roboto/Roboto-MediumItalic.ttf</file>
+        <file alias="Roboto-Regular">fonts/Roboto/Roboto-Regular.ttf</file>
+        <file alias="Roboto-Thin">fonts/Roboto/Roboto-Thin.ttf</file>
+        <file alias="Roboto-ThinItalic">fonts/Roboto/Roboto-ThinItalic.ttf</file>
+        <file alias="iconfont">fonts/9e86e58.ttf</file>
     </qresource>
     <qresource prefix="/images">
         <file>images/ANDRO.png</file>
+        <file>images/vas.png</file>
+        <file>images/profile.png</file>
+        <file>images/default.png</file>
     </qresource>
     <qresource prefix="/icons">
-        <file>icons/bag.svg</file>
-        <file>icons/camera.svg</file>
-        <file>icons/sun.svg</file>
-        <file>icons/moon.svg</file>
-        <file>icons/analysic.svg</file>
-        <file>icons/purchase.svg</file>
-        <file>icons/addProduct.svg</file>
-        <file>icons/addMember.svg</file>
-        <file>icons/option.svg</file>
+        <file>icons/personal/image-2-line.svg</file>
+        <file>icons/personal/line-chart-line.svg</file>
+        <file>icons/personal/group-line.svg</file>
+        <file>icons/personal/shopping-bag-line.svg</file>
+        <file>icons/personal/stack-line.svg</file>
+        <file>icons/personal/settings-2-line.svg</file>
+        <file>icons/personal/subtract-line.svg</file>
+        <file>icons/personal/add-line.svg</file>
         <file>icons/communication/svg/production/ic_message_24px.svg</file>
         <file>icons/toggle/svg/production/ic_check_box_24px.svg</file>
         <file>icons/toggle/svg/production/ic_check_box_outline_blank_24px.svg</file>

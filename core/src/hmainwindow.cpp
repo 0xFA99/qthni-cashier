@@ -1,89 +1,88 @@
 #include "hmainwindow.h"
+
 #include <QWidget>
 #include <QHBoxLayout>
+#include <QWidget>
 
-#include "hmaterialdialog.h"
-#include "hmaterialflatbutton.h"
-#include "hproductdetail.h"
+#include <QStackedWidget>
+#include <QGridLayout>
+#include <QSizePolicy>
 
-#include <QDebug>
+#include "hpanel.h"
+#include "hpurchasepage.h"
+#include "hanalysicpage.h"
+#include "hproductpage.h"
+#include "hmemberpage.h"
+#include "hnotificationpage.h"
+#include "hoptionpage.h"
 
 HMainWindow::HMainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , m_centralWidget(new HMaterialFrame(HMaterial::Level2, this))
+    , m_centralWidget(new QWidget(this))
 {
     setCentralWidget(m_centralWidget);
-    m_centralWidget->setCornerRadius(0);
 
-    QHBoxLayout *layout = new QHBoxLayout(m_centralWidget);
+    QHBoxLayout *m_layout = new QHBoxLayout(m_centralWidget);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+    m_layout->setSpacing(0);
 
-    //HMaterialPanel *panel = new HMaterialPanel(m_centralWidget);
-
-    /*panel->addItem(QIcon(":/icons/icons/sun.svg"));
-    panel->addItem(QIcon(":/icons/icons/moon.svg"));
-    panel->addItem(QIcon(":/icons/icons/bag.svg"));
-    panel->addItem(QIcon(":/icons/icons/option.svg"));
-    panel->addStretch(1);
-    panel->addThemeControl();
-
+    HPanel *panel = new HPanel(m_centralWidget);
     panel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 
-    // 
-    // layout->addWidget(panel);
+    panel->addItem("\uE648");
+    panel->addItem("\uE654");
+    panel->addItem("\uE626");
+    panel->addItem("\uE65B");
+    panel->addStretch();
+    panel->addItem("\uE629");
+    panel->addItem("\uE637");
+    panel->addLogo();
 
-    // test
-    QStackedWidget *stack = new QStackedWidget(m_centralWidget);
-    
-    // Widget Collection
-    HMaterialFrame *w1 = new HMaterialFrame(HMaterial::Level1, stack);
-    HMaterialFrame *w2 = new HMaterialFrame(HMaterial::Level2, stack);
-    HMaterialFrame *w3 = new HMaterialFrame(HMaterial::Level3, stack);
-    HMaterialFrame *w4 = new HMaterialFrame(HMaterial::Level4, stack);
-    */
+
+    m_layout->addWidget(panel);
 
     /*
-     * W3 Product List
-     */
-    //QHBoxLayout *w3Layout = new QHBoxLayout(w3);
+    HMaterialFlatButton *button = new HMaterialFlatButton("EXIT", m_centralWidget);
+    button->setBackgroundColor(QColor(225, 231, 255));
+    button->setForegroundColor(QColor(101, 126, 248));
+    button->setHaloVisible(false);
+    button->setOverlayStyle(HMaterial::TintedOverlay);
+    button->setBaseOpacity(1);
+    button->setCornerRadius(button->sizeHint().height() / 2);
 
-    //HMaterialImage *i1 = new HMaterialImage(QImage(":/images/images/ANDRO.png"), QSize(300, 300));
+    HMaterialFlatButton *button2 = new HMaterialFlatButton(m_centralWidget);
+    button2->setFont(QFont("iconfont", 18, QFont::Medium));
+    button2->setText("\uE626");
+    button2->setForegroundColor(QColor(0, 0, 0, 115));
+    button2->setHaloVisible(false);
+    button2->setOverlayStyle(HMaterial::GrayOverlay);
+    button2->setBaseOpacity(1);
+    button2->setCornerRadius(button2->sizeHint().height() / 2);
+    button2->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    */
+    QStackedWidget *stack = new QStackedWidget(m_centralWidget);
 
-    //w3Layout->addWidget(i1);
-    // ------------------------------
-    //stack->addWidget(w1);
-    //stack->addWidget(w2);
-    //stack->addWidget(w3);
-    //stack->addWidget(w4);
+    HAnalysicPage       *page1 = new HAnalysicPage(stack);
+    HPurchasePage       *page2 = new HPurchasePage(stack);
+    HProductPage        *page3 = new HProductPage(stack);
+    HMemberPage         *page4 = new HMemberPage(stack);
+    HNotificationPage   *page5 = new HNotificationPage(stack);
+    HOptionPage         *page6 = new HOptionPage(stack);
 
-    //QObject::connect(panel, &HMaterialPanel::currentChanged, stack, &QStackedWidget::setCurrentIndex);
-    //layout->addWidget(stack);
-    //layout->setSpacing(10);
+    stack->addWidget(page1);
+    stack->addWidget(page2);
+    stack->addWidget(page3);
+    stack->addWidget(page4);
+    stack->addWidget(page5);
+    stack->addWidget(page6);
 
-    HMaterialFlatButton *showButton = new HMaterialFlatButton("Show", m_centralWidget);
-    layout->addWidget(showButton);
+    m_layout->addWidget(stack);
 
-    HMaterialDialog *dialog = new HMaterialDialog;
-    dialog->setParent(m_centralWidget);
-    QHBoxLayout *dialogLayout = new QHBoxLayout;
-
-    // fill the dialog
-    HProductDetail *productDetail = new HProductDetail(m_centralWidget); 
-
-    dialog->setWindowLayout(dialogLayout);
-
-    dialogLayout->addWidget(productDetail);
-
-    QObject::connect(showButton, &QPushButton::pressed, [=]() {
-        dialog->showDialog();
+    QObject::connect(panel, &HPanel::currentChanged, [stack](int index) {
+        stack->setCurrentIndex(index - 1);
     });
-
 }
 
 HMainWindow::~HMainWindow()
 {
-}
-
-void HMainWindow::test(int index)
-{
-    qDebug() << index;
 }

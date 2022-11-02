@@ -56,7 +56,6 @@ protected:
 private:
     Q_DISABLE_COPY(HMaterialBadge);
     Q_DECLARE_PRIVATE(HMaterialBadge);
-
 };
 
 #endif

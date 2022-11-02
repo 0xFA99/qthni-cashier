@@ -33,6 +33,9 @@ public:
     void setRole(HMaterial::Role role);
     HMaterial::Role role() const;
 
+    void setRippleColor(const QColor &color);
+    QColor rippleColor() const;
+
     void setForegroundColor(const QColor &color);
     QColor foregroundColor() const;
 
@@ -90,6 +93,8 @@ protected:
     };
 
     HMaterialFlatButton(HMaterialFlatButtonPrivate &d, QWidget *parent = nullptr, HMaterial::ButtonPreset preset = HMaterial::FlatPreset);
+
+    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
 
     void checkStateSet() Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;

@@ -3,29 +3,21 @@
 
 #include <QLabel>
 
-#include "hinterfacewidget.h"
-#include "hmaterialtheme.h"
-
 class HMaterialLabelPrivate;
-
-class HMaterialLabel : public QLabel, public HInterfaceWidget
+class HMaterialLabel : public QLabel
 {
+    Q_OBJECT
+
 public:
-    HMaterialLabel(QWidget *parent = nullptr);
-    HMaterialLabel(const QString &text, QWidget *parent = nullptr);
+    explicit HMaterialLabel(QWidget *parent = nullptr);
+    explicit HMaterialLabel(const QString &text, QWidget *parent = nullptr);
     ~HMaterialLabel();
 
-    void setDarkTheme() override;
-    void setLightTheme() override;
+    void setFontSize(int size);
+    int fontSize() const;
 
-    void setFollowTheme(bool value);
-    bool isFollowTheme() const;
-
-    void setLabelStyle(HMaterial::LabelStyle style);
-    HMaterial::LabelStyle labelStyle() const;
-
-    void setLabelRole(HMaterial::Role role);
-    HMaterial::Role labelRole() const;
+    void setFontWeight(QFont::Weight weight);
+    QFont::Weight fontWeight() const;
 
     void setTextColor(const QColor &color);
     QColor textColor() const;

@@ -36,7 +36,7 @@ void HMaterialTextFieldPrivate::init()
     q->setMouseTracking(true);
     q->setTextMargins(0, 2, 0, 4);
 
-    q->setFont(QFont("ProductSans", 11, QFont::Medium));
+    q->setFont(QFont("Roboto", 12, QFont::Medium));
 
     stateMachine->start();
     QCoreApplication::processEvents();
@@ -315,11 +315,15 @@ void HMaterialTextField::setCurrencyFormat(bool status)
         QObject::connect(this, &QLineEdit::textChanged, [=](const QString &string) {
             QLocale indo("id_ID");
 
-            QString temp = string.split(" ")[1];
-            temp.replace('.', "");
+            if (string == "") {
+                setText("Rp 0");
+            } else {
+                QString temp = string.split(" ")[1];
+                temp.replace('.', "");
 
-            int value = temp.toInt();
-            setText("Rp " + indo.toString(value));
+                int value = temp.toInt();
+                setText("Rp " + indo.toString(value));
+            }
         });
     }
 }

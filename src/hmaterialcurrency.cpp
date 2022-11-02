@@ -42,13 +42,6 @@ HMaterialCurrency::~HMaterialCurrency()
 {
 }
 
-void HMaterialCurrency::setRole(HMaterial::Role role)
-{
-    Q_D(HMaterialCurrency);
-
-    setLabelRole(role);
-}
-
 void HMaterialCurrency::setMoney(int value)
 {
     Q_D(HMaterialCurrency);

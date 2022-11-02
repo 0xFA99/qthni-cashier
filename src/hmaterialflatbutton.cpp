@@ -36,10 +36,11 @@ void HMaterialFlatButtonPrivate::init()
     overlayStyle         = HMaterial::GrayOverlay;
     bgMode               = Qt::TransparentMode;
     textAlignment        = Qt::AlignHCenter;
+    rippleColor          = QColor(Qt::gray);
     fixedRippleRadius    = 64;
     cornerRadius         = 3;
     baseOpacity          = 0.13;
-    fontSize             = 12;        
+    fontSize             = 10;
     useThemeColors       = true;
     useFixedRippleRadius = false;
     haloVisible          = true;
@@ -48,7 +49,7 @@ void HMaterialFlatButtonPrivate::init()
     q->setAttribute(Qt::WA_Hover);
     q->setMouseTracking(true);
 
-    QFont font("ProductSans", fontSize, QFont::Medium);
+    QFont font("ProductSans", fontSize, QFont::Bold);
     q->setFont(font);
 
     QPainterPath path;
@@ -141,6 +142,20 @@ HMaterial::Role HMaterialFlatButton::role() const
     Q_D(const HMaterialFlatButton);
 
     return d->role;
+}
+
+void HMaterialFlatButton::setRippleColor(const QColor &color)
+{
+    Q_D(HMaterialFlatButton);
+
+    d->rippleColor = color;
+}
+
+QColor HMaterialFlatButton::rippleColor() const
+{
+    Q_D(const HMaterialFlatButton);
+
+    return d->rippleColor;
 }
 
 void HMaterialFlatButton::setForegroundColor(const QColor &color)
@@ -498,7 +513,7 @@ void HMaterialFlatButton::mousePressEvent(QMouseEvent *event)
 
         ripple->setRadiusEndValue(radiusEndValue);
         ripple->setOpacityStartValue(0.35);
-        ripple->setColor(foregroundColor());
+        ripple->setColor(rippleColor());
         ripple->radiusAnimation()->setDuration(600);
         ripple->opacityAnimation()->setDuration(1300);
 
@@ -586,7 +601,7 @@ void HMaterialFlatButton::paintBackground(QPainter *painter)
         if (HMaterial::TintedOverlay == d->overlayStyle) {
             brush.setColor(overlayColor());
         } else {
-            brush.setColor(Qt::gray);
+            brush.setColor(QColor(225, 231, 255));
         }
         painter->setOpacity(overlayOpacity);
         painter->setBrush(brush);
@@ -662,7 +677,9 @@ void HMaterialFlatButton::paintForeground(QPainter *painter)
         QPixmap pixmap = icon().pixmap(iconSize());
         QPainter icon(&pixmap);
         icon.setCompositionMode(QPainter::CompositionMode_SourceIn);
+
         icon.fillRect(pixmap.rect(), painter->pen().color());
+
 
         painter->drawPixmap(iconGeometry, pixmap);
 
@@ -673,6 +690,14 @@ void HMaterialFlatButton::paintForeground(QPainter *painter)
         if (Qt::AlignLeft == d->textAlignment) {
             painter->drawText(rect().adjusted(12, 0, 0, 0), Qt::AlignLeft | Qt::AlignVCenter, text());
         } else {
+            const qreal overlayOpacity = d->stateMachine->overlayOpacity();
+            if ((HMaterial::NoOverlay != d->overlayStyle) && (overlayOpacity > 0)) {
+                if (HMaterial::TintedOverlay == d->overlayStyle) {
+                    painter->setPen(Qt::white);
+                } else {
+                    painter->setPen(QColor(101, 126, 248));
+                }
+            }
             painter->drawText(rect(), Qt::AlignCenter, text());
         }
         return;
@@ -714,4 +739,9 @@ void HMaterialFlatButton::updateClipPath()
     QPainterPath path;
     path.addRoundedRect(rect(), radius, radius);
     d->rippleOverlay->setClipPath(path);
+}
+
+void HMaterialFlatButton::enterEvent(QEvent *event)
+{
+    setCursor(Qt::PointingHandCursor);
 }

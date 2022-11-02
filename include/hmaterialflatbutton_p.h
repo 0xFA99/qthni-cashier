@@ -32,6 +32,7 @@ public:
     QColor                              backgroundColor;
     QColor                              foregroundColor;
     QColor                              overlayColor;
+    QColor                              rippleColor;
     QColor                              disabledColor;
     QColor                              disabledBackgroundColor;
     qreal                               fixedRippleRadius;

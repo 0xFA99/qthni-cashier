@@ -5,7 +5,7 @@
 #include "hmaterialtextfield.h"
 #include "hmaterialflatbutton.h"
 
-class QGridLayout;
+class QVBoxLayout;
 
 class HProductDetail;
 class HProductDetailPrivate
@@ -20,17 +20,12 @@ public:
     void init();
 
     HProductDetail *const   q_ptr;
-
-    QGridLayout             *m_layout;
+    QVBoxLayout             *m_layout;
     HMaterialImage          *m_image;
-    HMaterialTextField      *m_name;
-    HMaterialTextField      *m_category;
-    HMaterialTextField      *m_stock;
-    HMaterialTextField      *m_normalPrice;
+    HMaterialTextField      *m_title;
+    HMaterialTextField      *m_customerPrice;
     HMaterialTextField      *m_memberPrice;
-
-    HMaterialFlatButton     *m_cancelButton;
-    HMaterialFlatButton     *m_submitButton;
+    HMaterialFlatButton     *m_closeButton;
 };
 
 #endif

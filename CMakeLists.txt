@@ -46,24 +46,17 @@ set(INCLUDE_FILES
     include/hmaterialsnackbar.h
     include/hmaterialsnackbar_p.h
     include/hmaterialsnackbar_internal.h
+    include/hmaterialflowlayout.h
+    include/hmaterialdialog.h
+    include/hmaterialdialog_p.h
+    include/hmaterialdialog_internal.h
     include/hmateriallabel.h
     include/hmateriallabel_p.h
-    include/hmaterialframe.h
-    include/hmaterialframe_p.h
-    include/hmaterialbutton.h
-    include/hmaterialbutton_p.h
-    include/hthemecontrol.h
-    include/hinterfacewidget.h
-    include/hmaterialflowlayout.h
     include/hmaterialimage.h
     include/hmaterialimage_p.h
     include/hmaterialcurrency.h
-    include/hmaterialcurrency_p.h
-    include/hmaterialsperator.h
-    include/hmaterialsperator_p.h
-    include/hmaterialdialog.h
-    include/hmaterialdialog_p.h
-    include/hmaterialdialog_internal.h)
+    include/hmaterialsearch.h
+    include/hmaterialsearch_p.h)
     
 set(SOURCE_FILES
     src/hmaterialflatbutton.cpp
@@ -80,18 +73,15 @@ set(SOURCE_FILES
     src/hmaterialbadge.cpp
     src/hmaterialsnackbar.cpp
     src/hmaterialsnackbar_internal.cpp
-    src/hmateriallabel.cpp
-    src/hmaterialframe.cpp
-    src/hmaterialbutton.cpp
-    src/hthemecontrol.cpp
     src/hmaterialflowlayout.cpp
+    src/hmaterialdialog.cpp
+    src/hmaterialdialog_internal.cpp
+    src/hmateriallabel.cpp
     src/hmaterialimage.cpp
     src/hmaterialcurrency.cpp
-    src/hmaterialsperator.cpp
-    src/hmaterialdialog.cpp
-    src/hmaterialdialog_internal.cpp)
+    src/hmaterialsearch.cpp)
 
-add_library(hni-lib STATIC
+add_library(hni-lib SHARED
     ${INCLUDE_FILES}
     ${SOURCE_FILES}
     ${RESOURCE_FILE})

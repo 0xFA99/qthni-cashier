@@ -16,10 +16,12 @@ void HMaterialStylePrivate::init()
 {
     Q_Q(HMaterialStyle);
 
-    QFontDatabase::addApplicationFont(":/fonts/ProductSans-Regular");
-    QFontDatabase::addApplicationFont(":/fonts/ProductSans-Medium");
-    QFontDatabase::addApplicationFont(":/fonts/ProductSans-Bold");
-    // QFontDatabase::addApplicationFont(":/fonts/ProductSans-Light");
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Regular");
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Medium");
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Bold");
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Light");
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Thin");
+    QFontDatabase::addApplicationFont(":/fonts/iconfont");
 
     q->setTheme(new HMaterialTheme);
 }

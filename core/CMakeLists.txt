@@ -13,29 +13,69 @@ find_package(Qt5Gui     CONFIG REQUIRED)
 
 set(INCLUDE_FILES
     include/hmainwindow.h
-    include/hmaterialpanel.h
-    include/hmaterialpanel_p.h
-    include/hmaterialpanel_internal.h
-    include/hmaterialsmallproduct.h
-    include/hmaterialsmallproduct_p.h
-    include/hmaterialnormalproduct.h
-    include/hmaterialnormalproduct_p.h
-    include/hmaterialorderprice.h
-    include/hmaterialorderprice_p.h
-    include/hmaterialprofile.h
-    include/hmaterialprofile_p.h
+    include/hpanel.h
+    include/hpanel_p.h
+    include/hpanel_internal.h
+    include/hproductnormalview.h
+    include/hproductnormalview_p.h
+    include/hproductsmallview.h
+    include/hproductsmallview_p.h
+    include/horderlist.h
+    include/horderlist_p.h
     include/hproductdetail.h
-    include/hproductdetail_p.h)
+    include/hproductdetail_p.h
+    include/horderprice.h
+    include/horderprice_p.h
+    include/hpurchasepage.h
+    include/hpurchasepage_p.h
+    include/hproductchoose.h
+    include/hproductchoose_p.h
+    include/hanalysicpage.h
+    include/hanalysicpage_p.h
+    include/hconstructorpage.h
+    include/hoptionpage.h
+    include/hoptionpage_p.h
+    include/hproductpage.h
+    include/hproductpage_p.h
+    include/hnotificationpage.h
+    include/hnotificationpage_p.h
+    include/hproductresult.h
+    include/hproductresult_p.h
+
+    include/hmember.h
+    include/hmember_p.h
+    include/hmemberpage.h
+    include/hmemberpage_p.h
+    include/hmemberlist.h
+    include/hmemberlist_p.h
+    include/hmemberitem.h
+    include/hmemberitem_p.h
+    include/hmemberview.h
+    include/hmemberview_p.h)
 
 set(SOURCE_FILES
     src/hmainwindow.cpp
-    src/hmaterialpanel.cpp
-    src/hmaterialpanel_internal.cpp
-    src/hmaterialsmallproduct.cpp
-    src/hmaterialnormalproduct.cpp
-    src/hmaterialorderprice.cpp
-    src/hmaterialprofile.cpp
-    src/hproductdetail.cpp)
+    src/hpanel.cpp
+    src/hpanel_internal.cpp
+    src/hproductnormalview.cpp
+    src/hproductsmallview.cpp
+    src/horderlist.cpp
+    src/hproductdetail.cpp
+    src/horderprice.cpp
+    src/hpurchasepage.cpp
+    src/hproductchoose.cpp
+    src/hanalysicpage.cpp
+    src/hconstructorpage.cpp
+    src/hoptionpage.cpp
+    src/hproductpage.cpp
+    src/hnotificationpage.cpp
+    src/hproductresult.cpp
+
+    src/hmember.cpp
+    src/hmemberpage.cpp
+    src/hmemberlist.cpp
+    src/hmemberitem.cpp
+    src/hmemberview.cpp)
 
 add_executable(qthni-cashier
     src/main.cpp

@@ -6,6 +6,8 @@
 
 #include "hmaterialstyle.h"
 
+#include <QDebug>
+
 HMaterialAvatarPrivate::HMaterialAvatarPrivate(HMaterialAvatar *q)
     : q_ptr(q)
 {
@@ -134,7 +136,7 @@ QSize HMaterialAvatar::sizeHint() const
 {
     Q_D(const HMaterialAvatar);
 
-    return QSize(d->size + 2, d->size + 2);
+    return QSize(d->size + 12, d->size + 12);
 }
 
 void HMaterialAvatar::setSize(int size)
@@ -180,7 +182,7 @@ void HMaterialAvatar::setImage(const QImage &image)
     d->type = HMaterial::ImageAvatar;
 
     d->pixmap = QPixmap::fromImage(image.scaled(d->size, d->size,
-                Qt::IgnoreAspectRatio,
+                Qt::KeepAspectRatio,
                 Qt::SmoothTransformation));
     update();
 }
@@ -256,4 +258,3 @@ void HMaterialAvatar::paintEvent(QPaintEvent *event)
             break;
     }
 }
-

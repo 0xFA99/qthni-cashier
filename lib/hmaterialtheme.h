@@ -9,10 +9,12 @@
 namespace HMaterial
 {
     enum FrameStyle {
+        Level0,
         Level1,
         Level2,
         Level3,
-        Level4
+        Level4,
+        Level5
     };
 
     enum LabelStyle {

@@ -2,10 +2,7 @@
 #include "hproductdetail_p.h"
 
 #include <QGridLayout>
-#include <QLocale>
-#include <QDebug>
-
-#include "hmaterialtheme.h"
+#include <QPainter>
 
 HProductDetailPrivate::HProductDetailPrivate(HProductDetail *q)
     : q_ptr(q)
@@ -20,75 +17,75 @@ void HProductDetailPrivate::init()
 {
     Q_Q(HProductDetail);
 
-    m_layout        = new QGridLayout(q);
-    m_image         = new HMaterialImage(q);
-    m_name          = new HMaterialTextField(q);
-    m_category      = new HMaterialTextField(q);
-    m_stock         = new HMaterialTextField(q);
-    m_normalPrice   = new HMaterialTextField(q);
+    m_layout    = new QVBoxLayout(q);
+    m_image     = new HMaterialImage(QImage(":/images/images/ANDRO.png"), q);
+    m_title     = new HMaterialTextField(q);
+    m_customerPrice = new HMaterialTextField(q);
     m_memberPrice   = new HMaterialTextField(q);
-    m_cancelButton  = new HMaterialFlatButton("Batal", q);
-    m_submitButton  = new HMaterialFlatButton("Kirim", q);
+    m_closeButton   = new HMaterialFlatButton("BUY NOW", q);
 
-    m_name->setLabel("Nama Produk");
-    m_category->setLabel("Category Produk");
-    m_stock->setLabel("Stock Produk");
-    m_normalPrice->setLabel("Harga Konsumen");
-    m_memberPrice->setLabel("Harga Member");
+    m_image->setSize(100);
 
-    m_cancelButton->setBackgroundMode(Qt::OpaqueMode);
-    m_cancelButton->setRole(HMaterial::Secondary);
-    
-    m_submitButton->setBackgroundMode(Qt::OpaqueMode);
-    m_submitButton->setRole(HMaterial::Primary);
+    m_title->setText("Gentoo Linux");
+    m_title->setLabel("Product Name");
+    m_customerPrice->setLabel("Costumer Price");
+    m_memberPrice->setLabel("Member Price");
 
-    m_layout->addWidget(m_image, 0, 0, 2, 1);
-    m_layout->addWidget(m_name, 0, 1, 1, 3);
-    m_layout->addWidget(m_category, 1, 1, 1, 3);
+    m_title->setTextColor(QColor(70, 70, 70));
+    m_customerPrice->setTextColor(QColor(70, 70, 70));
+    m_memberPrice->setTextColor(QColor(70, 70, 70));
 
-    m_layout->addWidget(m_stock, 2, 0);
-    m_layout->addWidget(m_normalPrice, 2, 1);
-    m_layout->addWidget(m_memberPrice, 2, 2);
+    m_title->setDisabled(true);
+    m_customerPrice->setDisabled(true);
+    m_memberPrice->setDisabled(true);
 
-    // Sperator
-    QWidget *sep = new QWidget(q);
-    sep->setMinimumHeight(10);
-    m_layout->addWidget(sep, 3, 0, 1, 3);
-
-    m_layout->addWidget(m_cancelButton, 4, 0);
-    m_layout->addWidget(m_submitButton, 4, 2);
-
-    m_normalPrice->setCurrencyFormat(true);
+    m_customerPrice->setCurrencyFormat(true);
     m_memberPrice->setCurrencyFormat(true);
-    /*
-    QObject::connect(m_normalPrice, &QLineEdit::textChanged, [=](const QString &string) {
-        QString temp = string.split(" ")[1];
-        temp.replace('.', "");
-        
-        QLocale indo = QLocale("id_ID");
-        int value = temp.toInt();
-        m_normalPrice->setText("Rp " + indo.toString(value));
+
+    m_closeButton->setHaloVisible(false);
+    m_closeButton->setOverlayStyle(HMaterial::TintedOverlay);
+    m_closeButton->setFontSize(12);
+
+    m_layout->addWidget(m_image);
+    m_layout->addWidget(m_title);
+    m_layout->addWidget(m_customerPrice);
+    m_layout->addWidget(m_memberPrice);
+    m_layout->addWidget(m_closeButton);
+
+    QObject::connect(m_closeButton, &QPushButton::clicked, [this]() {
+        m_title->setDisabled(false);
+        m_customerPrice->setDisabled(false);
+        m_memberPrice->setDisabled(false);
     });
-
-    QObject::connect(m_memberPrice, &QLineEdit::textChanged, [=](const QString &string) {
-        QString temp = string.split(" ")[1];
-        temp.replace('.', "");
-
-        QLocale indo = QLocale("id_ID");
-        int value = temp.toInt();
-
-        m_memberPrice->setText("Rp " + indo.toString(value));
-    });
-    */
 }
 
 HProductDetail::HProductDetail(QWidget *parent)
-    : HMaterialFrame(parent)
+    : QWidget(parent)
     , d_ptr(new HProductDetailPrivate(this))
 {
     d_func()->init();
+
+    setFixedWidth(250);
+    QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    setSizePolicy(policy);
+
 }
 
 HProductDetail::~HProductDetail()
 {
+}
+
+void HProductDetail::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    Q_D(HProductDetail);
+
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(Qt::white);
+
+    QPainter painter(this);
+    painter.setBrush(brush);
+    painter.setPen(Qt::NoPen);
+    painter.drawRect(rect());
 }
