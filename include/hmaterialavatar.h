@@ -33,8 +33,9 @@ public:
     int size() const;
 
     void setLetter(const QChar &letter);
-    void setImage(const QImage &image);
     void setIcon(const QIcon &icon);
+    void setImage(const QImage &image);
+    QImage getImage() const;
 
     HMaterial::AvatarType type() const;
 

@@ -7,6 +7,7 @@
 
 class QGridLayout;
 
+class HMember;
 class HMemberEdit;
 class HMemberEditPrivate
 {
@@ -29,6 +30,9 @@ public:
     HMaterialFlatButton *m_avatarButton;
     HMaterialFlatButton *m_cancelButton;
     HMaterialFlatButton *m_submitButton;
+
+    HMemberEdit::Mode   m_mode;
+    HMember             *m_editMember;
 };
 
 #endif

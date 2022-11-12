@@ -187,6 +187,13 @@ void HMaterialAvatar::setImage(const QImage &image)
     update();
 }
 
+QImage HMaterialAvatar::getImage() const
+{
+    Q_D(const HMaterialAvatar);
+
+    return d->image;
+}
+
 void HMaterialAvatar::setIcon(const QIcon &icon)
 {
     Q_D(HMaterialAvatar);

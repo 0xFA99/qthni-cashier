@@ -29,17 +29,34 @@ HMemberView::HMemberView(QWidget *parent)
     , d_ptr(new HMemberViewPrivate(this))
 {
     d_func()->init();
+    
+    setStyleSheet("QWidget { background-color: white; };");
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 
 HMemberView::~HMemberView()
 {
 }
 
-void HMemberView::addItem()
+void HMemberView::addItem(HMemberItem *item)
 {
     Q_D(HMemberView);
 
-    HMemberItem *item = new HMemberItem(this);
-
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
+}
+
+void HMemberView::removeItem(const QString &id)
+{
+    Q_D(HMemberView);
+
+    HMemberItem *mem;
+    for (int i = 0; i < d->m_layout->count(); i++) {
+        QLayoutItem *item = d->m_layout->itemAt(i);
+        if ((mem = dynamic_cast<HMemberItem *>(item->widget()))) {
+            if (mem->getID() == id) {
+                d->m_layout->removeItem(reinterpret_cast<QLayoutItem *>(mem));
+                delete mem;
+            }
+        }
+    }
 }

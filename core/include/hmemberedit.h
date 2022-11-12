@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class HMember;
 class HMemberEditPrivate;
 class HMemberEdit : public QWidget
 {
@@ -12,16 +13,28 @@ public:
     explicit HMemberEdit(QWidget *parent = nullptr);
     ~HMemberEdit();
 
-    void setImage(const QImage &image);
+    enum Mode { AddMode, EditMode };
 
-    void setName(const QString &name);
+    void setTargetMember(HMember *);
 
-    void setID(const QString &id);
+    void setMode(Mode mode);
+    void editMode();
+    void addMode();
+
+public slots:
+    void addSlot();
+    void editSlot();
+
+signals:
+    void hideDialog();
+    void addSignal(const QImage &, const QString &, const QString &);
 
 protected:
     const QScopedPointer<HMemberEditPrivate> d_ptr;
 
 private:
+    void setEmptyField();
+
     Q_DISABLE_COPY(HMemberEdit)
     Q_DECLARE_PRIVATE(HMemberEdit)
 };

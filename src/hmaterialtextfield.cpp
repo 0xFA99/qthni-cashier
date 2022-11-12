@@ -1,7 +1,6 @@
 #include <QApplication>
 #include <QPainter>
 #include <QLocale>
-#include <QDebug>
 
 #include "hmaterialtextfield.h"
 #include "hmaterialtextfield_p.h"

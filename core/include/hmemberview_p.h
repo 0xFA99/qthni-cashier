@@ -1,6 +1,8 @@
 #ifndef HMEMBERVIEW_PRIVATE_H
 #define HMEMBERVIEW_PRIVATE_H
 
+#include <QtCore>
+
 class QVBoxLayout;
 
 class HMemberView;

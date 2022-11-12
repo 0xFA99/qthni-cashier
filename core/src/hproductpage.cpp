@@ -18,9 +18,9 @@ void HProductPagePrivate::init()
     Q_Q(HProductPage);
 
     m_layout        = new QHBoxLayout(q);
-    m_constructor   = new HConstructorPage(q);
+    m_productList   = new HProductList(q);
 
-    m_layout->addWidget(m_constructor);
+    m_layout->addWidget(m_productList);
     m_layout->setContentsMargins(20, 16, 20, 16);
 }
 

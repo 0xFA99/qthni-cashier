@@ -21,6 +21,12 @@ public:
     void setID(const QString &id);
     QString id() const;
 
+public slots:
+    void updateSlot();
+
+signals:
+    void updateSignal(HMember *);
+
 protected:
     const QScopedPointer<HMemberPrivate> d_ptr;
 

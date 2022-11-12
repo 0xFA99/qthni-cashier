@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class HMember;
+class HMemberItem;
 class HMemberViewPrivate;
 class HMemberView : public QWidget
 {
@@ -12,7 +14,9 @@ public:
     explicit HMemberView(QWidget *parent = nullptr);
     ~HMemberView();
 
-    void addItem();
+public slots:
+    void addItem(HMemberItem *);
+    void removeItem(const QString &id);
 
 protected:
     const QScopedPointer<HMemberViewPrivate> d_ptr;

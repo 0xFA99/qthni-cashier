@@ -15,7 +15,7 @@ void HMemberPrivate::init()
     Q_Q(HMember);
 
     m_avatar    = QImage(":/image/images/default.png");
-    m_name      = QString("Anonymouse");
+    m_name      = QString("Anonymous");
     m_id        = QString("0000000000");
 }
 
@@ -72,4 +72,11 @@ QString HMember::id() const
     Q_D(const HMember);
 
     return d->m_id;
+}
+
+void HMember::updateSlot()
+{
+    Q_D(HMember);
+
+    emit updateSignal(this);
 }

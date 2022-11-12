@@ -17,7 +17,7 @@ void HConstructorPage::paintForeground(QPainter *painter)
     painter->setPen(QColor(0, 0, 0, 115));
     painter->setFont(QFont("Roboto", 12, QFont::Medium));
 
-    const int z = (36 / 1.33);
+    int z = int(36.0 / 1.33);
     const int x = (rect().width() - size().width()) / 2;
     int y = ((rect().height() - size().height()) / 2) + z;
 

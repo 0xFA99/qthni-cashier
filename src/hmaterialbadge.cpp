@@ -25,9 +25,7 @@ void HMaterialBadgePrivate::init()
 
     q->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    QFont font(q->font());
-    font.setPointSizeF(10);
-    font.setStyleName("Bold");
+    QFont font("Roboto", 8, QFont::Bold);
     q->setFont(font);
 
     q->setText("+1");

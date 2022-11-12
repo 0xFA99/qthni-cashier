@@ -214,3 +214,10 @@ void HMaterialImage::paintEvent(QPaintEvent *event)
             break;
     }
 }
+
+QImage HMaterialImage::image() const
+{
+    Q_D(const HMaterialImage);
+
+    return d->m_image;
+}

@@ -19,6 +19,7 @@
         <file>images/vas.png</file>
         <file>images/profile.png</file>
         <file>images/default.png</file>
+        <file>images/profile1.png</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/personal/image-2-line.svg</file>

@@ -32,6 +32,8 @@ public:
     void setImage(const QImage &image);
     void setIcon(const QIcon &icon);
 
+    QImage image() const;
+
     HMaterial::AvatarType type() const;
 
 protected:

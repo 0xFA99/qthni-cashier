@@ -1,7 +1,7 @@
 #ifndef HPRODUCTPAGE_PRIVATE_H
 #define HPRODUCTPAGE_PRIVATE_H
 
-#include "hconstructorpage.h"
+#include "hproductlist.h"
 
 class QHBoxLayout;
 
@@ -19,7 +19,7 @@ public:
 
     HProductPage *const  q_ptr;
     QHBoxLayout         *m_layout;
-    HConstructorPage    *m_constructor;
+    HProductList        *m_productList;
 };
 
 #endif

@@ -3,7 +3,8 @@
 
 #include <QWidget>
 
-class HMemberListItem;
+class HMember;
+class HMemberItem;
 class HMemberListPrivate;
 class HMemberList : public QWidget
 {
@@ -12,6 +13,15 @@ class HMemberList : public QWidget
 public:
     explicit HMemberList(QWidget *parent = nullptr);
     ~HMemberList();
+
+    void syncMemberDB();
+    void performConnection();
+
+public slots:
+    void addMember(const QImage &, const QString &, const QString &);
+    void editMember(HMember *);
+    // void updateMember(HMember *);
+    void removeMember(const QString &);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

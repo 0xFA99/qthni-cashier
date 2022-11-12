@@ -1,6 +1,7 @@
 #ifndef HMEMBERITEM_PRIVATE_H
 #define HMEMBERITEM_PRIVATE_H
 
+#include "hmember.h"
 #include "hmaterialavatar.h"
 #include "hmateriallabel.h"
 #include "hmaterialflatbutton.h"
@@ -14,7 +15,7 @@ class HMemberItemPrivate
     Q_DECLARE_PUBLIC(HMemberItem)
 
 public:
-    HMemberItemPrivate(HMemberItem *q);
+    explicit HMemberItemPrivate(HMemberItem *q);
     ~HMemberItemPrivate();
 
     void init();
@@ -28,6 +29,8 @@ public:
     HMaterialLabel      *m_id;
     HMaterialFlatButton *m_editButton;
     HMaterialFlatButton *m_removeButton;
+
+    HMember             *m_member;
 };
 
 #endif

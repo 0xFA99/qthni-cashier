@@ -1,11 +1,11 @@
-#ifndef HMEMBERLIST_PRIVATE_H
-#define HMEMBERLIST_PRIVATE_H
+#ifndef HNILIB_HPRODUCTLIST_P_H
+#define HNILIB_HPRODUCTLIST_P_H
 
-#include "hmemberview.h"
-#include "hmemberedit.h"
-#include "hmaterialdialog.h"
+#include "hproductview.h"
+#include "hproductedit.h"
 #include "hmaterialfab.h"
 #include "hmateriallabel.h"
+#include "hmaterialdialog.h"
 #include "hmaterialflatbutton.h"
 
 #include <QScrollArea>
@@ -14,21 +14,20 @@
 class QVBoxLayout;
 class QGridLayout;
 
-class HMember;
-class HMemberList;
-class HMemberListPrivate
+class HProduct;
+class HProductList;
+class HProductListPrivate
 {
-    Q_DISABLE_COPY(HMemberListPrivate)
-    Q_DECLARE_PUBLIC(HMemberList)
+    Q_DISABLE_COPY(HProductListPrivate)
+    Q_DECLARE_PUBLIC(HProductList)
 
 public:
-    explicit HMemberListPrivate(HMemberList *q);
-    ~HMemberListPrivate();
+    explicit HProductListPrivate(HProductList *q);
+    ~HProductListPrivate();
 
     void init();
 
-    HMemberList *const  q_ptr;
-
+    HProductList *const             q_ptr;
     QGridLayout                     *m_layout;
 
     HMaterialLabel                  *m_title;
@@ -37,13 +36,12 @@ public:
     HMaterialFloatingActionButton   *m_fabButton;
 
     QScrollArea                     *m_scrollArea;
-    HMemberView                     *m_memberView;
-    QVector<HMember *>              m_memberList;
+    HProductView                    *m_productView;
+    QVector<HProduct *>             m_productList;
 
-    // Dialog
     HMaterialDialog                 *m_dialog;
     QVBoxLayout                     *m_dialogLayout;
-    HMemberEdit                     *m_memberDialog;
+    HProductEdit                    *m_productDialog;
 };
 
 #endif

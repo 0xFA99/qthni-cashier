@@ -1,21 +1,21 @@
 set(INCLUDE_FILES
-    hmaterialoverlaywidget.h
-    hmaterialripple.h
-    hmaterialrippleoverlay.h
-    hmaterialstatetransition.h
-    hmaterialstatetransitionevent.h
-    hmaterialstyle.h
-    hmaterialstyle_p.h
-    hmaterialtheme.h
-    hmaterialtheme_p.h)
+        hmaterialoverlaywidget.h
+        hmaterialripple.h
+        hmaterialrippleoverlay.h
+        hmaterialstatetransition.h
+        hmaterialstatetransitionevent.h
+        hmaterialstyle.h
+        hmaterialstyle_p.h
+        hmaterialtheme.h
+        hmaterialtheme_p.h)
 
 set(SOURCE_FILES
-    hmaterialoverlaywidget.cpp
-    hmaterialripple.cpp
-    hmaterialrippleoverlay.cpp
-    hmaterialstatetransition.cpp
-    hmaterialstyle.cpp
-    hmaterialtheme.cpp)
+        hmaterialoverlaywidget.cpp
+        hmaterialripple.cpp
+        hmaterialrippleoverlay.cpp
+        hmaterialstatetransition.cpp
+        hmaterialstyle.cpp
+        hmaterialtheme.cpp)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
