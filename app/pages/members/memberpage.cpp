@@ -138,5 +138,5 @@ void MemberPage::deleteMember(int index)
     d->m_memberList->deleteMemberItem(index);
     d->m_memberManager->deleteMember(index);
 
-    d->m_snackBar->addMessage(QString("Berhasil Menghapus Member"));
+    d->m_snackBar->addInstantMessage(QString("Berhasil Menghapus Member"));
 }

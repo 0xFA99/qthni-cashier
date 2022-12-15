@@ -143,5 +143,5 @@ void ProductPage::deleteProduct(int index)
     d->m_productList->deleteProductItem(index);
     d->m_productManager->deleteProduct(index);
 
-    d->m_snackBar->addMessage(QString("Berhasil Menghapus Product"));
+    d->m_snackBar->addInstantMessage(QString("Berhasil Menghapus Product"));
 }
