@@ -17,6 +17,7 @@ public:
 
     void addProductItem(OperateItem *item);
     void updateProductItem(int index, Product *);
+    void deleteProductItem(int index);
 
 protected:
     const QScopedPointer<ProductListPrivate> d_ptr;

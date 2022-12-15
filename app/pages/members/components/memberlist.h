@@ -16,6 +16,7 @@ public:
 
     void addMemberItem(OperateItem *item);
     void updateMemberItem(int index, Member *);
+    void deleteMemberItem(int index);
 
 protected:
     const QScopedPointer<MemberListPrivate> d_ptr;

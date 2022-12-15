@@ -33,10 +33,11 @@ public:
     [[nodiscard]] int subTitleSize() const;
 
     void setIndex(int index);
+    int getIndex() const;
 
 signals:
     void editItem(int);
-    void deleteItem();
+    void deleteItem(int);
 
 protected:
     const QScopedPointer<OperateItemPrivate> d_ptr;

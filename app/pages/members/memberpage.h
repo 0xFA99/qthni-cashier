@@ -18,6 +18,7 @@ public slots:
     void addingMember(Member *);
     void editMember(int);
     void updateMember(int, Member *);
+    void deleteMember(int);
 
 protected:
     const QScopedPointer<MemberPagePrivate> d_ptr;

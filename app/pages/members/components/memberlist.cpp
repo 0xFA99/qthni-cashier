@@ -46,7 +46,28 @@ void MemberList::updateMemberItem(int index, Member *member)
     Q_D(MemberList);
 
     QLayoutItem *item = d->m_layout->itemAt(index);
-    auto *mem = dynamic_cast<OperateItem *>(item->widget());
+    auto mem = dynamic_cast<OperateItem *>(item->widget());
     mem->setTitle(member->name());
     mem->setSubTitle(member->id());
 }
+
+void MemberList::deleteMemberItem(int index)
+{
+    Q_D(MemberList);
+
+    OperateItem *item;
+    for (int i = 0; i < d->m_layout->count(); i++) {
+        QLayoutItem *litem = d->m_layout->itemAt(i);
+
+        if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
+            item->setIndex(item->getIndex() - 1);
+        }
+    }
+
+    QLayoutItem *litem = d->m_layout->itemAt(index);
+    if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
+        delete item;
+    }
+}
+
+// 0 1 2 3 4

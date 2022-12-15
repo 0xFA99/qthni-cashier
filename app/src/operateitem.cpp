@@ -189,23 +189,6 @@ int OperateItem::subTitleSize() const
     return d->m_subTitleSize;
 }
 
-/*
-void OperateItem::setObject(QObject *object)
-{
-    Q_D(OperateItem);
-
-    d->m_object = object;
-
-    QObject::connect(d->m_editButton, &QPushButton::clicked, [=]() {
-        // editItem(this);
-    });
-
-    QObject::connect(d->m_deleteButton, &QPushButton::clicked, [=]() {
-        // deleteItem(this);
-    });
-}
- */
-
 void OperateItem::setIndex(int index)
 {
     Q_D(OperateItem);
@@ -213,6 +196,17 @@ void OperateItem::setIndex(int index)
     d->m_index = index;
 
     QObject::connect(d->m_editButton, &QPushButton::clicked, [=]() {
-        editItem(index);
+        editItem(d->m_index);
     });
+
+    QObject::connect(d->m_deleteButton, &QPushButton::clicked, [=]() {
+        deleteItem(d->m_index);
+    });
+}
+
+int OperateItem::getIndex() const
+{
+    Q_D(const OperateItem);
+
+    return d->m_index;
 }

@@ -47,7 +47,26 @@ void ProductList::updateProductItem(int index, Product *product)
     Q_D(ProductList);
 
     QLayoutItem *item = d->m_layout->itemAt(index);
-    auto *pro = dynamic_cast<OperateItem *>(item->widget());
+    auto pro = dynamic_cast<OperateItem *>(item->widget());
     pro->setTitle(product->name());
     pro->setSubTitle(QString::number(product->price()));
+}
+
+void ProductList::deleteProductItem(int index)
+{
+    Q_D(ProductList);
+
+    OperateItem *item;
+    for (int i = 0; i < d->m_layout->count(); i++) {
+        QLayoutItem *litem = d->m_layout->itemAt(i);
+
+        if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
+            item->setIndex(item->getIndex() - 1);
+        }
+    }
+
+    QLayoutItem *litem = d->m_layout->itemAt(index);
+    if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
+        delete item;
+    }
 }

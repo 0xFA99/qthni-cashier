@@ -14,6 +14,7 @@ public:
     ~ProductManager();
 
     void addProduct(Product *);
+    void deleteProduct(int index);
 
     Product *getProduct(int index);
 

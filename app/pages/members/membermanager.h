@@ -14,6 +14,7 @@ public:
     ~MemberManager();
 
     void addMember(Member *);
+    void deleteMember(int index);
 
     Member* getMember(int index);
 

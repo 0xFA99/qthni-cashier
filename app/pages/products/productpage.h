@@ -18,6 +18,7 @@ public slots:
     void addingProduct(Product *);
     void editProduct(int);
     void updateProduct(int, Product *);
+    void deleteProduct(int);
 
 protected:
     const QScopedPointer<ProductPagePrivate> d_ptr;

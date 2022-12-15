@@ -98,6 +98,9 @@ void MemberPage::addingMember(Member *member)
     QObject::connect(newItemMember, &OperateItem::editItem,
                      this, &MemberPage::editMember);
 
+    QObject::connect(newItemMember, &OperateItem::deleteItem,
+                     this, &MemberPage::deleteMember);
+
     d->m_memberList->addMemberItem(newItemMember);
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Member"));
@@ -126,4 +129,14 @@ void MemberPage::updateMember(int index, Member *member)
     d->m_memberList->updateMemberItem(index, member);
 
     d->m_snackBar->addMessage(QString("Berhasil Mengedit Member"));
+}
+
+void MemberPage::deleteMember(int index)
+{
+    Q_D(MemberPage);
+
+    d->m_memberList->deleteMemberItem(index);
+    d->m_memberManager->deleteMember(index);
+
+    d->m_snackBar->addMessage(QString("Berhasil Menghapus Member"));
 }

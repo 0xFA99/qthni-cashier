@@ -45,6 +45,17 @@ void MemberManager::updateMember(int index, Member *member)
     updatedMember->setID(member->id());
 }
 
+void MemberManager::deleteMember(int index)
+{
+    Q_D(MemberManager);
+
+    Member *deleteMember;
+    deleteMember = d->m_memberList.at(index);
+
+    d->m_memberList.removeAt(index);
+    delete deleteMember;
+}
+
 QString MemberManager::getMemberName(int index) const
 {
     Q_D(const MemberManager);
@@ -71,5 +82,4 @@ Member *MemberManager::getMember(int index)
     Q_D(MemberManager);
 
     return d->m_memberList.at(index);
-
 }

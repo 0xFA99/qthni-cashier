@@ -101,6 +101,9 @@ void ProductPage::addingProduct(Product *product)
     QObject::connect(newItemProduct, &OperateItem::editItem,
                      this, &ProductPage::editProduct);
 
+    QObject::connect(newItemProduct, &OperateItem::deleteItem,
+                     this, &ProductPage::deleteProduct);
+
     d->m_productList->addProductItem(newItemProduct);
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Product"));
@@ -131,4 +134,14 @@ void ProductPage::updateProduct(int index, Product *product)
     d->m_productList->updateProductItem(index, product);
 
     d->m_snackBar->addMessage(QString("Berhasil Mengedit Product"));
+}
+
+void ProductPage::deleteProduct(int index)
+{
+    Q_D(ProductPage);
+
+    d->m_productList->deleteProductItem(index);
+    d->m_productManager->deleteProduct(index);
+
+    d->m_snackBar->addMessage(QString("Berhasil Menghapus Product"));
 }

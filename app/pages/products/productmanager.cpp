@@ -47,6 +47,17 @@ void ProductManager::updateProduct(int index, Product *product)
     updatedProduct->setPoint(product->point());
 }
 
+void ProductManager::deleteProduct(int index)
+{
+    Q_D(ProductManager);
+
+    Product *deleteProduct;
+    deleteProduct = d->m_productList.at(index);
+
+    d->m_productList.removeAt(index);
+    delete deleteProduct;
+}
+
 QString ProductManager::getProductName(int index) const
 {
     Q_D(const ProductManager);
