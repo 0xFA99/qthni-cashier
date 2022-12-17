@@ -26,6 +26,7 @@ signals:
     void closedMemberDialog();
     void addedMember(Member *);
     void editedMember(int, Member *);
+    void showProfileDialog();
 
 protected:
     const QScopedPointer<MemberDialogPrivate> d_ptr;

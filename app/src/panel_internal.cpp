@@ -3,7 +3,6 @@
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QLayoutItem>
 #include <QEvent>
-#include <QDebug>
 
 #include "widgets/panel_internal.h"
 #include "widgets/panel.h"

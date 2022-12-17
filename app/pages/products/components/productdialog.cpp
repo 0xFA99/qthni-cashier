@@ -2,6 +2,7 @@
 #include "products/components/productdialog_p.h"
 
 #include <QGridLayout>
+#include <QFileDialog>
 #include <QLocale>
 
 #include "products/product.h"
@@ -65,6 +66,10 @@ void ProductDialogPrivate::init()
     m_layout->addWidget(m_submitButton, 6, 1, 1, 1);
     m_layout->setSpacing(18);
 
+    QObject::connect(m_changeAvatarButton, &QPushButton::clicked, [q]() {
+        q->chooseImage();
+    });
+
     QObject::connect(m_priceField, &QLineEdit::textChanged, [=](const QString &string) {
         QLocale indo("id_ID");
 
@@ -83,36 +88,6 @@ void ProductDialogPrivate::init()
         emit q->closedProductDialog();
     });
 
-    /*
-    QObject::connect(m_submitButton, &QPushButton::clicked, [=]() {
-
-        struct NewProduct {
-            QString name = "";
-            int price = 0;
-            int stock = 0;
-            int point = 0;
-        } newProduct;
-
-        newProduct.name = m_nameField->text();
-
-        QString price = m_priceField->text().split(" ")[1];
-        price.replace('.', "");
-        newProduct.price = price.toInt();
-
-        if (m_stockField->text() == "")
-            newProduct.stock = 0;
-        newProduct.stock = m_stockField->text().toInt();
-
-        if (m_pointField->text() == "")
-            newProduct.point = 0;
-        newProduct.point = m_pointField->text().toInt();
-
-        q->addedProduct(newProduct.name, newProduct.price, newProduct.point, newProduct.stock);
-        emit q->closedProductDialog();
-        emit q->clearField();
-    });
-    */
-
     QObject::connect(m_submitButton, &QPushButton::clicked,
                      q, &ProductDialog::addSlot);
 }
@@ -129,7 +104,7 @@ ProductDialog::~ProductDialog() = default;
 void ProductDialog::clearField()
 {
     Q_D(ProductDialog);
-
+    d->m_avatar->setImage(QImage(":/images/images/profiles/defaultimage.png"));
     d->m_nameField->clear();
     d->m_priceField->setText("Rp 0");
     d->m_pointField->clear();
@@ -254,4 +229,21 @@ void ProductDialog::setIndex(int index)
     Q_D(ProductDialog);
 
     d->m_index = index;
+}
+
+void ProductDialog::chooseImage()
+{
+    Q_D(ProductDialog);
+
+    QString filename = QFileDialog::getOpenFileName(
+                this, "Choose Image",
+                QDir::currentPath(),
+                "All files (*.*) ;; PNG files (*.png)"
+            );
+
+    if (!filename.isNull())
+        // qDebug() << "file choosen: " << filename.toUtf8();
+
+    // return QImage(filename.toUtf8());
+    d->m_avatar->setImage(QImage(filename.toUtf8()));
 }

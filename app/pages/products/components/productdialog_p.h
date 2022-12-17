@@ -6,6 +6,8 @@
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 #include "qtmaterial/components/qtmaterialtextfield.h"
 
+#include "qtmaterial/components/qtmaterialdialog.h"
+
 class Product;
 class OperateItem;
 class QGridLayout;
@@ -32,6 +34,8 @@ public:
     QtMaterialTextField         *m_pointField;
     QtMaterialFlatButton        *m_cancelButton;
     QtMaterialFlatButton        *m_submitButton;
+
+    QtMaterialDialog            *m_profileDialog;
 
     ProductDialog::Mode         m_mode;
     int                         m_index;

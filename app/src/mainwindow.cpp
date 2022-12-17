@@ -1,10 +1,7 @@
-//
-// Created by margaretha on 11/29/22.
-//
-
 #include "widgets/mainwindow.h"
 
 #include <QHBoxLayout>
+#include <QDirIterator>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

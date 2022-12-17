@@ -36,6 +36,8 @@ private:
     void addMode();
     void editMode();
 
+    void chooseImage();
+
     Q_DISABLE_COPY(ProductDialog)
     Q_DECLARE_PRIVATE(ProductDialog)
 

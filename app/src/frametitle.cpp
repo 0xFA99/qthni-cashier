@@ -108,7 +108,7 @@ int FrameTitle::fontSize() const
 
 void FrameTitle::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
 
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);

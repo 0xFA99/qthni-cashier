@@ -59,6 +59,10 @@ void MemberDialogPrivate::init()
 
     QObject::connect(m_submitButton, &QPushButton::clicked,
                      q, &MemberDialog::addSlot);
+
+    QObject::connect(m_changeAvatarButton, &QPushButton::clicked, [q]() {
+        emit q->showProfileDialog();
+    });
 }
 
 MemberDialog::MemberDialog(QWidget *parent)

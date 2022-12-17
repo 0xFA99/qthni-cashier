@@ -2,7 +2,6 @@
 #include "products/productpage_p.h"
 
 #include <QHBoxLayout>
-#include <QDebug>
 
 #include "products/product.h"
 #include "widgets/items/operateitem.h"

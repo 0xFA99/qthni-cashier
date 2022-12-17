@@ -3,7 +3,6 @@
 #include "members/member.h"
 
 #include <QGridLayout>
-#include <QDebug>
 
 OperateItemPrivate::OperateItemPrivate(OperateItem *q)
     : q_ptr(q)

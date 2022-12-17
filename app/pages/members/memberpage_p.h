@@ -6,6 +6,7 @@
 #include "members/membermanager.h"
 #include "members/components/memberlist.h"
 #include "members/components/memberdialog.h"
+#include "members/components/profiledialog.h"
 
 #include "qtmaterial/components/qtmaterialdialog.h"
 #include "qtmaterial/components/qtmaterialscrollbar.h"
@@ -49,6 +50,10 @@ public:
 
     // Notification
     QtMaterialSnackbar              *m_snackBar;
+
+    // Profile Dialog
+    QtMaterialDialog    *m_profileDialog;
+    ProfileDialog       *m_profileDialogWidget;
 };
 
 #endif //QTHNI_MEMBERPAGE_P_H

@@ -2,7 +2,6 @@
 #include "members/memberpage_p.h"
 
 #include <QHBoxLayout>
-#include <QDebug>
 
 #include "members/member.h"
 #include "widgets/items/operateitem.h"
@@ -25,6 +24,9 @@ void MemberPagePrivate::init()
     m_memberScrollArea      = new QScrollArea(q);
     m_memberDialog          = new QtMaterialDialog;
     m_memberDialogWidget    = new MemberDialog(q);
+    m_profileDialog         = new QtMaterialDialog;
+    m_profileDialogWidget   = new ProfileDialog(q);
+
     m_snackBar              = new QtMaterialSnackbar;
     m_fabButton             = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("content", "add"), q);
 
@@ -56,7 +58,23 @@ void MemberPagePrivate::init()
 
     QObject::connect(m_memberDialogWidget, &MemberDialog::editedMember,
                      q, &MemberPage::updateMember);
+    // END
+    // START PROFILE DIALOG
+    auto *profileLayout = new QVBoxLayout;
 
+    m_profileDialog->setParent(q);
+    m_profileDialog->setWindowLayout(profileLayout);
+
+    profileLayout->addWidget(m_profileDialogWidget);
+
+    QObject::connect(m_memberDialogWidget, &MemberDialog::showProfileDialog, [=]() {
+        m_profileDialog->showDialog();
+    });
+
+    QObject::connect(m_profileDialogWidget, &ProfileDialog::closedProfileDialog, [=]() {
+        m_profileDialog->hideDialog();
+    });
+    // END
     QFont font("Roboto", 12, QFont::Medium);
 
     m_memberScrollArea->setWidget(m_memberList);
