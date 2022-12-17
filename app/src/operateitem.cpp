@@ -86,6 +86,20 @@ OperateItem::OperateItem(int index, QWidget *parent)
 
 OperateItem::~OperateItem() = default;
 
+void OperateItem::setImage(const QImage &image)
+{
+    Q_D(OperateItem);
+
+    d->m_avatar->setImage(image);
+}
+
+QImage OperateItem::image() const
+{
+    Q_D(const OperateItem);
+
+    return d->m_avatar->image();
+}
+
 void OperateItem::setTitle(const QString &text)
 {
     Q_D(OperateItem);

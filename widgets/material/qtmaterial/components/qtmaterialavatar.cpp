@@ -292,3 +292,12 @@ void QtMaterialAvatar::paintEvent(QPaintEvent *event)
         break;
     }
 }
+QImage QtMaterialAvatar::image() const
+{
+    Q_D(const QtMaterialAvatar);
+
+    if (d->image.isNull())
+        return {};
+
+    return d->image;
+}

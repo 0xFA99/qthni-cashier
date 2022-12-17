@@ -47,6 +47,7 @@ void MemberList::updateMemberItem(int index, Member *member)
 
     QLayoutItem *item = d->m_layout->itemAt(index);
     auto mem = dynamic_cast<OperateItem *>(item->widget());
+    mem->setImage(member->image());
     mem->setTitle(member->name());
     mem->setSubTitle(member->id());
 }

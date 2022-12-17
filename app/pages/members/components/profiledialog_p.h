@@ -7,6 +7,7 @@
 #include <QScrollArea>
 #include <QList>
 
+class FlowLayout;
 class QVBoxLayout;
 class QGridLayout;
 
@@ -35,9 +36,8 @@ public:
     // Bottom Side
     QScrollArea             *m_scrollArea;
     QWidget                 *m_profileList;
-    QGridLayout             *m_profileLayout;
+    FlowLayout             *m_profileLayout;
 
-    QList<QImage>           m_imageList;
     QtMaterialFlatButton    *m_closeButton;
 };
 

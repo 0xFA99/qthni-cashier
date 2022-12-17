@@ -30,7 +30,7 @@ void ProductDialogPrivate::init()
     m_mode                  = ProductDialog::Mode::Add;
     m_index                 = 0;
 
-    m_avatar->setLetter(QChar('A'));
+    m_avatar->setImage(QImage(":/images/images/profiles/defaultimage.png"));
     m_avatar->setSize(72);
 
     m_changeAvatarButton->setColor(QRgb(0x8a8a8a));

@@ -26,7 +26,7 @@ void MemberDialogPrivate::init()
     m_mode                  = MemberDialog::Mode::Add;
     m_index                 = 0;
 
-    m_avatar->setLetter(QChar('A'));
+    m_avatar->setImage(QImage(":/images/images/profiles/defaultimage.png"));
     m_avatar->setSize(72);
 
     m_changeAvatarButton->setColor(QRgb(0x8a8a8a));
@@ -87,6 +87,7 @@ void MemberDialog::addSlot()
     Q_D(MemberDialog);
 
     Member newMember;
+    newMember.setImage(d->m_avatar->image());
     newMember.setName(d->m_nameField->text());
     newMember.setID(d->m_idField->text());
 
@@ -101,6 +102,7 @@ void MemberDialog::editSlot()
     Q_D(MemberDialog);
 
     Member tempMember;
+    tempMember.setImage(d->m_avatar->image());
     tempMember.setName(d->m_nameField->text());
     tempMember.setID(d->m_idField->text());
 
@@ -142,6 +144,13 @@ void MemberDialog::editMode()
                         this, &MemberDialog::addSlot);
     QObject::connect(d->m_submitButton, &QPushButton::clicked,
                      this, &MemberDialog::editSlot);
+}
+
+void MemberDialog::setImageField(const QImage &image)
+{
+    Q_D(MemberDialog);
+
+    d->m_avatar->setImage(image);
 }
 
 void MemberDialog::setNameField(const QString &name)

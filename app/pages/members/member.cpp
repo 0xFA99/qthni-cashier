@@ -35,6 +35,20 @@ Member::Member(const QString &name, const QString &id, QObject *parent)
 
 Member::~Member() = default;
 
+void Member::setImage(const QImage &image)
+{
+    Q_D(Member);
+
+    d->m_image = image;
+}
+
+QImage Member::image() const
+{
+    Q_D(const Member);
+
+    return d->m_image;
+}
+
 void Member::setName(const QString &name)
 {
     Q_D(Member);

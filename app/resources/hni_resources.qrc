@@ -1,5 +1,25 @@
 <RCC>
     <qresource prefix="/images">
         <file>images/profiles/defaultimage.png</file>
+        <file>images/profiles/avatar1.png</file>
+        <file>images/profiles/avatar2.png</file>
+        <file>images/profiles/avatar3.png</file>
+        <file>images/profiles/avatar4.png</file>
+        <file>images/profiles/avatar5.png</file>
+        <file>images/profiles/avatar6.png</file>
+        <file>images/profiles/avatar7.png</file>
+        <file>images/profiles/avatar8.png</file>
+        <file>images/profiles/avatar9.png</file>
+        <file>images/profiles/avatar10.png</file>
+        <file>images/profiles/avatar11.png</file>
+        <file>images/profiles/avatar12.png</file>
+        <file>images/profiles/avatar13.png</file>
+        <file>images/profiles/avatar14.png</file>
+        <file>images/profiles/avatar15.png</file>
+        <file>images/profiles/avatar16.png</file>
+        <file>images/profiles/avatar17.png</file>
+        <file>images/profiles/avatar18.png</file>
+        <file>images/profiles/avatar19.png</file>
+        <file>images/profiles/avatar20.png</file>
     </qresource>
 </RCC>

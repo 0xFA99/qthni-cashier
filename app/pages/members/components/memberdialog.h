@@ -18,6 +18,7 @@ public:
     enum Mode { Edit, Add };
     void setMode(Mode mode);
 
+    void setImageField(const QImage &image);
     void setNameField(const QString &name);
     void setIDField(const QString &id);
     void setIndex(int index);

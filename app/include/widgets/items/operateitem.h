@@ -14,6 +14,9 @@ public:
     explicit OperateItem(int index, QWidget *parent = nullptr);
     ~OperateItem();
 
+    void setImage(const QImage &image);
+    QImage image() const;
+
     void setTitle(const QString &text);
     [[nodiscard]] QString title() const;
 

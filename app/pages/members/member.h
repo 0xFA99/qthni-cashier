@@ -11,6 +11,9 @@ public:
     Member(const QString &, const QString &, QObject *parent = nullptr);
     ~Member();
 
+    void setImage(const QImage &image);
+    QImage image() const;
+
     void setName(const QString &name);
     [[nodiscard]] QString name() const;
 

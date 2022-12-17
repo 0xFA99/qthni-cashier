@@ -105,11 +105,13 @@ void MemberPage::addingMember(Member *member)
     Q_D(MemberPage);
 
     auto newMember = new Member;
+    newMember->setImage(member->image());
     newMember->setName(member->name());
     newMember->setID(member->id());
     d->m_memberManager->addMember(newMember);
 
     auto newItemMember = new OperateItem(d->m_memberManager->lastItemIndex() - 1);
+    newItemMember->setImage(member->image());
     newItemMember->setTitle(member->name());
     newItemMember->setSubTitle(member->id());
 
@@ -132,6 +134,7 @@ void MemberPage::editMember(int index)
 
     Member *tempMember = d->m_memberManager->getMember(index);
 
+    d->m_memberDialogWidget->setImageField(tempMember->image());
     d->m_memberDialogWidget->setNameField(tempMember->name());
     d->m_memberDialogWidget->setIDField(tempMember->id());
     d->m_memberDialogWidget->setIndex(index);

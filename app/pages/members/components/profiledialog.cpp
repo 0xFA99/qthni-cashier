@@ -3,6 +3,8 @@
 
 #include <QVBoxLayout>
 
+#include "purchase/components/flowlayout.h"
+
 #include "qtmaterial/components/qtmaterialscrollbar.h"
 #include "qtmaterial/components/qtmaterialavatar.h"
 
@@ -26,13 +28,17 @@ void ProfileDialogPrivate::init()
 
     m_scrollArea    = new QScrollArea(q);
     m_profileList   = new QWidget(m_scrollArea);
-    m_profileLayout = new QGridLayout(m_profileList);
-    m_closeButton   = new QtMaterialFlatButton(q);
+    m_profileLayout = new FlowLayout(m_profileList, 10, -1, -1);
+    m_closeButton   = new QtMaterialFlatButton("PILIH", q);
+
+    m_layout->setSpacing(16);
 
     m_scrollArea->setWidget(m_profileList);
     m_scrollArea->setWidgetResizable(true);
     m_scrollArea->setStyleSheet("background-color: transparent");
     m_scrollArea->setVerticalScrollBar(new QtMaterialScrollBar(m_scrollArea));
+
+    m_closeButton->setRole(Material::Role::Primary);
 
     m_layout->addWidget(m_currentAvatar);
     m_layout->addWidget(m_scrollArea);
@@ -57,4 +63,10 @@ void ProfileDialog::initImagePack()
 {
     Q_D(ProfileDialog);
 
+    for (int i = 1; i <= 20; i++) {
+        auto newAvatar = new QtMaterialAvatar(this);
+        newAvatar->setImage(QImage(":/images/images/profiles/avatar" + QString::number(i)));
+        newAvatar->setSize(72);
+        d->m_profileLayout->addWidget(newAvatar);
+    }
 }

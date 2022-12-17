@@ -31,8 +31,10 @@ public:
     void setSize(int size);
     int size() const;
 
-    void setLetter(const QChar &letter);
     void setImage(const QImage &image);
+    QImage image() const;
+
+    void setLetter(const QChar &letter);
     void setIcon(const QIcon &icon);
 
     Material::AvatarType type() const;

@@ -15,7 +15,6 @@ public:
     void initImagePack();
 
 signals:
-    void showedProfileDialog();
     void closedProfileDialog();
 
 protected:
