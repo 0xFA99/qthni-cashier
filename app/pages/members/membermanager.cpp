@@ -3,6 +3,8 @@
 
 #include "members/member.h"
 
+#include <QImage>
+
 MemberManagerPrivate::MemberManagerPrivate(MemberManager *q)
     : q_ptr(q)
 {
@@ -41,6 +43,7 @@ void MemberManager::updateMember(int index, Member *member)
     Member *updatedMember;
     updatedMember = d->m_memberList.at(index);
 
+    updatedMember->setImage(member->image());
     updatedMember->setName(member->name());
     updatedMember->setID(member->id());
 }

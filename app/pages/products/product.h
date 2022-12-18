@@ -10,6 +10,9 @@ public:
     explicit Product(QObject *parent = nullptr);
     ~Product();
 
+    void setImage(const QImage &image);
+    [[nodiscard]] QImage image() const;
+
     void setName(const QString &name);
     [[nodiscard]] QString name() const;
 

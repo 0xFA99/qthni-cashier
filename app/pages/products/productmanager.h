@@ -18,6 +18,7 @@ public:
 
     Product *getProduct(int index);
 
+    [[nodiscard]] QImage getProductImage(int index);
     [[nodiscard]] QString getProductName(int index) const;
     [[nodiscard]] int getProductPrice(int index) const;
     [[nodiscard]] int getProductStock(int index) const;

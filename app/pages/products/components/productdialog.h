@@ -17,6 +17,7 @@ public:
     enum Mode { Edit, Add };
     void setMode(Mode mode);
 
+    void setImageField(const QImage &image);
     void setNameField(const QString &name);
     void setPriceField(int price);
     void setStockField(int stock);

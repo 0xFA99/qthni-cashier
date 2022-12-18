@@ -48,6 +48,7 @@ void ProductList::updateProductItem(int index, Product *product)
 
     QLayoutItem *item = d->m_layout->itemAt(index);
     auto pro = dynamic_cast<OperateItem *>(item->widget());
+    pro->setImage(product->image());
     pro->setTitle(product->name());
     pro->setSubTitle(QString::number(product->price()));
 }

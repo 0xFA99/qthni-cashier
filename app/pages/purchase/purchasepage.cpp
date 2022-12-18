@@ -9,6 +9,7 @@
 
 // TEST
 #include "purchase/components/searchfield.h"
+#include "purchase/components/pricewidgets.h"
 
 PurchasePagePrivate::PurchasePagePrivate(PurchasePage *q)
     : q_ptr(q)
@@ -27,7 +28,8 @@ void PurchasePagePrivate::init()
     m_orderScrollArea   = new QScrollArea(q);
     m_orderFrame        = new FrameTitle("Daftar Pesanan");
     m_totalFrame        = new FrameTitle("Total Harga");
-    m_totalFrame->setMaximumHeight(300);
+
+    m_totalFrame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     SearchField *searchField = new SearchField(q);
 
@@ -41,11 +43,10 @@ void PurchasePagePrivate::init()
 
     // Temp Widgets
     QWidget *temp2 = new QWidget(q);
-    QWidget *temp3 = new QWidget(q);
+    PriceWidget *priceWidget = new PriceWidget(q);
 
     QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     temp2->setSizePolicy(sizePolicy);
-    temp3->setSizePolicy(sizePolicy);
 
     // TEST
     OrderList *order1 = new OrderList(q);
@@ -58,14 +59,12 @@ void PurchasePagePrivate::init()
 
     m_searchFieldFrame->addChildWidget(m_resultScroll);
     m_orderFrame->addChildWidget(m_orderScrollArea);
-    m_totalFrame->addChildWidget(temp3);
+    m_totalFrame->addChildWidget(priceWidget);
 
     QFrame *leftFrame = new QFrame(q);
     QFrame *rightFrame = new QFrame(q);
 
     m_orderFrame->setParent(leftFrame);
-
-    m_totalFrame->setParent(rightFrame);
     m_totalFrame->setParent(rightFrame);
 
     QSizePolicy leftFramePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);

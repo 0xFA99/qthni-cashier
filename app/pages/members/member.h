@@ -12,7 +12,7 @@ public:
     ~Member();
 
     void setImage(const QImage &image);
-    QImage image() const;
+    [[nodiscard]] QImage image() const;
 
     void setName(const QString &name);
     [[nodiscard]] QString name() const;

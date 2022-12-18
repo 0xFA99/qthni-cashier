@@ -115,6 +115,8 @@ void ProductDialog::addSlot() {
     Q_D(ProductDialog);
 
     Product newProduct;
+
+    newProduct.setImage(d->m_avatar->image());
     newProduct.setName(d->m_nameField->text());
 
     QString price = d->m_priceField->text().split(" ")[1];
@@ -140,6 +142,7 @@ void ProductDialog::editSlot()
     Q_D(ProductDialog);
 
     Product tempProduct;
+    tempProduct.setImage(d->m_avatar->image());
     tempProduct.setName(d->m_nameField->text());
 
     QString price = d->m_priceField->text().split(" ")[1];
@@ -192,6 +195,13 @@ void ProductDialog::editMode()
                         this, &ProductDialog::addSlot);
     QObject::connect(d->m_submitButton, &QPushButton::clicked,
                      this, &ProductDialog::editSlot);
+}
+
+void ProductDialog::setImageField(const QImage &image)
+{
+    Q_D(ProductDialog);
+
+    d->m_avatar->setImage(image);
 }
 
 void ProductDialog::setNameField(const QString &name)

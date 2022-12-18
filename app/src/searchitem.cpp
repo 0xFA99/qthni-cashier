@@ -50,7 +50,7 @@ SearchItem::SearchItem(QWidget *parent)
     , d_ptr(new SearchItemPrivate(this))
 {
     d_func()->init();
-    setMinimumSize(120, 200);
+    setMinimumSize(160, 200);
 }
 
 SearchItem::~SearchItem() = default;

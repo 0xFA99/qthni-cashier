@@ -86,6 +86,7 @@ void ProductPage::addingProduct(Product *product)
     Q_D(ProductPage);
 
     auto newProduct = new Product;
+    newProduct->setImage(product->image());
     newProduct->setName(product->name());
     newProduct->setPrice(product->price());
     newProduct->setStock(product->stock());
@@ -94,6 +95,7 @@ void ProductPage::addingProduct(Product *product)
     d->m_productManager->addProduct(newProduct);
 
     auto newItemProduct = new OperateItem(d->m_productManager->lastItemIndex() - 1);
+    newItemProduct->setImage(product->image());
     newItemProduct->setTitle(product->name());
     newItemProduct->setSubTitle(QString::number(product->price()));
 
@@ -116,6 +118,7 @@ void ProductPage::editProduct(int index)
 
     Product *tempProduct = d->m_productManager->getProduct(index);
 
+    d->m_productDialogWidget->setImageField(tempProduct->image());
     d->m_productDialogWidget->setNameField(tempProduct->name());
     d->m_productDialogWidget->setPriceField(tempProduct->price());
     d->m_productDialogWidget->setStockField(tempProduct->stock());

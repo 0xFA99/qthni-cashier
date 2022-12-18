@@ -24,7 +24,7 @@ void ProfileDialogPrivate::init()
     m_frontLayout   = new QVBoxLayout(m_frontWidget);
 
     m_currentAvatar = new QtMaterialAvatar(q);
-    m_currentAvatar->setSize(72);
+    m_currentAvatar->setSize(112);
 
     m_scrollArea    = new QScrollArea(q);
     m_profileList   = new QWidget(m_scrollArea);

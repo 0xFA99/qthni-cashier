@@ -28,6 +28,20 @@ Product::Product(QObject *parent)
 
 Product::~Product() = default;
 
+void Product::setImage(const QImage &image)
+{
+    Q_D(Product);
+
+    d->m_image = image;
+}
+
+QImage Product::image() const
+{
+    Q_D(const Product);
+
+    return d->m_image;
+}
+
 void Product::setName(const QString &name)
 {
     Q_D(Product);

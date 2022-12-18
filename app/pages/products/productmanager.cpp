@@ -3,6 +3,8 @@
 
 #include "products/product.h"
 
+#include <QImage>
+
 ProductManagerPrivate::ProductManagerPrivate(ProductManager *q)
     : q_ptr(q)
 {
@@ -41,6 +43,7 @@ void ProductManager::updateProduct(int index, Product *product)
     Product *updatedProduct;
     updatedProduct = d->m_productList.at(index);
 
+    updatedProduct->setImage(product->image());
     updatedProduct->setName(product->name());
     updatedProduct->setPrice(product->price());
     updatedProduct->setStock(product->stock());
@@ -56,6 +59,13 @@ void ProductManager::deleteProduct(int index)
 
     d->m_productList.removeAt(index);
     delete deleteProduct;
+}
+
+QImage ProductManager::getProductImage(int index)
+{
+    Q_D(ProductManager);
+
+    return d->m_productList.at(index)->image();
 }
 
 QString ProductManager::getProductName(int index) const
