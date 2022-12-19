@@ -2,6 +2,7 @@
 #include "widgets/items/searchitem_p.h"
 
 #include <QVBoxLayout>
+#include <QLocale>
 
 SearchItemPrivate::SearchItemPrivate(SearchItem *q)
     : q_ptr(q)
@@ -28,8 +29,9 @@ void SearchItemPrivate::init()
     m_title->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
     m_price->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-    QFont font("Roboto", 10, QFont::Medium);
+    QFont font("Roboto", 12, QFont::Normal);
     m_title->setFont(font);
+    font.setPointSize(10);
     m_price->setFont(font);
 
     m_button->setRippleStyle(Material::NoRipple);
@@ -68,4 +70,51 @@ void SearchItem::changeStat()
         d->m_button->setRole(Material::Secondary);
         d->m_hasAdded = true;
     }
+}
+
+void SearchItem::setImage(const QImage &image)
+{
+    Q_D(SearchItem);
+
+    d->m_avatar->setImage(image);
+}
+
+QImage SearchItem::image() const
+{
+    Q_D(const SearchItem);
+
+    return d->m_avatar->image();
+}
+
+void SearchItem::setTitle(const QString &text)
+{
+    Q_D(SearchItem);
+
+    d->m_title->setText(text);
+}
+
+QString SearchItem::title() const
+{
+    Q_D(const SearchItem);
+
+    return d->m_title->text();
+}
+
+void SearchItem::setPrice(int price)
+{
+    Q_D(SearchItem);
+
+    QLocale indo("id_ID");
+
+    d->m_price->setText("Rp " + indo.toString(price));
+}
+
+int SearchItem::price() const
+{
+    Q_D(const SearchItem);
+
+    QString price = d->m_price->text().split(" ")[1];
+    price.replace('.', "");
+
+    return price.toInt();
 }

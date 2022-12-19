@@ -107,6 +107,8 @@ void ProductPage::addingProduct(Product *product)
 
     d->m_productList->addProductItem(newItemProduct);
 
+    emit addedToPurchase(newProduct);
+
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Product"));
 }
 
@@ -134,6 +136,8 @@ void ProductPage::updateProduct(int index, Product *product)
 
     d->m_productManager->updateProduct(index, product);
     d->m_productList->updateProductItem(index, product);
+
+    updatedToPurchase(index, product);
 
     d->m_snackBar->addMessage(QString("Berhasil Mengedit Product"));
 }

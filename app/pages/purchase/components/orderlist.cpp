@@ -45,3 +45,18 @@ OrderList::OrderList(QWidget *parent)
 }
 
 OrderList::~OrderList() = default;
+
+void OrderList::addProduct(int productIndex, int maxStock)
+{
+    Q_D(OrderList);
+
+    ExtendItem *newItem = new ExtendItem(this);
+
+    d->m_layout->addWidget(newItem);
+}
+
+void OrderList::removeProduct(int productIndex)
+{
+    Q_D(OrderList);
+
+}

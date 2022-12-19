@@ -90,6 +90,20 @@ ExtendItem::ExtendItem(QWidget *parent)
 
 ExtendItem::~ExtendItem() = default;
 
+void ExtendItem::setImage(const QImage &image)
+{
+    Q_D(ExtendItem);
+
+    d->m_avatar->setImage(image);
+}
+
+QImage ExtendItem::image() const
+{
+    Q_D(const ExtendItem);
+
+    return d->m_avatar->image();
+}
+
 void ExtendItem::setTitle(const QString &text)
 {
     Q_D(ExtendItem);

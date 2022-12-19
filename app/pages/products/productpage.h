@@ -20,6 +20,10 @@ public slots:
     void updateProduct(int, Product *);
     void deleteProduct(int);
 
+signals:
+    void addedToPurchase(Product *);
+    void updatedToPurchase(int, Product *);
+
 protected:
     const QScopedPointer<ProductPagePrivate> d_ptr;
 

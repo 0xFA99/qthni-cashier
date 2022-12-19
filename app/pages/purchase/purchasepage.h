@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "products/product.h"
+
 class PurchasePagePrivate;
 class PurchasePage : public QWidget
 {
@@ -11,6 +13,10 @@ class PurchasePage : public QWidget
 public:
     explicit PurchasePage(QWidget *parent = nullptr);
     ~PurchasePage();
+
+public slots:
+    void addedShowProduct(Product *);
+    void updatedShowProduct(int, Product *);
 
 protected:
     const QScopedPointer<PurchasePagePrivate> d_ptr;

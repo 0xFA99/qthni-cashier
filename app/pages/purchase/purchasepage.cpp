@@ -7,6 +7,8 @@
 #include "purchase/components/orderlist.h"
 #include "qtmaterial/components/qtmaterialscrollbar.h"
 
+#include "products/productmanager.h"
+
 // TEST
 #include "purchase/components/searchfield.h"
 #include "purchase/components/pricewidgets.h"
@@ -100,3 +102,17 @@ PurchasePage::PurchasePage(QWidget *parent)
 }
 
 PurchasePage::~PurchasePage() = default;
+
+void PurchasePage::addedShowProduct(Product *product)
+{
+    Q_D(PurchasePage);
+
+    d->m_resultList->addProductShow(product);
+}
+
+void PurchasePage::updatedShowProduct(int index, Product *product)
+{
+    Q_D(PurchasePage);
+
+    d->m_resultList->updateProductShow(index, product);
+}

@@ -17,6 +17,7 @@ void ResultListPrivate::init()
 
     m_layout        = new FlowLayout(q);
 
+    /*
     SearchItem *s1 = new SearchItem(q);
     SearchItem *s2 = new SearchItem(q);
     SearchItem *s3 = new SearchItem(q);
@@ -54,6 +55,7 @@ void ResultListPrivate::init()
     m_layout->addWidget(s16);
     m_layout->addWidget(s17);
     m_layout->addWidget(s18);
+    */
 
 }
 
@@ -65,3 +67,26 @@ ResultList::ResultList(QWidget *parent)
 }
 
 ResultList::~ResultList() = default;
+
+void ResultList::addProductShow(Product *product)
+{
+    Q_D(ResultList);
+
+    auto newItem = new SearchItem(this);
+    newItem->setImage(product->image());
+    newItem->setTitle(product->name());
+    newItem->setPrice(product->price());
+
+    d->m_layout->addWidget(newItem);
+}
+
+void ResultList::updateProductShow(int index, Product *product)
+{
+    Q_D(ResultList);
+
+    QLayoutItem *item = d->m_layout->itemAt(index);
+    auto newItem = dynamic_cast<SearchItem *>(item->widget());
+    newItem->setImage(product->image());
+    newItem->setTitle(product->name());
+    newItem->setPrice(product->price());
+}

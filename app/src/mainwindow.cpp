@@ -35,13 +35,13 @@ MainWindow::MainWindow(QWidget *parent)
     m_stackedWidget->addWidget(m_purchasePage);
     m_stackedWidget->addWidget(m_productPage);
     m_stackedWidget->addWidget(m_memberPage);
-    // m_stackedWidget->addWidget(m_notificationPage);
-    // m_stackedWidget->addWidget(m_optionPage);
 
     m_layout->addWidget(m_panel);
     m_layout->addWidget(m_stackedWidget);
 
     QObject::connect(m_panel, &Panel::currentChanged, m_stackedWidget, &QStackedWidget::setCurrentIndex);
+    QObject::connect(m_productPage, &ProductPage::addedToPurchase, m_purchasePage, &PurchasePage::addedShowProduct);
+    QObject::connect(m_productPage, &ProductPage::updatedToPurchase, m_purchasePage, &PurchasePage::updatedShowProduct);
 }
 
 MainWindow::~MainWindow()

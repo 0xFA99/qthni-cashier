@@ -12,6 +12,15 @@ public:
     explicit SearchItem(QWidget *parent = nullptr);
     ~SearchItem();
 
+    void setImage(const QImage &image);
+    [[nodiscard]] QImage image() const;
+
+    void setTitle(const QString &text);
+    [[nodiscard]] QString title() const;
+
+    void setPrice(int price);
+    [[nodiscard]] int price() const;
+
     void changeStat();
 
 protected:

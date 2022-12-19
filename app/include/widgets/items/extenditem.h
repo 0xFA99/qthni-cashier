@@ -12,6 +12,9 @@ public:
     explicit ExtendItem(QWidget *parent = nullptr);
     ~ExtendItem();
 
+    void setImage(const QImage &image);
+    [[nodiscard]] QImage image() const;
+
     void setTitle(const QString &text);
     [[nodiscard]] QString title() const;
 
