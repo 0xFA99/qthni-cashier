@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class Member;
+class MemberObject;
 class OperateItem;
 class MemberPagePrivate;
 class MemberPage : public QWidget
@@ -15,9 +15,11 @@ public:
     ~MemberPage();
 
 public slots:
-    void addingMember(Member *);
+    void addingMember(MemberObject *);
+
     void editMember(int);
-    void updateMember(int, Member *);
+
+    void updateMember(int, MemberObject*);
     void deleteMember(int);
 
 protected:

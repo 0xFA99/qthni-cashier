@@ -24,9 +24,12 @@ public:
     void setSubTitle(const QString &) override;
     void setSubTitleColor(const QColor &) override;
 
+    void setIndex(int);
+    [[nodiscard]] int index() const;
+
 signals:
-    void s_editButton();
-    void s_deleteButton();
+    void s_editButton(int);
+    void s_deleteButton(int);
 
 protected:
     const QScopedPointer<OperateItemPrivate> d_ptr;

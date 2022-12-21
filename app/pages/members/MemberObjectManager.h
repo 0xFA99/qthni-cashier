@@ -13,7 +13,12 @@ public:
     explicit MemberObjectManager(QObject *parent = nullptr);
     ~MemberObjectManager();
 
-    void addMember(MemberObject *);
+    [[nodiscard]] int lastItemIndex() const;
+
+    MemberObject* getMemberObject(int);
+
+    void addMember(MemberObject*);
+    void updateMember(int, MemberObject*);
     void deleteMember(int);
 
 protected:

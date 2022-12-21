@@ -63,7 +63,7 @@ void MemberList::deleteMemberItem(int index)
         QLayoutItem *litem = d->m_layout->itemAt(i);
 
         if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
-            // item->setIndex(item->getIndex() - 1);
+            item->setIndex(item->index() - 1);
         }
     }
 
@@ -72,5 +72,3 @@ void MemberList::deleteMemberItem(int index)
         delete item;
     }
 }
-
-// 0 1 2 3 4

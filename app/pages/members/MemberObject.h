@@ -26,7 +26,10 @@ public:
     [[nodiscard]] QString id() const;
 
     void Attach(IObserver *observer) override;
+
     void Detach(IObserver *observer) override;
+    void DetachAll();
+
     void Update() override;
 
 protected:

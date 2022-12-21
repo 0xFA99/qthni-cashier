@@ -21,6 +21,7 @@ void OperateItemPrivate::init()
     m_subTitle      = new QLabel("Subtitled", q);
     m_editButton    = new QtMaterialFlatButton("Edit", q);
     m_deleteButton  = new QtMaterialFlatButton("Delete", q);
+    m_index         = 0;
 
     m_avatar->setSize(42);
     m_avatar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
@@ -47,8 +48,8 @@ void OperateItemPrivate::init()
     m_deleteButton->setIcon(QtMaterialTheme::icon("action", "delete"));
     m_deleteButton->setSizePolicy(buttonPolicy);
 
-    QObject::connect(m_editButton, &QPushButton::clicked, [q]() { emit q->s_editButton(); });
-    QObject::connect(m_deleteButton, &QPushButton::clicked, [q]() { emit q->s_deleteButton(); });
+    QObject::connect(m_editButton, &QPushButton::clicked, [=]() { q->s_editButton(m_index); });
+    QObject::connect(m_deleteButton, &QPushButton::clicked, [=]() { q->s_deleteButton(m_index); });
 
     m_layout->addWidget(m_avatar, 0, 0, 2, 1);
     m_layout->addWidget(m_title, 0, 1, 1, 1);
@@ -111,4 +112,18 @@ void OperateItem::setSubTitleColor(const QColor &color)
     QPalette palette = d->m_subTitle->palette();
     palette.setColor(d->m_subTitle->foregroundRole(), color);
     d->m_subTitle->setPalette(palette);
+}
+
+void OperateItem::setIndex(int index)
+{
+    Q_D(OperateItem);
+
+    d->m_index = index;
+}
+
+int OperateItem::index() const
+{
+    Q_D(const OperateItem);
+
+    return d->m_index;
 }

@@ -27,6 +27,7 @@ public:
     QtMaterialFlatButton    *m_deleteButton;
     QLabel                  *m_title;
     QLabel                  *m_subTitle;
+    int                     m_index;
 };
 
 #endif //QTHNI_OPERATEITEM_P_H

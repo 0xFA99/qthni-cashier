@@ -7,7 +7,8 @@ project(hni_components VERSION 1.0
 
 set(INTERFACE_FILES
         include/interfaces/IObserver.h
-        include/interfaces/ISubject.h include/interfaces/IItem.h)
+        include/interfaces/ISubject.h
+        include/interfaces/IItem.h)
 
 set(LAYOUT_FILES
         src/flowlayout.cpp
@@ -33,11 +34,9 @@ set(WIDGETS_FILES
         src/minimalitem.cpp
         include/widgets/items/minimalitem.h
         include/widgets/items/minimalitem_p.h
-
-        include/widgets/items/OperateItem.cpp
+        src/OperateItem.cpp
         include/widgets/items/OperateItem.h
         include/widgets/items/OperateItem_p.h
-
         src/searchitem.cpp
         include/widgets/items/searchitem.h
         include/widgets/items/searchitem_p.h)
@@ -57,18 +56,15 @@ set(ANALYSIS_FILES
         pages/analysic/components/remainingstock_p.h)
 
 set(MEMBERS_FILES
-        pages/members/member.cpp
-        pages/members/member.h
-        pages/members/member_p.h
-        pages/members/membermanager.cpp
-        pages/members/membermanager.h
-        pages/members/membermanager_p.h
-        pages/members/memberpage.cpp
-        pages/members/memberpage.h
-        pages/members/memberpage_p.h
         pages/members/MemberObject.cpp
         pages/members/MemberObject.h
         pages/members/MemberObject_p.h
+        pages/members/MemberObjectManager.cpp
+        pages/members/MemberObjectManager.h
+        pages/members/MemberObjectManager_p.h
+        pages/members/memberpage.cpp
+        pages/members/memberpage.h
+        pages/members/memberpage_p.h
         pages/members/components/memberdialog.cpp
         pages/members/components/memberdialog.h
         pages/members/components/memberdialog_p.h
@@ -77,7 +73,7 @@ set(MEMBERS_FILES
         pages/members/components/memberlist_p.h
         pages/members/components/profiledialog.cpp
         pages/members/components/profiledialog.h
-        pages/members/components/profiledialog_p.h pages/members/MemberObjectManager.cpp pages/members/MemberObjectManager.h pages/members/MemberObjectManager_p.h)
+        pages/members/components/profiledialog_p.h)
 
 set(NOTIFICATION_FILES
         pages/notifications/notificationpage.cpp
@@ -146,7 +142,6 @@ add_library(${PROJECT_NAME} SHARED
         ${PRODUCT_FILES}
         ${PURCHASE_FILES}
         ${RESOURCE_FILES})
-
 
 target_sources(
         ${PROJECT_NAME} PRIVATE

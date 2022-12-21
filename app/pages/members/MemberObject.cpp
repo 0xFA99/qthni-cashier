@@ -91,6 +91,16 @@ void MemberObject::Detach(IObserver *observer)
     d->m_observerList.removeOne(observer);
 }
 
+void MemberObject::DetachAll()
+{
+    Q_D(MemberObject);
+
+    QVector<IObserver *>::iterator iterator = d->m_observerList.begin();
+    while (iterator != d->m_observerList.end()) {
+
+    }
+}
+
 void MemberObject::Update()
 {
     Q_D(MemberObject);

@@ -4,8 +4,6 @@
 #include "widgets/frametitle.h"
 
 #include "members/MemberObjectManager.h"
-
-#include "members/membermanager.h"
 #include "members/components/memberlist.h"
 #include "members/components/memberdialog.h"
 #include "members/components/profiledialog.h"
@@ -32,33 +30,30 @@ public:
 
     void init();
 
-    MemberPage *const   q_ptr;
-    QHBoxLayout         *m_layout;
+    MemberPage *const               q_ptr;
+    QHBoxLayout                     *m_layout;
     QtMaterialFloatingActionButton  *m_fabButton;
 
-    // Member Manager
-    MemberManager       *m_memberManager;
-
     // Member List
-    FrameTitle          *m_memberListTitle;
-    MemberList          *m_memberList;
+    FrameTitle                      *m_memberListTitle;
+    MemberList                      *m_memberList;
 
     // Scroll Area
-    QScrollArea         *m_memberScrollArea;
+    QScrollArea                     *m_memberScrollArea;
 
     // Member Dialog
-    QtMaterialDialog    *m_memberDialog;
-    MemberDialog        *m_memberDialogWidget;
+    QtMaterialDialog                *m_memberDialog;
+    MemberDialog                    *m_memberDialogWidget;
 
     // Notification
     QtMaterialSnackbar              *m_snackBar;
 
     // Profile Dialog
-    QtMaterialDialog    *m_profileDialog;
-    ProfileDialog       *m_profileDialogWidget;
+    QtMaterialDialog                *m_profileDialog;
+    ProfileDialog                   *m_profileDialogWidget;
 
     // TEST
-    MemberObjectManager     *m_member_object_manager;
+    MemberObjectManager             *m_member_object_manager;
 };
 
 #endif //QTHNI_MEMBERPAGE_P_H
