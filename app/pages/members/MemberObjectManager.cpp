@@ -58,10 +58,7 @@ MemberObjectManager::updateMember(int index, MemberObject *member)
 
     MemberObject *updateMember = d->m_memberList.at(index);
 
-    updateMember->setImage(member->image());
-    updateMember->setName(member->name());
-    updateMember->setID(member->id());
-
+    updateMember->editMember(member);
     updateMember->Update();
 }
 

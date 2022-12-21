@@ -13,8 +13,9 @@ class MemberObject : public QObject, public ISubject
 
 public:
     explicit MemberObject(QObject *parent = nullptr);
-    explicit MemberObject(const QString &, const QString &, QObject *parent = nullptr);
     ~MemberObject();
+
+    void editMember(MemberObject*);
 
     void setImage(const QImage &image);
     [[nodiscard]] QImage image() const;
@@ -26,10 +27,7 @@ public:
     [[nodiscard]] QString id() const;
 
     void Attach(IObserver *observer) override;
-
     void Detach(IObserver *observer) override;
-    void DetachAll();
-
     void Update() override;
 
 protected:

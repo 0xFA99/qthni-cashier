@@ -3,7 +3,7 @@
 
 #include <QHBoxLayout>
 
-#include "products/product.h"
+#include "products/ProductObject.h"
 #include "widgets/items/OperateItem.h"
 
 ProductPagePrivate::ProductPagePrivate(ProductPage *q)
@@ -18,7 +18,7 @@ void ProductPagePrivate::init()
     Q_Q(ProductPage);
 
     m_layout                = new QHBoxLayout(q);
-    m_productManager        = new ProductManager(q);
+    m_productManager        = new ProductObjectManager(q);
     m_productListTitle      = new FrameTitle(q);
     m_productList           = new ProductList(q);
     m_productScrollArea     = new QScrollArea(q);
@@ -26,6 +26,7 @@ void ProductPagePrivate::init()
     m_productDialogWidget   = new ProductDialog(q);
     m_snackBar              = new QtMaterialSnackbar;
     m_fabButton             = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("content", "add"), q);
+    m_locale                = QLocale("id_ID");
 
     m_snackBar->setParent(q);
 
@@ -81,34 +82,27 @@ ProductPage::ProductPage(QWidget *parent)
 
 ProductPage::~ProductPage() = default;
 
-void ProductPage::addingProduct(Product *product)
+void ProductPage::addingProduct(ProductObject *product)
 {
     Q_D(ProductPage);
 
-    auto newProduct = new Product;
-    newProduct->setImage(product->image());
-    newProduct->setName(product->name());
-    newProduct->setPrice(product->price());
-    newProduct->setStock(product->stock());
-    newProduct->setPoint(product->point());
+    auto newProductObject = new ProductObject;
+    newProductObject->editProduct(product);
+    d->m_productManager->addProduct(newProductObject);
 
-    d->m_productManager->addProduct(newProduct);
+    // emit addedToPurchase(newProduct);
 
-    /*
-    auto newItemProduct = new OperateItem(d->m_productManager->lastItemIndex() - 1);
+    auto newItemProduct = new OperateItem;
     newItemProduct->setImage(product->image());
     newItemProduct->setTitle(product->name());
-    newItemProduct->setSubTitle(QString::number(product->price()));
+    newItemProduct->setSubTitle(QString("Rp " + d->m_locale.toString(product->price())));
+    newItemProduct->setIndex(d->m_productManager->lastItemIndex() - 1);
 
-    QObject::connect(newItemProduct, &OperateItem::editItem,
-                     this, &ProductPage::editProduct);
+    QObject::connect(newItemProduct, &OperateItem::s_editButton, this, &ProductPage::editProduct);
+    QObject::connect(newItemProduct, &OperateItem::s_deleteButton, this, &ProductPage::deleteProduct);
 
-    QObject::connect(newItemProduct, &OperateItem::deleteItem,
-                     this, &ProductPage::deleteProduct);
-
+    newProductObject->Attach(newItemProduct);
     d->m_productList->addProductItem(newItemProduct);
-    */
-    emit addedToPurchase(newProduct);
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Product"));
 }
@@ -119,11 +113,11 @@ void ProductPage::editProduct(int index)
 
     d->m_productDialogWidget->setMode(ProductDialog::Edit);
 
-    Product *tempProduct = d->m_productManager->getProduct(index);
+    ProductObject *tempProduct = d->m_productManager->getProductObject(index);
 
     d->m_productDialogWidget->setImageField(tempProduct->image());
     d->m_productDialogWidget->setNameField(tempProduct->name());
-    d->m_productDialogWidget->setPriceField(tempProduct->price());
+    d->m_productDialogWidget->setPriceField(QString("Rp " + d->m_locale.toString(tempProduct->price())));
     d->m_productDialogWidget->setStockField(tempProduct->stock());
     d->m_productDialogWidget->setPointField(tempProduct->point());
     d->m_productDialogWidget->setIndex(index);
@@ -131,24 +125,21 @@ void ProductPage::editProduct(int index)
     d->m_productDialog->showDialog();
 }
 
-void ProductPage::updateProduct(int index, Product *product)
+void ProductPage::updateProduct(int index, ProductObject *product)
 {
     Q_D(ProductPage);
 
     d->m_productManager->updateProduct(index, product);
-    d->m_productList->updateProductItem(index, product);
 
-    updatedToPurchase(index, product);
-
-    d->m_snackBar->addMessage(QString("Berhasil Mengedit Product"));
+    d->m_snackBar->addInstantMessage(QString("Berhasil Mengedit Product"));
 }
 
 void ProductPage::deleteProduct(int index)
 {
     Q_D(ProductPage);
 
-    d->m_productList->deleteProductItem(index);
     d->m_productManager->deleteProduct(index);
+    d->m_productList->deleteProductItem(index);
 
     d->m_snackBar->addInstantMessage(QString("Berhasil Menghapus Product"));
 }

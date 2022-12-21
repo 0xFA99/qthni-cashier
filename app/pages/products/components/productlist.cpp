@@ -2,10 +2,8 @@
 #include "products/components/productlist_p.h"
 
 #include <QVBoxLayout>
-#include <QLocale>
 
 #include "widgets/items/OperateItem.h"
-#include "products/product.h"
 
 ProductListPrivate::ProductListPrivate(ProductList *q)
     : q_ptr(q)
@@ -19,7 +17,6 @@ void ProductListPrivate::init()
     Q_Q(ProductList);
 
     m_layout    = new QVBoxLayout(q);
-    m_indo      = QLocale("id_ID");
 
     m_layout->addStretch(1);
     m_layout->setContentsMargins(0, 0, 0, 0);
@@ -41,26 +38,7 @@ void ProductList::addProductItem(OperateItem *item)
     Q_D(ProductList);
 
     item->setParent(this);
-
-    // int price = item->subTitle().toInt();
-
-    // item->setSubTitle("Rp " + d->m_indo.toString(price));
-
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
-}
-
-void ProductList::updateProductItem(int index, Product *product)
-{
-    Q_D(ProductList);
-
-    QLayoutItem *item = d->m_layout->itemAt(index);
-    auto pro = dynamic_cast<OperateItem *>(item->widget());
-    pro->setImage(product->image());
-    pro->setTitle(product->name());
-
-    QLocale indo("id_ID");
-
-    pro->setSubTitle("Rp " + indo.toString(product->price()));
 }
 
 void ProductList::deleteProductItem(int index)
@@ -72,12 +50,12 @@ void ProductList::deleteProductItem(int index)
         QLayoutItem *litem = d->m_layout->itemAt(i);
 
         if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
-            // item->setIndex(item->getIndex() - 1);
+            item->setIndex(item->index() - 1);
         }
     }
 
     QLayoutItem *litem = d->m_layout->itemAt(index);
     if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
-        delete item;
+        item->deleteLater();
     }
 }

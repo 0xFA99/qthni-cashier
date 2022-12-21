@@ -3,7 +3,7 @@
 
 #include "widgets/frametitle.h"
 
-#include "products/productmanager.h"
+#include "products/ProductObjectManager.h"
 #include "products/components/productlist.h"
 #include "products/components/productdialog.h"
 
@@ -13,9 +13,9 @@
 #include "qtmaterial/components/qtmaterialfab.h"
 
 #include <QScrollArea>
+#include <QLocale>
 
 class QHBoxLayout;
-class Product;
 
 class ProductPage;
 class ProductPagePrivate
@@ -29,26 +29,27 @@ public:
 
     void init();
 
-    ProductPage *const  q_ptr;
-    QHBoxLayout         *m_layout;
-    QtMaterialFloatingActionButton *m_fabButton;
+    ProductPage *const              q_ptr;
+    QHBoxLayout                     *m_layout;
+    QtMaterialFloatingActionButton  *m_fabButton;
 
     // Product Manager
-    ProductManager      *m_productManager;
+    ProductObjectManager            *m_productManager;
 
     // Product List
-    FrameTitle          *m_productListTitle;
-    ProductList         *m_productList;
+    FrameTitle                      *m_productListTitle;
+    ProductList                     *m_productList;
 
     // Scroll Area
-    QScrollArea         *m_productScrollArea;
+    QScrollArea                     *m_productScrollArea;
 
     // Product Dialog
-    QtMaterialDialog    *m_productDialog;
-    ProductDialog       *m_productDialogWidget;
+    QtMaterialDialog                *m_productDialog;
+    ProductDialog                   *m_productDialogWidget;
 
     // Notification
-    QtMaterialSnackbar  *m_snackBar;
+    QtMaterialSnackbar              *m_snackBar;
+    QLocale                         m_locale;
 };
 
 #endif //QTHNI_PRODUCTPAGE_P_H

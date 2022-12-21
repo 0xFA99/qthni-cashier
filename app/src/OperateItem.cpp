@@ -114,6 +114,14 @@ void OperateItem::setSubTitleColor(const QColor &color)
     d->m_subTitle->setPalette(palette);
 }
 
+QString
+OperateItem::subTitle() const
+{
+    Q_D(const OperateItem);
+
+    return d->m_subTitle->text();
+}
+
 void OperateItem::setIndex(int index)
 {
     Q_D(OperateItem);

@@ -4,6 +4,8 @@
 #include "layout/flowlayout.h"
 #include "widgets/items/searchitem.h"
 
+#include "products/ProductObject.h"
+
 ResultListPrivate::ResultListPrivate(ResultList *q)
     : q_ptr(q)
 {
@@ -68,7 +70,7 @@ ResultList::ResultList(QWidget *parent)
 
 ResultList::~ResultList() = default;
 
-void ResultList::addProductShow(Product *product)
+void ResultList::addProductObjectShow(ProductObject *product)
 {
     Q_D(ResultList);
 
@@ -86,7 +88,7 @@ void ResultList::addProductShow(Product *product)
     d->m_layout->addWidget(newItem);
 }
 
-void ResultList::updateProductShow(int index, Product *product)
+void ResultList::updateProductObjectShow(int index, ProductObject *product)
 {
     Q_D(ResultList);
 

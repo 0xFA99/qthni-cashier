@@ -16,7 +16,6 @@
 #include <QScrollArea>
 
 class QHBoxLayout;
-class Member;
 
 class MemberPage;
 class MemberPagePrivate

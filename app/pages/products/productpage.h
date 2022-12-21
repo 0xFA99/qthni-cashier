@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class Product;
+class ProductObject;
 class OperateItem;
 class ProductPagePrivate;
 class ProductPage : public QWidget
@@ -15,14 +15,14 @@ public:
     ~ProductPage();
 
 public slots:
-    void addingProduct(Product *);
+    void addingProduct(ProductObject*);
     void editProduct(int);
-    void updateProduct(int, Product *);
+    void updateProduct(int, ProductObject*);
     void deleteProduct(int);
 
 signals:
-    void addedToPurchase(Product *);
-    void updatedToPurchase(int, Product *);
+    void addedToPurchase(ProductObject *);
+    void updatedToPurchase(int, ProductObject *);
 
 protected:
     const QScopedPointer<ProductPagePrivate> d_ptr;

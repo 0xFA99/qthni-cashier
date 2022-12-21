@@ -86,12 +86,12 @@ set(OPTIONS_FILES
         pages/options/optionpage_p.h)
 
 set(PRODUCT_FILES
-        pages/products/product.cpp
-        pages/products/product.h
-        pages/products/product_p.h
-        pages/products/productmanager.cpp
-        pages/products/productmanager.h
-        pages/products/productmanager_p.h
+        pages/products/ProductObject.cpp
+        pages/products/ProductObject.h
+        pages/products/ProductObject_p.h
+        pages/products/ProductObjectManager.cpp
+        pages/products/ProductObjectManager.h
+        pages/products/ProductObjectManager_p.h
         pages/products/productpage.cpp
         pages/products/productpage.h
         pages/products/productpage_p.h

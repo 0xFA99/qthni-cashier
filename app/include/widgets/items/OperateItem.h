@@ -23,6 +23,7 @@ public:
 
     void setSubTitle(const QString &) override;
     void setSubTitleColor(const QColor &) override;
+    [[nodiscard]] QString subTitle() const;
 
     void setIndex(int);
     [[nodiscard]] int index() const;

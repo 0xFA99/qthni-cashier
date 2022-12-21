@@ -3,9 +3,8 @@
 
 #include <QWidget>
 
-#include "widgets/items/OperateItem.h"
+class OperateItem;
 
-class Product;
 class ProductListPrivate;
 class ProductList : public QWidget
 {
@@ -16,7 +15,6 @@ public:
     ~ProductList();
 
     void addProductItem(OperateItem *item);
-    void updateProductItem(int index, Product *);
     void deleteProductItem(int index);
 
 protected:

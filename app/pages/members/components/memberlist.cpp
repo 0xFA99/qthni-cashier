@@ -41,19 +41,6 @@ void MemberList::addMemberItem(OperateItem *item)
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
 }
 
-/*
-void MemberList::updateMemberItem(int index, Member *member)
-{
-    Q_D(MemberList);
-
-    QLayoutItem *item = d->m_layout->itemAt(index);
-    auto mem = dynamic_cast<OperateItem *>(item->widget());
-    mem->setImage(member->image());
-    mem->setTitle(member->name());
-    mem->setSubTitle(member->id());
-}
- */
-
 void MemberList::deleteMemberItem(int index)
 {
     Q_D(MemberList);
@@ -69,6 +56,6 @@ void MemberList::deleteMemberItem(int index)
 
     QLayoutItem *litem = d->m_layout->itemAt(index);
     if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
-        delete item;
+        item->deleteLater();
     }
 }

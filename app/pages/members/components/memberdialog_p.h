@@ -6,7 +6,6 @@
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 #include "qtmaterial/components/qtmaterialtextfield.h"
 
-class Member;
 class OperateItem;
 class QGridLayout;
 

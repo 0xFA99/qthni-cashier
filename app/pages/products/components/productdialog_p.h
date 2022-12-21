@@ -8,7 +8,8 @@
 
 #include "qtmaterial/components/qtmaterialdialog.h"
 
-class Product;
+#include <QLocale>
+
 class OperateItem;
 class QGridLayout;
 
@@ -34,9 +35,7 @@ public:
     QtMaterialTextField         *m_pointField;
     QtMaterialFlatButton        *m_cancelButton;
     QtMaterialFlatButton        *m_submitButton;
-
-    QtMaterialDialog            *m_profileDialog;
-
+    QLocale                     m_locale;
     ProductDialog::Mode         m_mode;
     int                         m_index;
 };

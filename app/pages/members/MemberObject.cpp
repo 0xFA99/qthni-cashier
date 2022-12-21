@@ -11,9 +11,11 @@ MemberObjectPrivate::~MemberObjectPrivate() = default;
 void MemberObjectPrivate::init()
 {
     Q_Q(MemberObject);
+    m_image         = QImage(":/images/images/profiles/defaultimage.png");
+    m_name          = QString("Anonymous");
+    m_id            = QString("000000");
 
-    m_name  = QString("Anonymous");
-    m_id    = QString("000000");
+    m_observerList  = QVector<IObserver *>();
 }
 
 MemberObject::MemberObject(QObject *parent)
@@ -21,16 +23,6 @@ MemberObject::MemberObject(QObject *parent)
     , d_ptr(new MemberObjectPrivate(this))
 {
     d_func()->init();
-}
-
-MemberObject::MemberObject(const QString &name, const QString &id, QObject *parent)
-    : QObject(parent)
-    , d_ptr(new MemberObjectPrivate(this))
-{
-    d_func()->init();
-
-    setName(name);
-    setID(id);
 }
 
 MemberObject::~MemberObject() = default;
@@ -91,16 +83,6 @@ void MemberObject::Detach(IObserver *observer)
     d->m_observerList.removeOne(observer);
 }
 
-void MemberObject::DetachAll()
-{
-    Q_D(MemberObject);
-
-    QVector<IObserver *>::iterator iterator = d->m_observerList.begin();
-    while (iterator != d->m_observerList.end()) {
-
-    }
-}
-
 void MemberObject::Update()
 {
     Q_D(MemberObject);
@@ -110,4 +92,12 @@ void MemberObject::Update()
         (*iterator)->Update(image(), name(), id());
         ++iterator;
     }
+}
+
+void
+MemberObject::editMember(MemberObject *member)
+{
+    setImage(member->image());
+    setName(member->name());
+    setID(member->id());
 }

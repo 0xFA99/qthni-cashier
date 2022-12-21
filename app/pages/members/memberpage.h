@@ -16,9 +16,7 @@ public:
 
 public slots:
     void addingMember(MemberObject *);
-
     void editMember(int);
-
     void updateMember(int, MemberObject*);
     void deleteMember(int);
 
