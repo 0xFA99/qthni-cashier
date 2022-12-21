@@ -21,7 +21,14 @@ public:
     void setPrice(int price);
     [[nodiscard]] int price() const;
 
+    void setStock(int stock);
+    [[nodiscard]] int stock() const;
+
     void changeStat();
+
+signals:
+    void addedToOrder(const QString &, int, int);
+    void deleteToOrder(const QString &);
 
 protected:
     const QScopedPointer<SearchItemPrivate> d_ptr;

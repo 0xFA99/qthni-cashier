@@ -4,7 +4,8 @@
 #include <QHBoxLayout>
 
 #include "members/member.h"
-#include "widgets/items/operateitem.h"
+#include "members/MemberObject.h"
+#include "widgets/items/OperateItem.h"
 
 MemberPagePrivate::MemberPagePrivate(MemberPage *q)
     : q_ptr(q)
@@ -30,6 +31,8 @@ void MemberPagePrivate::init()
     m_snackBar              = new QtMaterialSnackbar;
     m_fabButton             = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("content", "add"), q);
 
+    m_member_object_manager = new MemberObjectManager(q);
+
     m_snackBar->setParent(q);
 
     m_fabButton->setHaloVisible(false);
@@ -43,8 +46,6 @@ void MemberPagePrivate::init()
 
     dialogLayout->addWidget(m_memberDialogWidget);
 
-    // QObject::connect(m_fabButton, &QPushButton::clicked,
-    //                 m_memberDialog, &QtMaterialDialog::showDialog);
     QObject::connect(m_fabButton, &QPushButton::clicked, [=]() {
         m_memberDialogWidget->setMode(MemberDialog::Mode::Add);
         m_memberDialog->showDialog();
@@ -53,11 +54,14 @@ void MemberPagePrivate::init()
     QObject::connect(m_memberDialogWidget, &MemberDialog::closedMemberDialog,
                      m_memberDialog, &QtMaterialDialog::hideDialog);
 
+    /*
     QObject::connect(m_memberDialogWidget, &MemberDialog::addedMember,
                      q, &MemberPage::addingMember);
 
     QObject::connect(m_memberDialogWidget, &MemberDialog::editedMember,
                      q, &MemberPage::updateMember);
+
+                     */
     // END
     // START PROFILE DIALOG
     auto *profileLayout = new QVBoxLayout;
@@ -104,17 +108,40 @@ void MemberPage::addingMember(Member *member)
 {
     Q_D(MemberPage);
 
+    /*
     auto newMember = new Member;
     newMember->setImage(member->image());
     newMember->setName(member->name());
     newMember->setID(member->id());
     d->m_memberManager->addMember(newMember);
+     */
 
+    /*
+     * Adding Member to Member Manager
+     */
+    auto newMemberObject = new MemberObject;
+    newMemberObject->setImage(member->image());
+    newMemberObject->setName(member->name());
+    newMemberObject->setID(member->id());
+
+    d->m_member_object_manager->addMember(newMemberObject);
+
+    /*
     auto newItemMember = new OperateItem(d->m_memberManager->lastItemIndex() - 1);
     newItemMember->setImage(member->image());
     newItemMember->setTitle(member->name());
     newItemMember->setSubTitle(member->id());
+     */
+    /*
+     * Make Item for Member
+     */
+    auto newItemManager = new OperateItem;
+    newItemManager->setImage(member->image());
+    newItemManager->setTitle(member->name());
+    newItemManager->setSubTitle(member->id());
 
+
+    /*
     QObject::connect(newItemMember, &OperateItem::editItem,
                      this, &MemberPage::editMember);
 
@@ -122,6 +149,7 @@ void MemberPage::addingMember(Member *member)
                      this, &MemberPage::deleteMember);
 
     d->m_memberList->addMemberItem(newItemMember);
+     */
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Member"));
 }
@@ -147,7 +175,7 @@ void MemberPage::updateMember(int index, Member *member)
     Q_D(MemberPage);
 
     d->m_memberManager->updateMember(index, member);
-    d->m_memberList->updateMemberItem(index, member);
+    // d->m_memberList->updateMemberItem(index, member);
 
     d->m_snackBar->addMessage(QString("Berhasil Mengedit Member"));
 }

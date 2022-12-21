@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "widgets/items/operateitem.h"
+#include "widgets/items/OperateItem.h"
 
 class Product;
 class ProductListPrivate;

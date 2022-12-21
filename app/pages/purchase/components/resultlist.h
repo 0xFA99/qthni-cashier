@@ -17,6 +17,10 @@ public:
     void addProductShow(Product *);
     void updateProductShow(int, Product *);
 
+signals:
+    void addToOrder(Product *);
+    void updateToOrder(Product *);
+
 protected:
     const QScopedPointer<ResultListPrivate> d_ptr;
 

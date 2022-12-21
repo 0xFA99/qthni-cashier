@@ -3,6 +3,8 @@
 
 #include "widgets/frametitle.h"
 
+#include "members/MemberObjectManager.h"
+
 #include "members/membermanager.h"
 #include "members/components/memberlist.h"
 #include "members/components/memberdialog.h"
@@ -54,6 +56,9 @@ public:
     // Profile Dialog
     QtMaterialDialog    *m_profileDialog;
     ProfileDialog       *m_profileDialogWidget;
+
+    // TEST
+    MemberObjectManager     *m_member_object_manager;
 };
 
 #endif //QTHNI_MEMBERPAGE_P_H

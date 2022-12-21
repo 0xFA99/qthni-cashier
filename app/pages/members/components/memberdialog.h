@@ -3,8 +3,7 @@
 
 #include <QWidget>
 
-
-class Member;
+class MemberObject;
 
 class MemberDialogPrivate;
 class MemberDialog : public QWidget
@@ -25,8 +24,8 @@ public:
 
 signals:
     void closedMemberDialog();
-    void addedMember(Member *);
-    void editedMember(int, Member *);
+    void addedMember(MemberObject *);
+    void editedMember(int, MemberObject *);
     void showProfileDialog();
 
 protected:

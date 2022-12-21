@@ -4,7 +4,7 @@
 #include <QVBoxLayout>
 #include <QLocale>
 
-#include "widgets/items/operateitem.h"
+#include "widgets/items/OperateItem.h"
 #include "products/product.h"
 
 ProductListPrivate::ProductListPrivate(ProductList *q)
@@ -42,9 +42,9 @@ void ProductList::addProductItem(OperateItem *item)
 
     item->setParent(this);
 
-    int price = item->subTitle().toInt();
+    // int price = item->subTitle().toInt();
 
-    item->setSubTitle("Rp " + d->m_indo.toString(price));
+    // item->setSubTitle("Rp " + d->m_indo.toString(price));
 
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
 }
@@ -72,7 +72,7 @@ void ProductList::deleteProductItem(int index)
         QLayoutItem *litem = d->m_layout->itemAt(i);
 
         if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
-            item->setIndex(item->getIndex() - 1);
+            // item->setIndex(item->getIndex() - 1);
         }
     }
 

@@ -1,7 +1,7 @@
 #include "purchase/components/resultlist.h"
 #include "purchase/components/resultlist_p.h"
 
-#include "purchase/components/flowlayout.h"
+#include "layout/flowlayout.h"
 #include "widgets/items/searchitem.h"
 
 ResultListPrivate::ResultListPrivate(ResultList *q)
@@ -76,6 +76,12 @@ void ResultList::addProductShow(Product *product)
     newItem->setImage(product->image());
     newItem->setTitle(product->name());
     newItem->setPrice(product->price());
+    newItem->setStock(product->stock());
+
+    /*
+    QObject::connect(newItem, &SearchItem::addedToOrder,
+                     this, &ResultList::)
+                     */
 
     d->m_layout->addWidget(newItem);
 }

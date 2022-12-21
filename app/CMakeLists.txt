@@ -4,56 +4,148 @@ project(hni_components VERSION 1.0
         DESCRIPTION "HNI Application"
         LANGUAGES CXX)
 
-add_library(${PROJECT_NAME} SHARED
 
+set(INTERFACE_FILES
+        include/interfaces/IObserver.h
+        include/interfaces/ISubject.h include/interfaces/IItem.h)
+
+set(LAYOUT_FILES
+        src/flowlayout.cpp
+        include/layout/flowlayout.h)
+
+set(WIDGETS_FILES
+        src/mainwindow.cpp
+        include/widgets/mainwindow.h
+        src/frametitle.cpp
+        include/widgets/frametitle.h
+        include/widgets/frametitle_p.h
+        src/panel.cpp
+        src/panel_internal.cpp
+        include/widgets/panel.h
+        include/widgets/panel_p.h
+        include/widgets/panel_internal.h
+        src/defaultitem.cpp
+        include/widgets/items/defaultitem.h
+        include/widgets/items/defaultitem_p.h
+        src/extenditem.cpp
+        include/widgets/items/extenditem.h
+        include/widgets/items/extenditem_p.h
+        src/minimalitem.cpp
+        include/widgets/items/minimalitem.h
+        include/widgets/items/minimalitem_p.h
+
+        include/widgets/items/OperateItem.cpp
+        include/widgets/items/OperateItem.h
+        include/widgets/items/OperateItem_p.h
+
+        src/searchitem.cpp
+        include/widgets/items/searchitem.h
+        include/widgets/items/searchitem_p.h)
+
+set(ANALYSIS_FILES
         pages/analysic/analysicpage.cpp
         pages/analysic/analysicpage.h
         pages/analysic/analysicpage_p.h
+        pages/analysic/components/chartwidget.cpp
+        pages/analysic/components/chartwidget.h
+        pages/analysic/components/chartwidget_p.h
+        pages/analysic/components/lastpurchase.cpp
+        pages/analysic/components/lastpurchase.h
+        pages/analysic/components/lastpurchase_p.h
+        pages/analysic/components/remainingstock.cpp
+        pages/analysic/components/remainingstock.h
+        pages/analysic/components/remainingstock_p.h)
 
+set(MEMBERS_FILES
+        pages/members/member.cpp
+        pages/members/member.h
+        pages/members/member_p.h
+        pages/members/membermanager.cpp
+        pages/members/membermanager.h
+        pages/members/membermanager_p.h
         pages/members/memberpage.cpp
         pages/members/memberpage.h
         pages/members/memberpage_p.h
-
+        pages/members/MemberObject.cpp
+        pages/members/MemberObject.h
+        pages/members/MemberObject_p.h
         pages/members/components/memberdialog.cpp
         pages/members/components/memberdialog.h
         pages/members/components/memberdialog_p.h
+        pages/members/components/memberlist.cpp
+        pages/members/components/memberlist.h
+        pages/members/components/memberlist_p.h
+        pages/members/components/profiledialog.cpp
+        pages/members/components/profiledialog.h
+        pages/members/components/profiledialog_p.h pages/members/MemberObjectManager.cpp pages/members/MemberObjectManager.h pages/members/MemberObjectManager_p.h)
 
+set(NOTIFICATION_FILES
         pages/notifications/notificationpage.cpp
         pages/notifications/notificationpage.h
-        pages/notifications/notificationpage_p.h
+        pages/notifications/notificationpage_p.h)
 
+set(OPTIONS_FILES
         pages/options/optionpage.cpp
         pages/options/optionpage.h
-        pages/options/optionpage_p.h
+        pages/options/optionpage_p.h)
 
+set(PRODUCT_FILES
+        pages/products/product.cpp
+        pages/products/product.h
+        pages/products/product_p.h
+        pages/products/productmanager.cpp
+        pages/products/productmanager.h
+        pages/products/productmanager_p.h
         pages/products/productpage.cpp
         pages/products/productpage.h
         pages/products/productpage_p.h
-
+        pages/products/components/productdialog.cpp
+        pages/products/components/productdialog.h
+        pages/products/components/productdialog_p.h
         pages/products/components/productlist.cpp
         pages/products/components/productlist.h
-        pages/products/components/productlist_p.h
+        pages/products/components/productlist_p.h)
 
+set(PURCHASE_FILES
         pages/purchase/purchasepage.cpp
         pages/purchase/purchasepage.h
         pages/purchase/purchasepage_p.h
+        pages/purchase/components/memberchooser.cpp
+        pages/purchase/components/memberchooser.h
+        pages/purchase/components/memberchooser_p.h
+        pages/purchase/components/orderlist.cpp
+        pages/purchase/components/orderlist.h
+        pages/purchase/components/orderlist_p.h
+        pages/purchase/components/orderprice.cpp
+        pages/purchase/components/orderprice.h
+        pages/purchase/components/orderprice_p.h
+        pages/purchase/components/pricewidgets.cpp
+        pages/purchase/components/pricewidgets.h
+        pages/purchase/components/pricewidget_p.h
+        pages/purchase/components/resultlist.cpp
+        pages/purchase/components/resultlist.h
+        pages/purchase/components/resultlist_p.h
+        pages/purchase/components/resultpurchase.cpp
+        pages/purchase/components/resultpurchase.h
+        pages/purchase/components/resultpurchase_p.h
+        pages/purchase/components/searchfield.cpp
+        pages/purchase/components/searchfield.h
+        pages/purchase/components/searchfield_p.h)
 
-        include/widgets/frametitle.h
-        include/widgets/frametitle_p.h
-        src/frametitle.cpp
+set(RESOURCE_FILES
+        resources/hni_resources.qrc)
 
-        include/widgets/items/defaultitem_p.h
-        include/widgets/items/defaultitem.h
-        src/defaultitem.cpp
-
-        include/widgets/items/operateitem_p.h
-        include/widgets/items/operateitem.h
-        src/operateitem.cpp
-
-        include/widgets/items/extenditem_p.h
-        include/widgets/items/extenditem.h
-        src/extenditem.cpp
-        pages/products/components/productdialog.h pages/products/components/productdialog_p.h pages/products/components/productdialog.cpp pages/members/components/memberlist.cpp pages/members/components/memberlist.h pages/members/components/memberlist_p.h pages/purchase/components/orderlist.cpp pages/purchase/components/orderlist.h pages/purchase/components/orderlist_p.h pages/analysic/components/lastpurchase.cpp pages/analysic/components/lastpurchase.h pages/analysic/components/lastpurchase_p.h include/widgets/items/minimalitem.h include/widgets/items/minimalitem_p.h src/minimalitem.cpp pages/analysic/components/remainingstock.cpp pages/analysic/components/remainingstock.h pages/analysic/components/remainingstock_p.h pages/analysic/components/chartwidget.cpp pages/analysic/components/chartwidget.h pages/analysic/components/chartwidget_p.h src/searchitem.cpp include/widgets/items/searchitem.h include/widgets/items/searchitem_p.h pages/purchase/components/flowlayout.cpp pages/purchase/components/flowlayout.h pages/purchase/components/resultlist.cpp pages/purchase/components/resultlist.h pages/purchase/components/resultlist_p.h pages/purchase/components/searchfield.cpp pages/purchase/components/searchfield.h pages/purchase/components/searchfield_p.h pages/members/member.cpp pages/members/member.h pages/members/member_p.h pages/products/product.cpp pages/products/product.h pages/products/product_p.h pages/purchase/components/orderprice.cpp pages/purchase/components/orderprice.h pages/purchase/components/orderprice_p.h pages/members/membermanager.cpp pages/members/membermanager.h pages/members/membermanager.cpp pages/members/membermanager.h pages/members/membermanager_p.h pages/products/productmanager.cpp pages/products/productmanager.h pages/products/productmanager_p.h pages/members/components/profiledialog.cpp pages/members/components/profiledialog.h pages/members/components/profiledialog_p.h pages/purchase/components/pricewidgets.cpp pages/purchase/components/pricewidgets.h pages/purchase/components/pricewidget_p.h pages/purchase/components/memberchooser.cpp pages/purchase/components/memberchooser.h pages/purchase/components/memberchooser_p.h pages/purchase/components/resultpurchase.cpp pages/purchase/components/resultpurchase.h pages/purchase/components/resultpurchase_p.h)
+add_library(${PROJECT_NAME} SHARED
+        ${INTERFACE_FILES}
+        ${LAYOUT_FILES}
+        ${WIDGETS_FILES}
+        ${ANALYSIS_FILES}
+        ${MEMBERS_FILES}
+        ${NOTIFICATION_FILES}
+        ${OPTIONS_FILES}
+        ${PRODUCT_FILES}
+        ${PURCHASE_FILES}
+        ${RESOURCE_FILES})
 
 
 target_sources(
@@ -70,8 +162,6 @@ target_sources(
         include/widgets/panel_p.h
         include/widgets/panel_internal.h
 
-        # Resources
-        resources/hni_resources.qrc
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

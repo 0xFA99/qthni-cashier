@@ -28,7 +28,8 @@ public:
     QLabel              *m_price;
 
     QtMaterialFlatButton    *m_button;
-    bool                m_hasAdded;
+    bool                    m_hasAdded;
+    int                 m_stock;
 };
 
 #endif //QTHNI_SEARCHITEM_P_H

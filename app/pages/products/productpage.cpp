@@ -4,7 +4,7 @@
 #include <QHBoxLayout>
 
 #include "products/product.h"
-#include "widgets/items/operateitem.h"
+#include "widgets/items/OperateItem.h"
 
 ProductPagePrivate::ProductPagePrivate(ProductPage *q)
     : q_ptr(q)
@@ -94,6 +94,7 @@ void ProductPage::addingProduct(Product *product)
 
     d->m_productManager->addProduct(newProduct);
 
+    /*
     auto newItemProduct = new OperateItem(d->m_productManager->lastItemIndex() - 1);
     newItemProduct->setImage(product->image());
     newItemProduct->setTitle(product->name());
@@ -106,7 +107,7 @@ void ProductPage::addingProduct(Product *product)
                      this, &ProductPage::deleteProduct);
 
     d->m_productList->addProductItem(newItemProduct);
-
+    */
     emit addedToPurchase(newProduct);
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Product"));

@@ -61,14 +61,14 @@ void SearchItem::changeStat()
 {
     Q_D(SearchItem);
 
-    if (d->m_hasAdded) {
-        d->m_button->setText("BUY NOW");
-        d->m_button->setRole(Material::Primary);
-        d->m_hasAdded = false;
-    } else {
-        d->m_button->setText("DELETE FROM LIST");
+    if (!d->m_hasAdded) {
+        d->m_button->setText("HAPUS PESANAN");
         d->m_button->setRole(Material::Secondary);
         d->m_hasAdded = true;
+    } else {
+        d->m_button->setText("TAMBAH PESANAN");
+        d->m_button->setRole(Material::Primary);
+        d->m_hasAdded = false;
     }
 }
 
@@ -117,4 +117,18 @@ int SearchItem::price() const
     price.replace('.', "");
 
     return price.toInt();
+}
+
+void SearchItem::setStock(int stock)
+{
+    Q_D(SearchItem);
+
+    d->m_stock = stock;
+}
+
+int SearchItem::stock() const
+{
+    Q_D(const SearchItem);
+
+    return d->m_stock;
 }

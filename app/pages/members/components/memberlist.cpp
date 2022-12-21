@@ -3,7 +3,7 @@
 
 #include <QVBoxLayout>
 
-#include "widgets/items/operateitem.h"
+#include "widgets/items/OperateItem.h"
 
 MemberListPrivate::MemberListPrivate(MemberList *q)
     : q_ptr(q)
@@ -41,6 +41,7 @@ void MemberList::addMemberItem(OperateItem *item)
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
 }
 
+/*
 void MemberList::updateMemberItem(int index, Member *member)
 {
     Q_D(MemberList);
@@ -51,6 +52,7 @@ void MemberList::updateMemberItem(int index, Member *member)
     mem->setTitle(member->name());
     mem->setSubTitle(member->id());
 }
+ */
 
 void MemberList::deleteMemberItem(int index)
 {
@@ -61,7 +63,7 @@ void MemberList::deleteMemberItem(int index)
         QLayoutItem *litem = d->m_layout->itemAt(i);
 
         if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
-            item->setIndex(item->getIndex() - 1);
+            // item->setIndex(item->getIndex() - 1);
         }
     }
 
