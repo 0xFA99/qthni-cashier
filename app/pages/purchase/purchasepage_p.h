@@ -3,6 +3,7 @@
 
 #include "widgets/frametitle.h"
 #include "purchase/components/resultlist.h"
+#include "purchase/components/orderlist.h"
 
 #include <QScrollArea>
 
@@ -32,6 +33,8 @@ public:
 
     ResultList              *m_resultList;
     QScrollArea             *m_resultScroll;
+
+    OrderList               *m_orderList;
 };
 
 #endif //QTHNI_PURCHASEPAGE_P_H

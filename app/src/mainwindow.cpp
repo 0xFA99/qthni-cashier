@@ -11,12 +11,16 @@ MainWindow::MainWindow(QWidget *parent)
     m_stackedWidget     = new QStackedWidget(m_centralWidget);
     m_panel             = new Panel(m_centralWidget);
 
+    m_productObjectManager  = new ProductObjectManager(this);
+    m_memberObjectManager   = new MemberObjectManager(this);
+
     m_analysicPage      = new AnalysicPage(m_centralWidget);
-    m_purchasePage      = new PurchasePage(m_centralWidget);
-    m_productPage       = new ProductPage(m_centralWidget);
-    m_memberPage        = new MemberPage(m_centralWidget);
+    m_purchasePage      = new PurchasePage(m_productObjectManager, m_centralWidget);
+    m_productPage       = new ProductPage(m_productObjectManager, m_centralWidget);
+    m_memberPage        = new MemberPage(m_memberObjectManager, m_centralWidget);
     m_notificationPage  = new NotificationPage(m_centralWidget);
     m_optionPage        = new OptionPage(m_centralWidget);
+
 
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->setSpacing(0);
@@ -41,9 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(m_panel, &Panel::currentChanged, m_stackedWidget, &QStackedWidget::setCurrentIndex);
     QObject::connect(m_productPage, &ProductPage::addedToPurchase, m_purchasePage, &PurchasePage::addedShowProduct);
-    QObject::connect(m_productPage, &ProductPage::updatedToPurchase, m_purchasePage, &PurchasePage::updatedShowProduct);
+    QObject::connect(m_productPage, &ProductPage::deleteShowProduct, m_purchasePage, &PurchasePage::deletedShowProduct);
 }
 
-MainWindow::~MainWindow()
-{
-}
+MainWindow::~MainWindow() = default;

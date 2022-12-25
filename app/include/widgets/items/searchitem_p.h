@@ -4,8 +4,7 @@
 #include "qtmaterial/components/qtmaterialavatar.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 
-#include <QLabel>
-
+class QLabel;
 class QVBoxLayout;
 
 class SearchItem;
@@ -20,16 +19,14 @@ public:
 
     void init();
 
-    SearchItem *const   q_ptr;
-    QVBoxLayout         *m_layout;
-    QtMaterialAvatar    *m_avatar;
-
-    QLabel              *m_title;
-    QLabel              *m_price;
-
+    SearchItem *const       q_ptr;
+    QVBoxLayout             *m_layout;
+    QtMaterialAvatar        *m_avatar;
+    QLabel                  *m_title;
+    QLabel                  *m_subTitle;
     QtMaterialFlatButton    *m_button;
     bool                    m_hasAdded;
-    int                 m_stock;
+    int                     m_index;
 };
 
 #endif //QTHNI_SEARCHITEM_P_H

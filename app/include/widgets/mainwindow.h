@@ -14,6 +14,9 @@
 #include "products/productpage.h"
 #include "purchase/purchasepage.h"
 
+#include "products/ProductObjectManager.h"
+#include "members/MemberObjectManager.h"
+
 class QHBoxLayout;
 class MainWindow : public QMainWindow {
 
@@ -36,6 +39,9 @@ private:
     OptionPage          *m_optionPage;
     ProductPage         *m_productPage;
     PurchasePage        *m_purchasePage;
+
+    ProductObjectManager    *m_productObjectManager;
+    MemberObjectManager     *m_memberObjectManager;
 };
 
 #endif //QTHNI_MAINWINDOW_H

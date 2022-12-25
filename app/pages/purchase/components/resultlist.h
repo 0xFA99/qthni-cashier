@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class ProductObject;
+class SearchItem;
 
 class ResultListPrivate;
 class ResultList : public QWidget
@@ -14,8 +15,8 @@ public:
     explicit ResultList(QWidget *parent = nullptr);
     ~ResultList();
 
-    void addProductObjectShow(ProductObject *);
-    void updateProductObjectShow(int, ProductObject *);
+    void addProductObjectShow(SearchItem*);
+    void deleteProductObjectShow(int);
 
 signals:
     void addToOrder(ProductObject *);

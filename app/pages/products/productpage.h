@@ -3,15 +3,19 @@
 
 #include <QWidget>
 
-class ProductObject;
+#include "widgets/items/searchitem.h"
+#include "products/ProductObject.h"
+
+class ProductObjectManager;
 class OperateItem;
+
 class ProductPagePrivate;
 class ProductPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ProductPage(QWidget *parent = nullptr);
+    explicit ProductPage(ProductObjectManager *manager, QWidget *parent = nullptr);
     ~ProductPage();
 
 public slots:
@@ -21,13 +25,15 @@ public slots:
     void deleteProduct(int);
 
 signals:
-    void addedToPurchase(ProductObject *);
-    void updatedToPurchase(int, ProductObject *);
+    void addedToPurchase(SearchItem*);
+    void deleteShowProduct(int);
 
 protected:
     const QScopedPointer<ProductPagePrivate> d_ptr;
 
 private:
+    void addProductManager(ProductObjectManager *manager);
+
     Q_DISABLE_COPY(ProductPage)
     Q_DECLARE_PRIVATE(ProductPage)
 };

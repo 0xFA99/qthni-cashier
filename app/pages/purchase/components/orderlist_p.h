@@ -1,6 +1,8 @@
 #ifndef QTHNI_ORDERLIST_P_H
 #define QTHNI_ORDERLIST_P_H
 
+#include "products/ProductObjectManager.h"
+
 class QVBoxLayout;
 
 class OrderList;
@@ -17,6 +19,8 @@ public:
 
     OrderList *const    q_ptr;
     QVBoxLayout         *m_layout;
+
+    ProductObjectManager    *m_productManager;
 };
 
 #endif //QTHNI_ORDERLIST_P_H

@@ -70,31 +70,28 @@ ResultList::ResultList(QWidget *parent)
 
 ResultList::~ResultList() = default;
 
-void ResultList::addProductObjectShow(ProductObject *product)
+void ResultList::addProductObjectShow(SearchItem* item)
 {
     Q_D(ResultList);
 
-    auto newItem = new SearchItem(this);
-    newItem->setImage(product->image());
-    newItem->setTitle(product->name());
-    newItem->setPrice(product->price());
-    newItem->setStock(product->stock());
-
-    /*
-    QObject::connect(newItem, &SearchItem::addedToOrder,
-                     this, &ResultList::)
-                     */
-
-    d->m_layout->addWidget(newItem);
+    d->m_layout->addWidget(item);
 }
 
-void ResultList::updateProductObjectShow(int index, ProductObject *product)
+void ResultList::deleteProductObjectShow(int index)
 {
     Q_D(ResultList);
 
-    QLayoutItem *item = d->m_layout->itemAt(index);
-    auto newItem = dynamic_cast<SearchItem *>(item->widget());
-    newItem->setImage(product->image());
-    newItem->setTitle(product->name());
-    newItem->setPrice(product->price());
+    SearchItem *item;
+    for (int i = 0; i < d->m_layout->count(); i++) {
+        QLayoutItem *litem = d->m_layout->itemAt(i);
+
+        if (i > index && (item = dynamic_cast<SearchItem *>(litem->widget()))) {
+            item->setIndex(item->index() - 1);
+        }
+    }
+
+    QLayoutItem *litem = d->m_layout->itemAt(index);
+    if ((item = dynamic_cast<SearchItem *>(litem->widget()))) {
+        item->deleteLater();
+    }
 }

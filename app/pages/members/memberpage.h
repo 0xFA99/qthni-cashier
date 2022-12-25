@@ -3,15 +3,17 @@
 
 #include <QWidget>
 
+class MemberObjectManager;
 class MemberObject;
 class OperateItem;
+
 class MemberPagePrivate;
 class MemberPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MemberPage(QWidget *parent = nullptr);
+    explicit MemberPage(MemberObjectManager *manager, QWidget *parent = nullptr);
     ~MemberPage();
 
 public slots:
@@ -24,6 +26,8 @@ protected:
     const QScopedPointer<MemberPagePrivate> d_ptr;
 
 private:
+    void addMemberManager(MemberObjectManager *manager);
+
     Q_DISABLE_COPY(MemberPage)
     Q_DECLARE_PRIVATE(MemberPage)
 };

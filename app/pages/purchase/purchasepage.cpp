@@ -51,9 +51,10 @@ void PurchasePagePrivate::init()
     temp2->setSizePolicy(sizePolicy);
 
     // TEST
-    OrderList *order1 = new OrderList(q);
+    // OrderList *order1 = new OrderList(q);
+    m_orderList         = new OrderList(q);
 
-    m_orderScrollArea->setWidget(order1);
+    m_orderScrollArea->setWidget(m_orderList);
     m_orderScrollArea->setWidgetResizable(true);
     m_orderScrollArea->setStyleSheet("background-color: transparent;");
     m_orderScrollArea->setVerticalScrollBar(new QtMaterialScrollBar(m_orderScrollArea));
@@ -94,25 +95,39 @@ void PurchasePagePrivate::init()
     m_layout->addWidget(rightFrame);
 }
 
-PurchasePage::PurchasePage(QWidget *parent)
+PurchasePage::PurchasePage(ProductObjectManager *manager, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new PurchasePagePrivate(this))
 {
     d_func()->init();
+
+    addProductManager(manager);
 }
 
 PurchasePage::~PurchasePage() = default;
 
-void PurchasePage::addedShowProduct(ProductObject *product)
+void PurchasePage::addedShowProduct(SearchItem *item)
 {
     Q_D(PurchasePage);
 
-    d->m_resultList->addProductObjectShow(product);
+    item->setParent(this);
+
+    QObject::connect(item, &SearchItem::addedToOrder, d->m_orderList, &OrderList::addProduct);
+    QObject::connect(item, &SearchItem::deleteToOrder, d->m_orderList, &OrderList::removeProduct);
+
+    d->m_resultList->addProductObjectShow(item);
 }
 
-void PurchasePage::updatedShowProduct(int index, ProductObject *product)
+void PurchasePage::deletedShowProduct(int index)
 {
     Q_D(PurchasePage);
 
-    d->m_resultList->updateProductObjectShow(index, product);
+    d->m_resultList->deleteProductObjectShow(index);
+}
+
+void PurchasePage::addProductManager(ProductObjectManager *manager)
+{
+    Q_D(PurchasePage);
+
+    d->m_orderList->addManager(manager);
 }

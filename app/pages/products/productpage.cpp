@@ -3,7 +3,7 @@
 
 #include <QHBoxLayout>
 
-#include "products/ProductObject.h"
+#include "products/ProductObjectManager.h"
 #include "widgets/items/OperateItem.h"
 
 ProductPagePrivate::ProductPagePrivate(ProductPage *q)
@@ -18,7 +18,6 @@ void ProductPagePrivate::init()
     Q_Q(ProductPage);
 
     m_layout                = new QHBoxLayout(q);
-    m_productManager        = new ProductObjectManager(q);
     m_productListTitle      = new FrameTitle(q);
     m_productList           = new ProductList(q);
     m_productScrollArea     = new QScrollArea(q);
@@ -73,11 +72,13 @@ void ProductPagePrivate::init()
 
 }
 
-ProductPage::ProductPage(QWidget *parent)
+ProductPage::ProductPage(ProductObjectManager *manager, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new ProductPagePrivate(this))
 {
     d_func()->init();
+
+    addProductManager(manager);
 }
 
 ProductPage::~ProductPage() = default;
@@ -90,8 +91,6 @@ void ProductPage::addingProduct(ProductObject *product)
     newProductObject->editProduct(product);
     d->m_productManager->addProduct(newProductObject);
 
-    // emit addedToPurchase(newProduct);
-
     auto newItemProduct = new OperateItem;
     newItemProduct->setImage(product->image());
     newItemProduct->setTitle(product->name());
@@ -101,8 +100,18 @@ void ProductPage::addingProduct(ProductObject *product)
     QObject::connect(newItemProduct, &OperateItem::s_editButton, this, &ProductPage::editProduct);
     QObject::connect(newItemProduct, &OperateItem::s_deleteButton, this, &ProductPage::deleteProduct);
 
-    newProductObject->Attach(newItemProduct);
     d->m_productList->addProductItem(newItemProduct);
+
+    auto newSearchProduct = new SearchItem;
+    newSearchProduct->setImage(product->image());
+    newSearchProduct->setTitle(product->name());
+    newSearchProduct->setSubTitle(QString("Rp " + d->m_locale.toString(product->price())));
+    newSearchProduct->setIndex(d->m_productManager->lastItemIndex() - 1);
+
+    addedToPurchase(newSearchProduct);
+
+    newProductObject->Attach(newItemProduct);
+    newProductObject->Attach(newSearchProduct);
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Product"));
 }
@@ -140,6 +149,14 @@ void ProductPage::deleteProduct(int index)
 
     d->m_productManager->deleteProduct(index);
     d->m_productList->deleteProductItem(index);
+    deleteShowProduct(index);
 
     d->m_snackBar->addInstantMessage(QString("Berhasil Menghapus Product"));
+}
+
+void ProductPage::addProductManager(ProductObjectManager *manager)
+{
+    Q_D(ProductPage);
+
+    d->m_productManager = manager;
 }

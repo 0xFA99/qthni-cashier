@@ -52,7 +52,7 @@ public:
     ProfileDialog                   *m_profileDialogWidget;
 
     // TEST
-    MemberObjectManager             *m_member_object_manager;
+    MemberObjectManager             *m_memberManager;
 };
 
 #endif //QTHNI_MEMBERPAGE_P_H

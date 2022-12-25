@@ -16,7 +16,7 @@ void OperateItemPrivate::init()
     Q_Q(OperateItem);
 
     m_layout        = new QGridLayout(q);
-    m_avatar        = new QtMaterialAvatar(QImage(":/images/images/profiles/default.png"), q);
+    m_avatar        = new QtMaterialAvatar(QImage(":/images/images/profiles/defaultimage.png"), q);
     m_title         = new QLabel("Untitled", q);
     m_subTitle      = new QLabel("Subtitled", q);
     m_editButton    = new QtMaterialFlatButton("Edit", q);
@@ -40,11 +40,13 @@ void OperateItemPrivate::init()
 
     m_editButton->setHaloVisible(false);
     m_editButton->setRole(Material::Primary);
+    m_editButton->setOverlayStyle(Material::TintedOverlay);
     m_editButton->setIcon(QtMaterialTheme::icon("image", "edit"));
     m_editButton->setSizePolicy(buttonPolicy);
 
     m_deleteButton->setHaloVisible(false);
     m_deleteButton->setRole(Material::Secondary);
+    m_deleteButton->setOverlayStyle(Material::TintedOverlay);
     m_deleteButton->setIcon(QtMaterialTheme::icon("action", "delete"));
     m_deleteButton->setSizePolicy(buttonPolicy);
 
@@ -112,14 +114,6 @@ void OperateItem::setSubTitleColor(const QColor &color)
     QPalette palette = d->m_subTitle->palette();
     palette.setColor(d->m_subTitle->foregroundRole(), color);
     d->m_subTitle->setPalette(palette);
-}
-
-QString
-OperateItem::subTitle() const
-{
-    Q_D(const OperateItem);
-
-    return d->m_subTitle->text();
 }
 
 void OperateItem::setIndex(int index)
