@@ -26,10 +26,10 @@ public:
 
     QtMaterialFlatButton    *m_decreaseButton;
     QtMaterialFlatButton    *m_increaseButton;
-    QtMaterialFlatButton    *m_removeButton;
 
     QLabel                  *m_title;
     QLabel                  *m_amount;
+    int                     m_price;
     int                     m_stock;
     int                     m_index;
 };

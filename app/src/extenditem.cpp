@@ -20,7 +20,6 @@ void ExtendItemPrivate::init()
     m_amount            = new QLabel("1", q);
     m_decreaseButton    = new QtMaterialFlatButton(q);
     m_increaseButton    = new QtMaterialFlatButton(q);
-    m_removeButton      = new QtMaterialFlatButton(q);
 
     m_avatar->setSize(42);
     m_avatar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -46,16 +45,9 @@ void ExtendItemPrivate::init()
     m_increaseButton->setHaloVisible(false);
     m_increaseButton->setSizePolicy(sizePolicy);
 
-    m_removeButton->setFont(font);
-    m_removeButton->setText("\uE63A");
-    m_removeButton->setHaloVisible(false);
-    m_removeButton->setRole(Material::Secondary);
-    m_removeButton->setSizePolicy(sizePolicy);
-
     int cr = m_increaseButton->sizeHint().height() / 2;
     m_decreaseButton->setCornerRadius(cr);
     m_increaseButton->setCornerRadius(cr);
-    m_removeButton->setCornerRadius(cr);
 
     m_layout->addWidget(m_avatar);
     m_layout->addWidget(m_title);
@@ -63,19 +55,22 @@ void ExtendItemPrivate::init()
     m_layout->addWidget(m_decreaseButton);
     m_layout->addWidget(m_amount);
     m_layout->addWidget(m_increaseButton);
-    m_layout->addWidget(m_removeButton);
     m_layout->setContentsMargins(0, 10, 0, 0);
 
     QObject::connect(m_decreaseButton, &QPushButton::clicked, [=]() {
         int temp = m_amount->text().toInt();
         if (temp > 1) temp--;
         m_amount->setText(QString::number(temp));
+        q->decreasePrice(m_index);
     });
+
 
     QObject::connect(m_increaseButton, &QPushButton::clicked, [=]() {
         int temp = m_amount->text().toInt();
-        if (temp <= m_stock)
+        if (temp < m_stock)
             m_amount->setText(QString::number(temp + 1));
+
+        q->increasePrice(m_index);
     });
 }
 
@@ -88,11 +83,23 @@ ExtendItem::ExtendItem(QWidget *parent)
 
 ExtendItem::~ExtendItem() = default;
 
+void ExtendItem::extraItem(int stock)
+{
+    Q_D(ExtendItem);
+    if (d->m_amount->text().toInt() > stock) {
+        d->m_amount->setText(QString::number(stock));
+    }
+
+    setStock(stock);
+}
+
 void ExtendItem::Update(const QImage &image, const QString& title, const QString& subTitle)
 {
     setImage(image);
     setTitle(title);
-    // setStock(stock);
+
+    int price = subTitle.split(" ")[1].replace('.', "").toInt();
+    setStock(price);
 }
 
 void ExtendItem::setImage(const QImage &image)

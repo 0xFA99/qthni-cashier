@@ -5,6 +5,8 @@
 #include "purchase/components/resultlist.h"
 #include "purchase/components/orderlist.h"
 
+#include "products/ProductObjectManager.h"
+
 #include <QScrollArea>
 
 class QHBoxLayout;
@@ -35,6 +37,7 @@ public:
     QScrollArea             *m_resultScroll;
 
     OrderList               *m_orderList;
+    ProductObjectManager    *m_productManager;
 };
 
 #endif //QTHNI_PURCHASEPAGE_P_H

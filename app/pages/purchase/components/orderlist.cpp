@@ -36,20 +36,11 @@ OrderList::OrderList(QWidget *parent)
 
 OrderList::~OrderList() = default;
 
-void OrderList::addProduct(int productIndex)
+void OrderList::addProduct(ExtendItem *item)
 {
     Q_D(OrderList);
 
-    ProductObject* product = d->m_productManager->getProductObject(productIndex);
-
-    auto *item = new ExtendItem(this);
-    item->setImage(product->image());
-    item->setTitle(product->name());
-    item->setStock(product->stock());
-    item->setIndex(productIndex);
-
-    product->Attach(item);
-
+    item->setParent(this);
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
 }
 
@@ -62,11 +53,4 @@ void OrderList::removeProduct(int productIndex)
     if ((item = dynamic_cast<ExtendItem *>(litem->widget()))) {
         item->deleteLater();
     }
-}
-
-void OrderList::addManager(ProductObjectManager *manager)
-{
-    Q_D(OrderList);
-
-    d->m_productManager = manager;
 }

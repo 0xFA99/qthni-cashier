@@ -6,6 +6,7 @@
 
 #include "purchase/components/orderlist.h"
 #include "qtmaterial/components/qtmaterialscrollbar.h"
+#include "widgets/items/extenditem.h"
 
 #include "products/ProductObjectManager.h"
 
@@ -112,8 +113,8 @@ void PurchasePage::addedShowProduct(SearchItem *item)
 
     item->setParent(this);
 
-    QObject::connect(item, &SearchItem::addedToOrder, d->m_orderList, &OrderList::addProduct);
-    QObject::connect(item, &SearchItem::deleteToOrder, d->m_orderList, &OrderList::removeProduct);
+    QObject::connect(item, &SearchItem::addedToOrder, this, &PurchasePage::addOrderItem);
+    QObject::connect(item, &SearchItem::deleteToOrder, this, &PurchasePage::removeOrderItem);
 
     d->m_resultList->addProductObjectShow(item);
 }
@@ -129,5 +130,42 @@ void PurchasePage::addProductManager(ProductObjectManager *manager)
 {
     Q_D(PurchasePage);
 
-    d->m_orderList->addManager(manager);
+    d->m_productManager = manager;
+}
+
+void PurchasePage::addOrderItem(int index)
+{
+    Q_D(PurchasePage);
+
+    ProductObject *product = d->m_productManager->getProductObject(index);
+
+    auto *item = new ExtendItem;
+    item->setImage(product->image());
+    item->setTitle(product->name());
+    item->setStock(product->stock());
+    product->Attach(item);
+
+    d->m_orderList->addProduct(item);
+}
+
+void PurchasePage::removeOrderItem(int index)
+{
+    Q_D(PurchasePage);
+
+    d->m_orderList->removeProduct(index);
+}
+
+void PurchasePage::increasePrice(int price)
+{
+    Q_D(PurchasePage);
+}
+
+void PurchasePage::decreasePrice(int price)
+{
+    Q_D(PurchasePage);
+}
+
+void PurchasePage::removePrice(int price)
+{
+    Q_D(PurchasePage);
 }

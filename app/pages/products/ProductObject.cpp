@@ -126,6 +126,7 @@ ProductObject::Update()
     while (iterator != d->m_observerList.end()) {
         price_format = price();
         (*iterator)->Update(image(), name(), QString("Rp " + d->m_locale.toString(price_format)));
+        (*iterator)->extraItem(stock());
         ++iterator;
     }
 }

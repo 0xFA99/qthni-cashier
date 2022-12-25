@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class ProductObjectManager;
+class ExtendItem;
 class OrderListPrivate;
 class OrderList : public QWidget
 {
@@ -13,10 +13,8 @@ public:
     explicit OrderList(QWidget *parent = nullptr);
     ~OrderList();
 
-    void addManager(ProductObjectManager *manager);
-
 public slots:
-    void addProduct(int);
+    void addProduct(ExtendItem*);
     void removeProduct(int);
 
 protected:

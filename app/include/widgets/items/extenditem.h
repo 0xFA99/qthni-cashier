@@ -15,6 +15,7 @@ public:
     ~ExtendItem();
 
     void Update(const QImage&, const QString&, const QString&) override;
+    void extraItem(int) override;
 
     void setImage(const QImage&) override;
 
@@ -24,11 +25,18 @@ public:
     void setSubTitle(const QString&) override;
     void setSubTitleColor(const QColor&) override;
 
+    void setPrice(int);
+    [[nodiscard]] int price() const;
+
     void setStock(int);
     [[nodiscard]] int amount() const;
 
     void setIndex(int);
     [[nodiscard]] int index() const;
+
+signals:
+    void increasePrice(int);
+    void decreasePrice(int);
 
 protected:
     const QScopedPointer<ExtendItemPrivate> d_ptr;
