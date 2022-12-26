@@ -49,8 +49,11 @@ void OrderList::removeProduct(int productIndex)
     Q_D(OrderList);
 
     ExtendItem *item;
-    QLayoutItem *litem = d->m_layout->itemAt(productIndex);
-    if ((item = dynamic_cast<ExtendItem *>(litem->widget()))) {
-        item->deleteLater();
+    for (int i = 0; i < d->m_layout->count(); ++i) {
+        QLayoutItem *litem = d->m_layout->itemAt(i);
+        if ((item = dynamic_cast<ExtendItem *>(litem->widget()))) {
+            if (item->index() == productIndex)
+                item->deleteLater();
+        }
     }
 }

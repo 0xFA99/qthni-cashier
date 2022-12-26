@@ -59,18 +59,21 @@ void ExtendItemPrivate::init()
 
     QObject::connect(m_decreaseButton, &QPushButton::clicked, [=]() {
         int temp = m_amount->text().toInt();
-        if (temp > 1) temp--;
-        m_amount->setText(QString::number(temp));
-        q->decreasePrice(m_index);
+        if (temp > 1) {
+            temp--;
+            m_amount->setText(QString::number(temp));
+            q->changeSubPrice(m_index, (m_price * temp));
+        }
     });
 
 
     QObject::connect(m_increaseButton, &QPushButton::clicked, [=]() {
         int temp = m_amount->text().toInt();
-        if (temp < m_stock)
-            m_amount->setText(QString::number(temp + 1));
-
-        q->increasePrice(m_index);
+        if (temp < m_stock) {
+            temp++;
+            m_amount->setText(QString::number(temp));
+            q->changeSubPrice(m_index, (m_price * temp));
+        }
     });
 }
 
@@ -95,11 +98,15 @@ void ExtendItem::extraItem(int stock)
 
 void ExtendItem::Update(const QImage &image, const QString& title, const QString& subTitle)
 {
+    Q_D(ExtendItem);
+
     setImage(image);
     setTitle(title);
 
     int price = subTitle.split(" ")[1].replace('.', "").toInt();
-    setStock(price);
+    setPrice(price);
+
+    changeSubPrice(d->m_index, (d->m_price * d->m_amount->text().toInt()));
 }
 
 void ExtendItem::setImage(const QImage &image)
@@ -161,4 +168,18 @@ int ExtendItem::index() const
     Q_D(const ExtendItem);
 
     return d->m_index;
+}
+
+void ExtendItem::setPrice(int price)
+{
+    Q_D(ExtendItem);
+
+    d->m_price = price;
+}
+
+int ExtendItem::price() const
+{
+    Q_D(const ExtendItem);
+
+    return d->m_price;
 }

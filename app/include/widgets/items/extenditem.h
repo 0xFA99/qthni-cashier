@@ -35,8 +35,7 @@ public:
     [[nodiscard]] int index() const;
 
 signals:
-    void increasePrice(int);
-    void decreasePrice(int);
+    void changeSubPrice(int, int);
 
 protected:
     const QScopedPointer<ExtendItemPrivate> d_ptr;

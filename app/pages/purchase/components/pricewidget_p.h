@@ -4,6 +4,8 @@
 #include "qtmaterial/components/qtmaterialtextfield.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 
+#include <QLocale>
+
 class QVBoxLayout;
 class PriceWidget;
 class PriceWidgetPrivate
@@ -25,6 +27,9 @@ public:
     QtMaterialTextField     *m_discount;
 
     QtMaterialFlatButton    *m_button;
+
+    QLocale                 m_locale;
+    QMap<int, int>      m_priceMapList;
 };
 
 #endif //QTHNI_PRICEWIDGET_P_H

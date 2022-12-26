@@ -22,6 +22,7 @@ void SearchItemPrivate::init()
     m_subTitle      = new QLabel("0", q);
     m_button        = new QtMaterialFlatButton("TAMBAH PESANAN", q);
     m_hasAdded      = false;
+    m_amount        = 0;
 
     m_avatar->setSize(72);
     m_avatar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -34,6 +35,10 @@ void SearchItemPrivate::init()
     font.setPointSize(10);
     m_subTitle->setFont(font);
 
+    m_button->setHaloVisible(false);
+    m_button->setBackgroundMode(Qt::OpaqueMode);
+    m_button->setRole(Material::Primary);
+    m_button->setOverlayColor(Material::TintedOverlay);
     m_button->setRippleStyle(Material::NoRipple);
     m_button->setRole(Material::Primary);
 

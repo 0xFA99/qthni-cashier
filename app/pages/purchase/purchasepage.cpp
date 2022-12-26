@@ -12,7 +12,6 @@
 
 // TEST
 #include "purchase/components/searchfield.h"
-#include "purchase/components/pricewidgets.h"
 
 PurchasePagePrivate::PurchasePagePrivate(PurchasePage *q)
     : q_ptr(q)
@@ -31,6 +30,7 @@ void PurchasePagePrivate::init()
     m_orderScrollArea   = new QScrollArea(q);
     m_orderFrame        = new FrameTitle("Daftar Pesanan");
     m_totalFrame        = new FrameTitle("Total Harga");
+    m_priceWidget       = new PriceWidget(q);
 
     m_totalFrame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
@@ -46,7 +46,6 @@ void PurchasePagePrivate::init()
 
     // Temp Widgets
     QWidget *temp2 = new QWidget(q);
-    PriceWidget *priceWidget = new PriceWidget(q);
 
     QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     temp2->setSizePolicy(sizePolicy);
@@ -63,7 +62,7 @@ void PurchasePagePrivate::init()
 
     m_searchFieldFrame->addChildWidget(m_resultScroll);
     m_orderFrame->addChildWidget(m_orderScrollArea);
-    m_totalFrame->addChildWidget(priceWidget);
+    m_totalFrame->addChildWidget(m_priceWidget);
 
     QFrame *leftFrame = new QFrame(q);
     QFrame *rightFrame = new QFrame(q);
@@ -142,8 +141,15 @@ void PurchasePage::addOrderItem(int index)
     auto *item = new ExtendItem;
     item->setImage(product->image());
     item->setTitle(product->name());
+    item->setPrice(product->price());
     item->setStock(product->stock());
+    item->setIndex(index);
     product->Attach(item);
+
+    QObject::connect(item, &ExtendItem::changeSubPrice, d->m_priceWidget, &PriceWidget::changeSubTotal);
+
+    // First init
+    d->m_priceWidget->changeSubTotal(index, product->price());
 
     d->m_orderList->addProduct(item);
 }
@@ -152,20 +158,6 @@ void PurchasePage::removeOrderItem(int index)
 {
     Q_D(PurchasePage);
 
+    d->m_priceWidget->deleteItemPrice(index);
     d->m_orderList->removeProduct(index);
-}
-
-void PurchasePage::increasePrice(int price)
-{
-    Q_D(PurchasePage);
-}
-
-void PurchasePage::decreasePrice(int price)
-{
-    Q_D(PurchasePage);
-}
-
-void PurchasePage::removePrice(int price)
-{
-    Q_D(PurchasePage);
 }

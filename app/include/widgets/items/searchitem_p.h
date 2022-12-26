@@ -27,6 +27,7 @@ public:
     QtMaterialFlatButton    *m_button;
     bool                    m_hasAdded;
     int                     m_index;
+    int                     m_amount;
 };
 
 #endif //QTHNI_SEARCHITEM_P_H

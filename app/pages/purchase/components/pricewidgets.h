@@ -12,10 +12,17 @@ public:
     explicit PriceWidget(QWidget *parent = nullptr);
     ~PriceWidget();
 
+    void deleteItemPrice(int);
+
+public slots:
+    void changeSubTotal(int,int);
+
 protected:
     const QScopedPointer<PriceWidgetPrivate> d_ptr;
 
 private:
+    void updateTotal();
+
     Q_DISABLE_COPY(PriceWidget)
     Q_DECLARE_PRIVATE(PriceWidget)
 };

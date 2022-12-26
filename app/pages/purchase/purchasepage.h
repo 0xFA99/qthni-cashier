@@ -33,10 +33,6 @@ private:
 private slots:
     void addOrderItem(int);
     void removeOrderItem(int);
-
-    void increasePrice(int);
-    void decreasePrice(int);
-    void removePrice(int);
 };
 
 #endif //QTHNI_PURCHASEPAGE_H

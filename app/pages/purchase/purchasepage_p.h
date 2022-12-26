@@ -4,6 +4,7 @@
 #include "widgets/frametitle.h"
 #include "purchase/components/resultlist.h"
 #include "purchase/components/orderlist.h"
+#include "purchase/components/pricewidgets.h"
 
 #include "products/ProductObjectManager.h"
 
@@ -38,6 +39,8 @@ public:
 
     OrderList               *m_orderList;
     ProductObjectManager    *m_productManager;
+
+    PriceWidget             *m_priceWidget;
 };
 
 #endif //QTHNI_PURCHASEPAGE_P_H
