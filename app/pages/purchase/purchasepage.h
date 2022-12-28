@@ -3,27 +3,36 @@
 
 #include <QWidget>
 
-#include "products/product.h"
+#include "products/ProductObject.h"
+#include "widgets/items/searchitem.h"
 
+class ProductObject;
+class ProductObjectManager;
 class PurchasePagePrivate;
 class PurchasePage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PurchasePage(QWidget *parent = nullptr);
+    explicit PurchasePage(ProductObjectManager *manager, QWidget *parent = nullptr);
     ~PurchasePage();
 
 public slots:
-    void addedShowProduct(Product *);
-    void updatedShowProduct(int, Product *);
+    void addedShowProduct(int);
+    void deletedShowProduct(int);
 
 protected:
     const QScopedPointer<PurchasePagePrivate> d_ptr;
 
 private:
+    void addProductManager(ProductObjectManager *manager);
+
     Q_DISABLE_COPY(PurchasePage)
     Q_DECLARE_PRIVATE(PurchasePage)
+
+private slots:
+    void addOrderItem(int);
+    void removeOrderItem(int);
 };
 
 #endif //QTHNI_PURCHASEPAGE_H

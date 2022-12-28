@@ -26,16 +26,12 @@ public:
 
     QtMaterialFlatButton    *m_decreaseButton;
     QtMaterialFlatButton    *m_increaseButton;
-    QtMaterialFlatButton    *m_removeButton;
 
     QLabel                  *m_title;
     QLabel                  *m_amount;
-
-    QColor                  m_titleColor;
-    QColor                  m_amountColor;
-
-    int                     m_titleSize;
-    int                     m_amountSize;
+    int                     m_price;
+    int                     m_stock;
+    int                     m_index;
 };
 
 #endif //QTHNI_EXTENDITEM_P_H

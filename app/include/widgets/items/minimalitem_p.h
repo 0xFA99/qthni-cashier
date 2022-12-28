@@ -24,7 +24,8 @@ public:
     QtMaterialAvatar        *m_avatar;
 
     QLabel                  *m_title;
-    QLabel                  *m_extraTitle;
+    QLabel                  *m_subTitle;
+    int                     m_index;
 };
 
 #endif //QTHNI_MINIMALITEM_P_H

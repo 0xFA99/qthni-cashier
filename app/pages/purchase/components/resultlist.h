@@ -3,7 +3,8 @@
 
 #include <QWidget>
 
-#include "products/product.h"
+class ProductObject;
+class SearchItem;
 
 class ResultListPrivate;
 class ResultList : public QWidget
@@ -14,8 +15,12 @@ public:
     explicit ResultList(QWidget *parent = nullptr);
     ~ResultList();
 
-    void addProductShow(Product *);
-    void updateProductShow(int, Product *);
+    void addProductObjectShow(SearchItem*);
+    void deleteProductObjectShow(int);
+
+signals:
+    void addToOrder(ProductObject *);
+    void updateToOrder(ProductObject *);
 
 protected:
     const QScopedPointer<ResultListPrivate> d_ptr;

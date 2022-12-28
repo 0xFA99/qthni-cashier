@@ -1,10 +1,12 @@
 #ifndef QTHNI_EXTENDITEM_H
 #define QTHNI_EXTENDITEM_H
 
+#include "interfaces/IItem.h"
+#include "interfaces/IObserver.h"
 #include <QWidget>
 
 class ExtendItemPrivate;
-class ExtendItem : public QWidget
+class ExtendItem : public QWidget, public IObserver, public IItem
 {
     Q_OBJECT
 
@@ -12,25 +14,25 @@ public:
     explicit ExtendItem(QWidget *parent = nullptr);
     ~ExtendItem();
 
-    void setImage(const QImage &image);
-    [[nodiscard]] QImage image() const;
+    void Update(const QImage&, const QString&, const QString&) override;
+    void extraItem(int) override;
 
-    void setTitle(const QString &text);
-    [[nodiscard]] QString title() const;
+    void setImage(const QImage&) override;
 
-    void setTitleColor(const QColor &color);
-    [[nodiscard]] QColor titleColor() const;
+    void setTitle(const QString&) override;
+    void setTitleColor(const QColor&) override;
 
-    void setTitleSize(int size);
-    [[nodiscard]] int titleSize() const;
+    void setSubTitle(const QString&) override;
+    void setSubTitleColor(const QColor&) override;
 
-    [[nodiscard]] int amount() const;
+    void setPrice(int);
+    void setStock(int);
 
-    void setAmountColor(const QColor &color);
-    [[nodiscard]] QColor amountColor() const;
+    void setIndex(int);
+    [[nodiscard]] int index() const;
 
-    void setAmountSize(int size);
-    [[nodiscard]] int amountSize() const;
+signals:
+    void changeSubPrice(int, int);
 
 protected:
     const QScopedPointer<ExtendItemPrivate> d_ptr;

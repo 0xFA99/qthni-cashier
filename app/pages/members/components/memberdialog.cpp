@@ -3,7 +3,7 @@
 
 #include <QGridLayout>
 
-#include "members/member.h"
+#include "members/MemberObject.h"
 
 MemberDialogPrivate::MemberDialogPrivate(MemberDialog *q)
     : q_ptr(q)
@@ -86,7 +86,7 @@ void MemberDialog::addSlot()
 {
     Q_D(MemberDialog);
 
-    Member newMember;
+    MemberObject newMember;
     newMember.setImage(d->m_avatar->image());
     newMember.setName(d->m_nameField->text());
     newMember.setID(d->m_idField->text());
@@ -101,7 +101,7 @@ void MemberDialog::editSlot()
 {
     Q_D(MemberDialog);
 
-    Member tempMember;
+    MemberObject tempMember;
     tempMember.setImage(d->m_avatar->image());
     tempMember.setName(d->m_nameField->text());
     tempMember.setID(d->m_idField->text());

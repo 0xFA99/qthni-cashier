@@ -2,7 +2,8 @@
 #include "widgets/items/searchitem_p.h"
 
 #include <QVBoxLayout>
-#include <QLocale>
+#include <QLabel>
+
 
 SearchItemPrivate::SearchItemPrivate(SearchItem *q)
     : q_ptr(q)
@@ -16,35 +17,37 @@ void SearchItemPrivate::init()
     Q_Q(SearchItem);
 
     m_layout        = new QVBoxLayout(q);
-    m_avatar        = new QtMaterialAvatar(q);
+    m_avatar        = new QtMaterialAvatar(QImage(":/images/images/profiles/defaultimage.png"), q);
     m_title         = new QLabel("Untitled", q);
-    m_price         = new QLabel("0", q);
-    m_button        = new QtMaterialFlatButton("BUY NOW", q);
+    m_subTitle      = new QLabel("0", q);
+    m_button        = new QtMaterialFlatButton("TAMBAH PESANAN", q);
     m_hasAdded      = false;
+    m_amount        = 0;
 
     m_avatar->setSize(72);
-    m_avatar->setLetter(QChar('U'));
     m_avatar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     m_title->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
-    m_price->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    m_subTitle->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     QFont font("Roboto", 12, QFont::Normal);
     m_title->setFont(font);
     font.setPointSize(10);
-    m_price->setFont(font);
+    m_subTitle->setFont(font);
 
+    m_button->setHaloVisible(false);
+    m_button->setBackgroundMode(Qt::OpaqueMode);
+    m_button->setRole(Material::Primary);
+    m_button->setOverlayColor(Material::TintedOverlay);
     m_button->setRippleStyle(Material::NoRipple);
     m_button->setRole(Material::Primary);
 
     m_layout->addWidget(m_avatar);
     m_layout->addWidget(m_title);
-    m_layout->addWidget(m_price);
+    m_layout->addWidget(m_subTitle);
     m_layout->addWidget(m_button);
 
-    QObject::connect(m_button, &QPushButton::clicked, [q]() {
-        q->changeStat();
-    });
+    QObject::connect(m_button, &QPushButton::clicked, [q]() { q->changeStat(); });
 }
 
 SearchItem::SearchItem(QWidget *parent)
@@ -61,15 +64,26 @@ void SearchItem::changeStat()
 {
     Q_D(SearchItem);
 
-    if (d->m_hasAdded) {
-        d->m_button->setText("BUY NOW");
-        d->m_button->setRole(Material::Primary);
-        d->m_hasAdded = false;
-    } else {
-        d->m_button->setText("DELETE FROM LIST");
+    if (!d->m_hasAdded) {
+        d->m_button->setText("HAPUS PESANAN");
         d->m_button->setRole(Material::Secondary);
         d->m_hasAdded = true;
+
+        addedToOrder(d->m_index);
+    } else {
+        d->m_button->setText("TAMBAH PESANAN");
+        d->m_button->setRole(Material::Primary);
+        d->m_hasAdded = false;
+
+        deleteToOrder(d->m_index);
     }
+}
+
+void SearchItem::Update(const QImage &image, const QString &title, const QString &subTitle)
+{
+    setImage(image);
+    setTitle(title);
+    setSubTitle(subTitle);
 }
 
 void SearchItem::setImage(const QImage &image)
@@ -79,42 +93,48 @@ void SearchItem::setImage(const QImage &image)
     d->m_avatar->setImage(image);
 }
 
-QImage SearchItem::image() const
-{
-    Q_D(const SearchItem);
-
-    return d->m_avatar->image();
-}
-
-void SearchItem::setTitle(const QString &text)
+void SearchItem::setTitle(const QString &title)
 {
     Q_D(SearchItem);
 
-    d->m_title->setText(text);
+    d->m_title->setText(title);
 }
 
-QString SearchItem::title() const
-{
-    Q_D(const SearchItem);
-
-    return d->m_title->text();
-}
-
-void SearchItem::setPrice(int price)
+void SearchItem::setTitleColor(const QColor &color)
 {
     Q_D(SearchItem);
 
-    QLocale indo("id_ID");
-
-    d->m_price->setText("Rp " + indo.toString(price));
+    QPalette palette = d->m_title->palette();
+    palette.setColor(d->m_title->foregroundRole(), color);
+    d->m_title->setPalette(palette);
 }
 
-int SearchItem::price() const
+void SearchItem::setSubTitle(const QString &subTitle)
+{
+    Q_D(SearchItem);
+
+    d->m_subTitle->setText(subTitle);
+}
+
+void SearchItem::setSubTitleColor(const QColor &color)
+{
+    Q_D(SearchItem);
+
+    QPalette palette = d->m_subTitle->palette();
+    palette.setColor(d->m_subTitle->foregroundRole(), color);
+    d->m_subTitle->setPalette(palette);
+}
+
+void SearchItem::setIndex(int index)
+{
+    Q_D(SearchItem);
+
+    d->m_index = index;
+}
+
+int SearchItem::index() const
 {
     Q_D(const SearchItem);
 
-    QString price = d->m_price->text().split(" ")[1];
-    price.replace('.', "");
-
-    return price.toInt();
+    return d->m_index;
 }

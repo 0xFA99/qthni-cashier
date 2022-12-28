@@ -15,20 +15,16 @@ void ExtendItemPrivate::init()
     Q_Q(ExtendItem);
 
     m_layout            = new QHBoxLayout(q);
-    m_avatar            = new QtMaterialAvatar(q);
+    m_avatar            = new QtMaterialAvatar(QImage(":/images/images/profiles/defaultimage.png"), q);
     m_title             = new QLabel("Untitled", q);
     m_amount            = new QLabel("1", q);
     m_decreaseButton    = new QtMaterialFlatButton(q);
     m_increaseButton    = new QtMaterialFlatButton(q);
-    m_removeButton      = new QtMaterialFlatButton(q);
 
-    m_titleSize = m_amountSize = 12;
-
-    m_avatar->setLetter(QChar('A'));
     m_avatar->setSize(42);
     m_avatar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QFont font("Roboto", m_titleSize, QFont::Normal);
+    QFont font("Roboto", 12, QFont::Normal);
     m_title->setFont(font);
     m_amount->setFont(font);
 
@@ -49,16 +45,9 @@ void ExtendItemPrivate::init()
     m_increaseButton->setHaloVisible(false);
     m_increaseButton->setSizePolicy(sizePolicy);
 
-    m_removeButton->setFont(font);
-    m_removeButton->setText("\uE63A");
-    m_removeButton->setHaloVisible(false);
-    m_removeButton->setRole(Material::Secondary);
-    m_removeButton->setSizePolicy(sizePolicy);
-
     int cr = m_increaseButton->sizeHint().height() / 2;
     m_decreaseButton->setCornerRadius(cr);
     m_increaseButton->setCornerRadius(cr);
-    m_removeButton->setCornerRadius(cr);
 
     m_layout->addWidget(m_avatar);
     m_layout->addWidget(m_title);
@@ -66,18 +55,25 @@ void ExtendItemPrivate::init()
     m_layout->addWidget(m_decreaseButton);
     m_layout->addWidget(m_amount);
     m_layout->addWidget(m_increaseButton);
-    m_layout->addWidget(m_removeButton);
     m_layout->setContentsMargins(0, 10, 0, 0);
 
     QObject::connect(m_decreaseButton, &QPushButton::clicked, [=]() {
         int temp = m_amount->text().toInt();
-        if (temp > 1) temp--;
-        m_amount->setText(QString::number(temp));
+        if (temp > 1) {
+            temp--;
+            m_amount->setText(QString::number(temp));
+            q->changeSubPrice(m_index, (m_price * temp));
+        }
     });
+
 
     QObject::connect(m_increaseButton, &QPushButton::clicked, [=]() {
         int temp = m_amount->text().toInt();
-        m_amount->setText(QString::number(temp + 1));
+        if (temp < m_stock) {
+            temp++;
+            m_amount->setText(QString::number(temp));
+            q->changeSubPrice(m_index, (m_price * temp));
+        }
     });
 }
 
@@ -90,18 +86,34 @@ ExtendItem::ExtendItem(QWidget *parent)
 
 ExtendItem::~ExtendItem() = default;
 
+void ExtendItem::extraItem(int stock)
+{
+    Q_D(ExtendItem);
+    if (d->m_amount->text().toInt() > stock) {
+        d->m_amount->setText(QString::number(stock));
+    }
+
+    setStock(stock);
+}
+
+void ExtendItem::Update(const QImage &image, const QString& title, const QString& subTitle)
+{
+    Q_D(ExtendItem);
+
+    setImage(image);
+    setTitle(title);
+
+    int price = subTitle.split(" ")[1].replace('.', "").toInt();
+    setPrice(price);
+
+    changeSubPrice(d->m_index, (d->m_price * d->m_amount->text().toInt()));
+}
+
 void ExtendItem::setImage(const QImage &image)
 {
     Q_D(ExtendItem);
 
     d->m_avatar->setImage(image);
-}
-
-QImage ExtendItem::image() const
-{
-    Q_D(const ExtendItem);
-
-    return d->m_avatar->image();
 }
 
 void ExtendItem::setTitle(const QString &text)
@@ -111,88 +123,50 @@ void ExtendItem::setTitle(const QString &text)
     d->m_title->setText(text);
 }
 
-QString ExtendItem::title() const
-{
-    Q_D(const ExtendItem);
-
-    return d->m_title->text();
-}
-
 void ExtendItem::setTitleColor(const QColor &color)
 {
     Q_D(ExtendItem);
-
-    d->m_titleColor = color;
 
     QPalette palette = d->m_title->palette();
     palette.setColor(d->m_title->foregroundRole(), color);
     d->m_title->setPalette(palette);
 }
 
-QColor ExtendItem::titleColor() const
+void ExtendItem::setSubTitle(const QString &)
 {
-    Q_D(const ExtendItem);
-
-    return d->m_titleColor;
+    Q_D(ExtendItem);
 }
 
-void ExtendItem::setTitleSize(int size)
+void ExtendItem::setSubTitleColor(const QColor &)
+{
+    Q_D(const ExtendItem);
+}
+
+void ExtendItem::setStock(int stock)
 {
     Q_D(ExtendItem);
 
-    d->m_titleSize = size;
-
-    QFont font = d->m_title->font();
-    font.setPointSize(size);
-    d->m_title->setFont(font);
+    d->m_stock = stock;
 }
 
-int ExtendItem::titleSize() const
-{
-    Q_D(const ExtendItem);
-
-    return d->m_titleSize;
-}
-
-int ExtendItem::amount() const
-{
-    Q_D(const ExtendItem);
-
-    return d->m_amount->text().toInt();
-}
-
-void ExtendItem::setAmountColor(const QColor &color)
+void ExtendItem::setIndex(int index)
 {
     Q_D(ExtendItem);
 
-    d->m_amountColor = color;
-
-    QPalette palette = d->m_amount->palette();
-    palette.setColor(d->m_amount->foregroundRole(), color);
-    d->m_amount->setPalette(palette);
+    d->m_index = index;
 }
 
-QColor ExtendItem::amountColor() const
+int ExtendItem::index() const
 {
     Q_D(const ExtendItem);
 
-    return d->m_amountColor;
+    return d->m_index;
 }
 
-void ExtendItem::setAmountSize(int size)
+void ExtendItem::setPrice(int price)
 {
     Q_D(ExtendItem);
 
-    d->m_amountSize = size;
-
-    QFont font = d->m_amount->font();
-    font.setPointSize(size);
-    d->m_amount->setFont(font);
+    d->m_price = price;
 }
 
-int ExtendItem::amountSize() const
-{
-    Q_D(const ExtendItem);
-
-    return d->m_amountSize;
-}

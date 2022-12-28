@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "widgets/items/operateitem.h"
+class OperateItem;
 
 class MemberListPrivate;
 class MemberList : public QWidget
@@ -15,7 +15,6 @@ public:
     ~MemberList();
 
     void addMemberItem(OperateItem *item);
-    void updateMemberItem(int index, Member *);
     void deleteMemberItem(int index);
 
 protected:

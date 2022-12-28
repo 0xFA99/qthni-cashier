@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QLocale>
 
-#include "products/product.h"
+#include "products/ProductObject.h"
 
 ProductDialogPrivate::ProductDialogPrivate(ProductDialog *q)
     : q_ptr(q)
@@ -27,6 +27,7 @@ void ProductDialogPrivate::init()
     m_pointField            = new QtMaterialTextField(q);
     m_cancelButton          = new QtMaterialFlatButton("CLOSE", q);
     m_submitButton          = new QtMaterialFlatButton("SUBMIT", q);
+    m_locale                = QLocale("id_ID");
     m_mode                  = ProductDialog::Mode::Add;
     m_index                 = 0;
 
@@ -71,8 +72,6 @@ void ProductDialogPrivate::init()
     });
 
     QObject::connect(m_priceField, &QLineEdit::textChanged, [=](const QString &string) {
-        QLocale indo("id_ID");
-
         if (string == "") {
             m_priceField->setText("Rp 0");
         } else {
@@ -80,7 +79,7 @@ void ProductDialogPrivate::init()
             temp.replace('.', "");
 
             int value = temp.toInt();
-            m_priceField->setText("Rp " + indo.toString(value));
+            m_priceField->setText("Rp " + m_locale.toString(value));
         }
     });
 
@@ -88,8 +87,7 @@ void ProductDialogPrivate::init()
         emit q->closedProductDialog();
     });
 
-    QObject::connect(m_submitButton, &QPushButton::clicked,
-                     q, &ProductDialog::addSlot);
+    QObject::connect(m_submitButton, &QPushButton::clicked, q, &ProductDialog::addSlot);
 }
 
 ProductDialog::ProductDialog(QWidget *parent)
@@ -114,7 +112,7 @@ void ProductDialog::clearField()
 void ProductDialog::addSlot() {
     Q_D(ProductDialog);
 
-    Product newProduct;
+    ProductObject newProduct;
 
     newProduct.setImage(d->m_avatar->image());
     newProduct.setName(d->m_nameField->text());
@@ -123,12 +121,10 @@ void ProductDialog::addSlot() {
     price.replace('.', "");
     newProduct.setPrice(price.toInt());
 
-    if (d->m_stockField->text() == "")
-        newProduct.setStock(0);
+    if (d->m_stockField->text() == "") newProduct.setStock(0);
     newProduct.setStock(d->m_stockField->text().toInt());
 
-    if (d->m_pointField->text() == "")
-        newProduct.setPoint(0);
+    if (d->m_pointField->text() == "") newProduct.setPoint(0);
     newProduct.setPoint(d->m_pointField->text().toInt());
 
     addedProduct(&newProduct);
@@ -141,7 +137,7 @@ void ProductDialog::editSlot()
 {
     Q_D(ProductDialog);
 
-    Product tempProduct;
+    ProductObject tempProduct;
     tempProduct.setImage(d->m_avatar->image());
     tempProduct.setName(d->m_nameField->text());
 
@@ -149,15 +145,14 @@ void ProductDialog::editSlot()
     price.replace('.', "");
     tempProduct.setPrice(price.toInt());
 
-    if (d->m_stockField->text() == "")
-        tempProduct.setStock(0);
+    if (d->m_stockField->text() == "") tempProduct.setStock(0);
     tempProduct.setStock(d->m_stockField->text().toInt());
 
-    if (d->m_pointField->text() == "")
-        tempProduct.setPoint(0);
+    if (d->m_pointField->text() == "") tempProduct.setPoint(0);
     tempProduct.setPoint(d->m_pointField->text().toInt());
 
     editedProduct(d->m_index, &tempProduct);
+
     closedProductDialog();
     clearField();
 }
@@ -211,13 +206,11 @@ void ProductDialog::setNameField(const QString &name)
     d->m_nameField->setText(name);
 }
 
-void ProductDialog::setPriceField(int price)
+void ProductDialog::setPriceField(const QString& price)
 {
     Q_D(ProductDialog);
 
-    QLocale indo("id_ID");
-
-    d->m_priceField->setText("Rp " + indo.toString(price));
+    d->m_priceField->setText(price);
 }
 
 void ProductDialog::setPointField(int point)
@@ -251,9 +244,5 @@ void ProductDialog::chooseImage()
                 "All files (*.*) ;; PNG files (*.png)"
             );
 
-    if (!filename.isNull())
-        // qDebug() << "file choosen: " << filename.toUtf8();
-
-    // return QImage(filename.toUtf8());
     d->m_avatar->setImage(QImage(filename.toUtf8()));
 }

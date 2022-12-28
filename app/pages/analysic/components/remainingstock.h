@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class MinimalItem;
 class RemainingStockPrivate;
 class RemainingStock : public QWidget
 {
@@ -11,6 +12,9 @@ class RemainingStock : public QWidget
 public:
     explicit RemainingStock(QWidget *parent = nullptr);
     ~RemainingStock();
+
+    void addRemaindItem(MinimalItem*);
+    void deleteRemaindItem(int);
 
 protected:
     const QScopedPointer<RemainingStockPrivate> d_ptr;

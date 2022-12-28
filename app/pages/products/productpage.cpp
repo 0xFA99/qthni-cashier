@@ -2,9 +2,10 @@
 #include "products/productpage_p.h"
 
 #include <QHBoxLayout>
+#include <QDebug>
 
-#include "products/product.h"
-#include "widgets/items/operateitem.h"
+#include "products/ProductObjectManager.h"
+#include "widgets/items/OperateItem.h"
 
 ProductPagePrivate::ProductPagePrivate(ProductPage *q)
     : q_ptr(q)
@@ -18,7 +19,6 @@ void ProductPagePrivate::init()
     Q_Q(ProductPage);
 
     m_layout                = new QHBoxLayout(q);
-    m_productManager        = new ProductManager(q);
     m_productListTitle      = new FrameTitle(q);
     m_productList           = new ProductList(q);
     m_productScrollArea     = new QScrollArea(q);
@@ -26,6 +26,7 @@ void ProductPagePrivate::init()
     m_productDialogWidget   = new ProductDialog(q);
     m_snackBar              = new QtMaterialSnackbar;
     m_fabButton             = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("content", "add"), q);
+    m_locale                = QLocale("id_ID");
 
     m_snackBar->setParent(q);
 
@@ -72,42 +73,23 @@ void ProductPagePrivate::init()
 
 }
 
-ProductPage::ProductPage(QWidget *parent)
+ProductPage::ProductPage(ProductObjectManager *manager, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new ProductPagePrivate(this))
 {
     d_func()->init();
+
+    addProductManager(manager);
 }
 
 ProductPage::~ProductPage() = default;
 
-void ProductPage::addingProduct(Product *product)
+void ProductPage::addingProduct(ProductObject *product)
 {
     Q_D(ProductPage);
 
-    auto newProduct = new Product;
-    newProduct->setImage(product->image());
-    newProduct->setName(product->name());
-    newProduct->setPrice(product->price());
-    newProduct->setStock(product->stock());
-    newProduct->setPoint(product->point());
-
-    d->m_productManager->addProduct(newProduct);
-
-    auto newItemProduct = new OperateItem(d->m_productManager->lastItemIndex() - 1);
-    newItemProduct->setImage(product->image());
-    newItemProduct->setTitle(product->name());
-    newItemProduct->setSubTitle(QString::number(product->price()));
-
-    QObject::connect(newItemProduct, &OperateItem::editItem,
-                     this, &ProductPage::editProduct);
-
-    QObject::connect(newItemProduct, &OperateItem::deleteItem,
-                     this, &ProductPage::deleteProduct);
-
-    d->m_productList->addProductItem(newItemProduct);
-
-    emit addedToPurchase(newProduct);
+    addProductToManager(product);
+    addProductToDB(product);
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Product"));
 }
@@ -118,11 +100,11 @@ void ProductPage::editProduct(int index)
 
     d->m_productDialogWidget->setMode(ProductDialog::Edit);
 
-    Product *tempProduct = d->m_productManager->getProduct(index);
+    ProductObject *tempProduct = d->m_productManager->getProductObject(index);
 
     d->m_productDialogWidget->setImageField(tempProduct->image());
     d->m_productDialogWidget->setNameField(tempProduct->name());
-    d->m_productDialogWidget->setPriceField(tempProduct->price());
+    d->m_productDialogWidget->setPriceField(QString("Rp " + d->m_locale.toString(tempProduct->price())));
     d->m_productDialogWidget->setStockField(tempProduct->stock());
     d->m_productDialogWidget->setPointField(tempProduct->point());
     d->m_productDialogWidget->setIndex(index);
@@ -130,24 +112,90 @@ void ProductPage::editProduct(int index)
     d->m_productDialog->showDialog();
 }
 
-void ProductPage::updateProduct(int index, Product *product)
+void ProductPage::updateProduct(int index, ProductObject *product)
 {
     Q_D(ProductPage);
 
     d->m_productManager->updateProduct(index, product);
-    d->m_productList->updateProductItem(index, product);
 
-    updatedToPurchase(index, product);
-
-    d->m_snackBar->addMessage(QString("Berhasil Mengedit Product"));
+    d->m_snackBar->addInstantMessage(QString("Berhasil Mengedit Product"));
 }
 
 void ProductPage::deleteProduct(int index)
 {
     Q_D(ProductPage);
 
-    d->m_productList->deleteProductItem(index);
     d->m_productManager->deleteProduct(index);
+    d->m_productList->deleteProductItem(index);
+    deleteShowProduct(index);
 
     d->m_snackBar->addInstantMessage(QString("Berhasil Menghapus Product"));
+}
+
+void ProductPage::addProductManager(ProductObjectManager *manager)
+{
+    Q_D(ProductPage);
+
+    d->m_productManager = manager;
+}
+
+void ProductPage::addProductToManager(ProductObject *product)
+{
+    Q_D(ProductPage);
+
+    auto newProductObject = new ProductObject;
+    newProductObject->editProduct(product);
+
+    d->m_productManager->addProduct(newProductObject);
+
+    // Add to item list
+    addProductToItemList(newProductObject, product);
+}
+
+void ProductPage::addProductToItemList(ProductObject *subject, ProductObject *product)
+{
+    Q_D(ProductPage);
+
+    auto newItemProduct = new OperateItem;
+    newItemProduct->setImage(product->image());
+    newItemProduct->setTitle(product->name());
+    newItemProduct->setSubTitle(QString("Rp " + d->m_locale.toString(product->price())));
+    newItemProduct->setIndex(d->m_productManager->lastItemIndex() - 1);
+
+    QObject::connect(newItemProduct, &OperateItem::s_editButton, this, &ProductPage::editProduct);
+    QObject::connect(newItemProduct, &OperateItem::s_deleteButton, this, &ProductPage::deleteProduct);
+
+    d->m_productList->addProductItem(newItemProduct);
+
+    subject->Attach(newItemProduct);
+
+    addedToPurchase(d->m_productManager->lastItemIndex() - 1);
+}
+
+void ProductPage::addProductToDB(ProductObject *product)
+{
+    Q_D(ProductPage);
+
+    if (HNIDatabase::tryAddProduct(product)) {
+        qDebug() << "Menambahkan " << product->name() << " ke Database";
+    } else {
+        qDebug() << "Gagal Menambahkan " << product->name() << " ke Database";
+    }
+}
+
+void ProductPage::syncProductFromDB()
+{
+    QVector<ProductObject*> getAllProduct = HNIDatabase::getAllProduct();
+    for (auto i : getAllProduct) {
+        ProductObject loadProduct;
+        loadProduct.setImage(i->image());
+        loadProduct.setName(i->name());
+        loadProduct.setPrice(i->price());
+        loadProduct.setStock(i->stock());
+        loadProduct.setPoint(i->point());
+
+        delete i;
+
+        addProductToManager(&loadProduct);
+    }
 }

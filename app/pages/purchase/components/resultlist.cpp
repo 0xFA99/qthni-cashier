@@ -1,8 +1,10 @@
 #include "purchase/components/resultlist.h"
 #include "purchase/components/resultlist_p.h"
 
-#include "purchase/components/flowlayout.h"
+#include "layout/flowlayout.h"
 #include "widgets/items/searchitem.h"
+
+#include "products/ProductObject.h"
 
 ResultListPrivate::ResultListPrivate(ResultList *q)
     : q_ptr(q)
@@ -68,25 +70,28 @@ ResultList::ResultList(QWidget *parent)
 
 ResultList::~ResultList() = default;
 
-void ResultList::addProductShow(Product *product)
+void ResultList::addProductObjectShow(SearchItem* item)
 {
     Q_D(ResultList);
 
-    auto newItem = new SearchItem(this);
-    newItem->setImage(product->image());
-    newItem->setTitle(product->name());
-    newItem->setPrice(product->price());
-
-    d->m_layout->addWidget(newItem);
+    d->m_layout->addWidget(item);
 }
 
-void ResultList::updateProductShow(int index, Product *product)
+void ResultList::deleteProductObjectShow(int index)
 {
     Q_D(ResultList);
 
-    QLayoutItem *item = d->m_layout->itemAt(index);
-    auto newItem = dynamic_cast<SearchItem *>(item->widget());
-    newItem->setImage(product->image());
-    newItem->setTitle(product->name());
-    newItem->setPrice(product->price());
+    SearchItem *item;
+    for (int i = 0; i < d->m_layout->count(); i++) {
+        QLayoutItem *litem = d->m_layout->itemAt(i);
+
+        if (i > index && (item = dynamic_cast<SearchItem *>(litem->widget()))) {
+            item->setIndex(item->index() - 1);
+        }
+    }
+
+    QLayoutItem *litem = d->m_layout->itemAt(index);
+    if ((item = dynamic_cast<SearchItem *>(litem->widget()))) {
+        item->deleteLater();
+    }
 }

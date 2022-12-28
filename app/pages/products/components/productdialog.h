@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class Product;
+class ProductObject;
 
 class ProductDialogPrivate;
 class ProductDialog : public QWidget
@@ -17,17 +17,17 @@ public:
     enum Mode { Edit, Add };
     void setMode(Mode mode);
 
-    void setImageField(const QImage &image);
-    void setNameField(const QString &name);
-    void setPriceField(int price);
-    void setStockField(int stock);
-    void setPointField(int point);
-    void setIndex(int index);
+    void setImageField(const QImage&);
+    void setNameField(const QString&);
+    void setPriceField(const QString&);
+    void setStockField(int);
+    void setPointField(int);
+    void setIndex(int);
 
 signals:
     void closedProductDialog();
-    void addedProduct(Product *);
-    void editedProduct(int, Product *);
+    void addedProduct(ProductObject*);
+    void editedProduct(int, ProductObject*);
 
 protected:
     const QScopedPointer<ProductDialogPrivate> d_ptr;

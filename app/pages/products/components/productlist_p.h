@@ -19,7 +19,6 @@ public:
 
     ProductList *const      q_ptr;
     QVBoxLayout             *m_layout;
-    QLocale                 m_indo;
 };
 
 #endif //QTHNI_PRODUCTLIST_P_H

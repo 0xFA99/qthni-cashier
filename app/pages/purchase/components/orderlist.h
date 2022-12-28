@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class ExtendItem;
 class OrderListPrivate;
 class OrderList : public QWidget
 {
@@ -13,13 +14,14 @@ public:
     ~OrderList();
 
 public slots:
-    void addProduct(int productIndex, int maxStock);
-    void removeProduct(int productIndex);
+    void addProduct(ExtendItem*);
+    void removeProduct(int);
 
 protected:
     const QScopedPointer<OrderListPrivate> d_ptr;
 
 private:
+
     Q_DISABLE_COPY(OrderList)
     Q_DECLARE_PRIVATE(OrderList)
 };

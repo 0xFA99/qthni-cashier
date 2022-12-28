@@ -14,6 +14,7 @@ find_package(Qt5Core      REQUIRED CONFIG)
 find_package(Qt5Widgets   REQUIRED CONFIG)
 find_package(Qt5Gui       REQUIRED CONFIG)
 find_package(Qt5Charts    REQUIRED CONFIG)
+find_package(Qt5Sql       REQUIRED CONFIG)
 
 # Option to exclude application from build
 set(QTHNI_BUILD_APPLICATION TRUE CACHE BOOL "Executing building required. Default: True")

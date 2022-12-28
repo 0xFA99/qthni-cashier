@@ -3,6 +3,7 @@
 
 #include <QVBoxLayout>
 
+#include "products/ProductObject.h"
 // Test
 #include "widgets/items/extenditem.h"
 
@@ -19,17 +20,6 @@ void OrderListPrivate::init()
 
     m_layout        = new QVBoxLayout(q);
 
-    ExtendItem *item1 = new ExtendItem(q);
-    ExtendItem *item2 = new ExtendItem(q);
-    ExtendItem *item3 = new ExtendItem(q);
-    ExtendItem *item4 = new ExtendItem(q);
-    ExtendItem *item5 = new ExtendItem(q);
-
-    m_layout->addWidget(item1);
-    m_layout->addWidget(item2);
-    m_layout->addWidget(item3);
-    m_layout->addWidget(item4);
-    m_layout->addWidget(item5);
     m_layout->addStretch(1);
     m_layout->setContentsMargins(0, 0, 0, 0);
 
@@ -46,17 +36,24 @@ OrderList::OrderList(QWidget *parent)
 
 OrderList::~OrderList() = default;
 
-void OrderList::addProduct(int productIndex, int maxStock)
+void OrderList::addProduct(ExtendItem *item)
 {
     Q_D(OrderList);
 
-    ExtendItem *newItem = new ExtendItem(this);
-
-    d->m_layout->addWidget(newItem);
+    item->setParent(this);
+    d->m_layout->insertWidget(d->m_layout->count() - 1, item);
 }
 
 void OrderList::removeProduct(int productIndex)
 {
     Q_D(OrderList);
 
+    ExtendItem *item;
+    for (int i = 0; i < d->m_layout->count(); ++i) {
+        QLayoutItem *litem = d->m_layout->itemAt(i);
+        if ((item = dynamic_cast<ExtendItem *>(litem->widget()))) {
+            if (item->index() == productIndex)
+                item->deleteLater();
+        }
+    }
 }

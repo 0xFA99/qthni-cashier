@@ -3,7 +3,7 @@
 
 #include <QVBoxLayout>
 
-#include "purchase/components/flowlayout.h"
+#include "layout/flowlayout.h"
 
 #include "qtmaterial/components/qtmaterialscrollbar.h"
 #include "qtmaterial/components/qtmaterialavatar.h"

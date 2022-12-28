@@ -1,10 +1,13 @@
 #ifndef QTHNI_SEARCHITEM_H
 #define QTHNI_SEARCHITEM_H
 
+#include "interfaces/IItem.h"
+#include "interfaces/IObserver.h"
+
 #include <QWidget>
 
 class SearchItemPrivate;
-class SearchItem : public QWidget
+class SearchItem : public QWidget, public IObserver, public IItem
 {
     Q_OBJECT
 
@@ -12,16 +15,24 @@ public:
     explicit SearchItem(QWidget *parent = nullptr);
     ~SearchItem();
 
-    void setImage(const QImage &image);
-    [[nodiscard]] QImage image() const;
+    void Update(const QImage&, const QString&, const QString&) override;
 
-    void setTitle(const QString &text);
-    [[nodiscard]] QString title() const;
+    void setImage(const QImage&) override;
 
-    void setPrice(int price);
-    [[nodiscard]] int price() const;
+    void setTitle(const QString&) override;
+    void setTitleColor(const QColor&) override;
+
+    void setSubTitle(const QString&) override;
+    void setSubTitleColor(const QColor&) override;
+
+    void setIndex(int);
+    [[nodiscard]] int index() const;
 
     void changeStat();
+
+signals:
+    void addedToOrder(int);
+    void deleteToOrder(int);
 
 protected:
     const QScopedPointer<SearchItemPrivate> d_ptr;

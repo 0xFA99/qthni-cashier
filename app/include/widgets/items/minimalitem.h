@@ -1,25 +1,32 @@
 #ifndef QTHNI_MINIMALITEM_H
 #define QTHNI_MINIMALITEM_H
 
+#include "interfaces/IItem.h"
+#include "interfaces/IObserver.h"
 #include <QWidget>
 
 class MinimalItemPrivate;
-class MinimalItem : public QWidget
+class MinimalItem : public QWidget, public IObserver, public IItem
 {
     Q_OBJECT
 
 public:
     explicit MinimalItem(QWidget *parent = nullptr);
-    explicit MinimalItem(const QString &title, const QString &extra, QWidget *parent = nullptr);
     ~MinimalItem();
 
-    void setTitle(const QString &title);
-    QString title() const;
+    void Update(const QImage&, const QString&, const QString&) override;
+    void extraItem(int) override;
 
-    void setExtraTitle(const QString &extra);
-    QString extraTitle() const;
+    void setImage(const QImage&) override;
 
-    void setAvatarImage(const QImage &image);
+    void setTitle(const QString&) override;
+    void setTitleColor(const QColor&) override;
+
+    void setSubTitle(const QString&) override;
+    void setSubTitleColor(const QColor&) override;
+
+    void setIndex(int);
+    [[nodiscard]] int index() const;
 
 protected:
     const QScopedPointer<MinimalItemPrivate> d_ptr;
