@@ -18,7 +18,7 @@ public:
     ~PurchasePage();
 
 public slots:
-    void addedShowProduct(SearchItem*);
+    void addedShowProduct(int);
     void deletedShowProduct(int);
 
 protected:

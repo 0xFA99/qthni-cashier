@@ -26,10 +26,7 @@ public:
     void setSubTitleColor(const QColor&) override;
 
     void setPrice(int);
-    [[nodiscard]] int price() const;
-
     void setStock(int);
-    [[nodiscard]] int amount() const;
 
     void setIndex(int);
     [[nodiscard]] int index() const;

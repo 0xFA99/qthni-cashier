@@ -4,6 +4,7 @@
 #include "products/ProductObject.h"
 
 #include <QImage>
+#include "database/HNIDatabase.h"
 
 ProductObjectManagerPrivate::ProductObjectManagerPrivate(ProductObjectManager *q)
     : q_ptr(q)
@@ -60,6 +61,9 @@ ProductObjectManager::updateProduct(int index, ProductObject *product)
 
     ProductObject* updateProduct = d->m_productList.at(index);
 
+    // Update Product to DB
+    HNIDatabase::tryUpdateProduct(updateProduct->name(), product);
+
     updateProduct->editProduct(product);
     updateProduct->Update();
 }
@@ -70,6 +74,9 @@ ProductObjectManager::deleteProduct(int index)
     Q_D(ProductObjectManager);
 
     ProductObject* deleteProduct = d->m_productList.at(index);
+
+    // Delete Product to DB
+    HNIDatabase::tryDeleteProduct(deleteProduct->name());
 
     d->m_productList.removeAt(index);
     delete deleteProduct;

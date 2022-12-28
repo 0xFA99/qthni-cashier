@@ -12,6 +12,8 @@
 #include "qtmaterial/components/qtmaterialdialog.h"
 #include "qtmaterial/components/qtmaterialfab.h"
 
+#include "database/HNIDatabase.h"
+
 #include <QScrollArea>
 #include <QLocale>
 
@@ -50,6 +52,8 @@ public:
     // Notification
     QtMaterialSnackbar              *m_snackBar;
     QLocale                         m_locale;
+
+    HNIDatabase                     m_db;
 };
 
 #endif //QTHNI_PRODUCTPAGE_P_H

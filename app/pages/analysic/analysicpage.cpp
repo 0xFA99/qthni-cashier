@@ -1,6 +1,9 @@
 #include "analysic/analysicpage.h"
 #include "analysic/analysicpage_p.h"
 
+#include "widgets/items/minimalitem.h"
+#include "products/ProductObject.h"
+
 #include <QHBoxLayout>
 #include <QFrame>
 
@@ -79,11 +82,42 @@ void AnalysicPagePrivate::init()
     m_layout->addWidget(rightFrame);
 }
 
-AnalysicPage::AnalysicPage(QWidget *parent)
+AnalysicPage::AnalysicPage(ProductObjectManager *manager, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new AnalysicPagePrivate(this))
 {
     d_func()->init();
+
+    addProductManager(manager);
 }
 
 AnalysicPage::~AnalysicPage() = default;
+
+void AnalysicPage::addProductManager(ProductObjectManager *manager)
+{
+    Q_D(AnalysicPage);
+
+    d->m_productManager = manager;
+}
+
+void AnalysicPage::addRemaindStockItem(int index)
+{
+    Q_D(AnalysicPage);
+
+    ProductObject *product = d->m_productManager->getProductObject(index);
+
+    auto *item = new MinimalItem;
+    item->setImage(product->image());
+    item->setTitle(product->name());
+    item->setSubTitle(QString::number(product->stock()));
+    product->Attach(item);
+
+    d->m_remainingStockWidget->addRemaindItem(item);
+}
+
+void AnalysicPage::deleteRemainStockItem(int index)
+{
+    Q_D(AnalysicPage);
+
+    d->m_remainingStockWidget->deleteRemaindItem(index);
+}

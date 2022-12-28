@@ -149,13 +149,6 @@ void ExtendItem::setStock(int stock)
     d->m_stock = stock;
 }
 
-int ExtendItem::amount() const
-{
-    Q_D(const ExtendItem);
-
-    return d->m_amount->text().toInt();
-}
-
 void ExtendItem::setIndex(int index)
 {
     Q_D(ExtendItem);
@@ -177,9 +170,3 @@ void ExtendItem::setPrice(int price)
     d->m_price = price;
 }
 
-int ExtendItem::price() const
-{
-    Q_D(const ExtendItem);
-
-    return d->m_price;
-}

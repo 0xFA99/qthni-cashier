@@ -35,6 +35,8 @@ public:
     FrameTitle              *m_lastPurchaseFrame;
     QScrollArea             *m_lastPurchaseScroll;
     LastPurchase            *m_lastPurchaseWidget;
+
+    ProductObjectManager    *m_productManager;
 };
 
 #endif //QTHNI_ANALYSICPAGE_P_H

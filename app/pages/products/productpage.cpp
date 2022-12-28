@@ -2,6 +2,7 @@
 #include "products/productpage_p.h"
 
 #include <QHBoxLayout>
+#include <QDebug>
 
 #include "products/ProductObjectManager.h"
 #include "widgets/items/OperateItem.h"
@@ -87,31 +88,8 @@ void ProductPage::addingProduct(ProductObject *product)
 {
     Q_D(ProductPage);
 
-    auto newProductObject = new ProductObject;
-    newProductObject->editProduct(product);
-    d->m_productManager->addProduct(newProductObject);
-
-    auto newItemProduct = new OperateItem;
-    newItemProduct->setImage(product->image());
-    newItemProduct->setTitle(product->name());
-    newItemProduct->setSubTitle(QString("Rp " + d->m_locale.toString(product->price())));
-    newItemProduct->setIndex(d->m_productManager->lastItemIndex() - 1);
-
-    QObject::connect(newItemProduct, &OperateItem::s_editButton, this, &ProductPage::editProduct);
-    QObject::connect(newItemProduct, &OperateItem::s_deleteButton, this, &ProductPage::deleteProduct);
-
-    d->m_productList->addProductItem(newItemProduct);
-
-    auto newSearchProduct = new SearchItem;
-    newSearchProduct->setImage(product->image());
-    newSearchProduct->setTitle(product->name());
-    newSearchProduct->setSubTitle(QString("Rp " + d->m_locale.toString(product->price())));
-    newSearchProduct->setIndex(d->m_productManager->lastItemIndex() - 1);
-
-    addedToPurchase(newSearchProduct);
-
-    newProductObject->Attach(newItemProduct);
-    newProductObject->Attach(newSearchProduct);
+    addProductToManager(product);
+    addProductToDB(product);
 
     d->m_snackBar->addMessage(QString("Berhasil Menambahkan Product"));
 }
@@ -159,4 +137,65 @@ void ProductPage::addProductManager(ProductObjectManager *manager)
     Q_D(ProductPage);
 
     d->m_productManager = manager;
+}
+
+void ProductPage::addProductToManager(ProductObject *product)
+{
+    Q_D(ProductPage);
+
+    auto newProductObject = new ProductObject;
+    newProductObject->editProduct(product);
+
+    d->m_productManager->addProduct(newProductObject);
+
+    // Add to item list
+    addProductToItemList(newProductObject, product);
+}
+
+void ProductPage::addProductToItemList(ProductObject *subject, ProductObject *product)
+{
+    Q_D(ProductPage);
+
+    auto newItemProduct = new OperateItem;
+    newItemProduct->setImage(product->image());
+    newItemProduct->setTitle(product->name());
+    newItemProduct->setSubTitle(QString("Rp " + d->m_locale.toString(product->price())));
+    newItemProduct->setIndex(d->m_productManager->lastItemIndex() - 1);
+
+    QObject::connect(newItemProduct, &OperateItem::s_editButton, this, &ProductPage::editProduct);
+    QObject::connect(newItemProduct, &OperateItem::s_deleteButton, this, &ProductPage::deleteProduct);
+
+    d->m_productList->addProductItem(newItemProduct);
+
+    subject->Attach(newItemProduct);
+
+    addedToPurchase(d->m_productManager->lastItemIndex() - 1);
+}
+
+void ProductPage::addProductToDB(ProductObject *product)
+{
+    Q_D(ProductPage);
+
+    if (HNIDatabase::tryAddProduct(product)) {
+        qDebug() << "Menambahkan " << product->name() << " ke Database";
+    } else {
+        qDebug() << "Gagal Menambahkan " << product->name() << " ke Database";
+    }
+}
+
+void ProductPage::syncProductFromDB()
+{
+    QVector<ProductObject*> getAllProduct = HNIDatabase::getAllProduct();
+    for (auto i : getAllProduct) {
+        ProductObject loadProduct;
+        loadProduct.setImage(i->image());
+        loadProduct.setName(i->name());
+        loadProduct.setPrice(i->price());
+        loadProduct.setStock(i->stock());
+        loadProduct.setPoint(i->point());
+
+        delete i;
+
+        addProductToManager(&loadProduct);
+    }
 }

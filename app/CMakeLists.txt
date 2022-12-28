@@ -129,7 +129,9 @@ set(PURCHASE_FILES
         pages/purchase/components/searchfield_p.h)
 
 set(RESOURCE_FILES
-        resources/hni_resources.qrc)
+        resources/hni_resources.qrc
+        resources/database/HNIDatabase.cpp
+        resources/database/HNIDatabase.h)
 
 add_library(${PROJECT_NAME} SHARED
         ${INTERFACE_FILES}
@@ -162,7 +164,7 @@ target_sources(
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 target_include_directories(
-        ${PROJECT_NAME} PUBLIC include pages
+        ${PROJECT_NAME} PUBLIC include pages resources
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -170,6 +172,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt5::Widgets
         Qt5::Gui
         Qt5::Charts
+        Qt5::Sql
         qtmaterial)
 
 include(GNUInstallDirs)

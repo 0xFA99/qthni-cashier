@@ -3,6 +3,8 @@
 
 #include <QVector>
 
+// #include "database/HNIDatabase.h"
+
 class ProductObject;
 class ProductObjectManager;
 class ProductObjectManagerPrivate
@@ -18,6 +20,7 @@ public:
 
     ProductObjectManager *const   q_ptr;
     QVector<ProductObject *>      m_productList;
+    // HNIDatabase                   m_db;
 };
 
 #endif //QTHNI_PRODUCTOBJECTMANAGER_P_H

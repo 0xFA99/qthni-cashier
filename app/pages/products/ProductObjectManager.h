@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+// class HNIDatabase;
 class ProductObject;
 class ProductObjectManagerPrivate;
 class ProductObjectManager : public QObject
@@ -10,6 +11,7 @@ class ProductObjectManager : public QObject
     Q_OBJECT
 
 public:
+    // explicit ProductObjectManager(HNIDatabase&, QObject *parent = nullptr);
     explicit ProductObjectManager(QObject *parent = nullptr);
     ~ProductObjectManager();
 
@@ -25,6 +27,8 @@ protected:
     const QScopedPointer<ProductObjectManagerPrivate> d_ptr;
 
 private:
+    // void addDatabase(HNIDatabase&);
+
     Q_DISABLE_COPY(ProductObjectManager)
     Q_DECLARE_PRIVATE(ProductObjectManager)
 };
