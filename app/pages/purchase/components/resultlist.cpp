@@ -77,7 +77,7 @@ void ResultList::addProductObjectShow(SearchItem* item)
     d->m_layout->addWidget(item);
 }
 
-void ResultList::deleteProductObjectShow(int index)
+void ResultList::deleteProductObjectShow(QUuid uuid)
 {
     Q_D(ResultList);
 
@@ -85,13 +85,11 @@ void ResultList::deleteProductObjectShow(int index)
     for (int i = 0; i < d->m_layout->count(); i++) {
         QLayoutItem *litem = d->m_layout->itemAt(i);
 
-        if (i > index && (item = dynamic_cast<SearchItem *>(litem->widget()))) {
-            item->setIndex(item->index() - 1);
-        }
-    }
+        if ((item = dynamic_cast<SearchItem *>(litem->widget()))) {
 
-    QLayoutItem *litem = d->m_layout->itemAt(index);
-    if ((item = dynamic_cast<SearchItem *>(litem->widget()))) {
-        item->deleteLater();
+            if (item->uuid() == uuid) {
+                item->deleteLater();
+            }
+        }
     }
 }

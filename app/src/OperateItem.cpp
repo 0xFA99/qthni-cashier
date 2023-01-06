@@ -21,7 +21,7 @@ void OperateItemPrivate::init()
     m_subTitle      = new QLabel("Subtitled", q);
     m_editButton    = new QtMaterialFlatButton("Edit", q);
     m_deleteButton  = new QtMaterialFlatButton("Delete", q);
-    m_index         = 0;
+    m_locale        = QLocale("id_ID");
 
     m_avatar->setSize(42);
     m_avatar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
@@ -46,12 +46,10 @@ void OperateItemPrivate::init()
 
     m_deleteButton->setHaloVisible(false);
     m_deleteButton->setRole(Material::Secondary);
+    m_deleteButton->setRippleStyle(Material::NoRipple);
     m_deleteButton->setOverlayStyle(Material::TintedOverlay);
     m_deleteButton->setIcon(QtMaterialTheme::icon("action", "delete"));
     m_deleteButton->setSizePolicy(buttonPolicy);
-
-    QObject::connect(m_editButton, &QPushButton::clicked, [=]() { q->s_editButton(m_index); });
-    QObject::connect(m_deleteButton, &QPushButton::clicked, [=]() { q->s_deleteButton(m_index); });
 
     m_layout->addWidget(m_avatar, 0, 0, 2, 1);
     m_layout->addWidget(m_title, 0, 1, 1, 1);
@@ -75,6 +73,14 @@ void OperateItem::Update(const QImage &image, const QString &title, const QStrin
     setImage(image);
     setTitle(title);
     setSubTitle(subtitle);
+}
+
+void
+OperateItem::ExtraUpdate(const QUuid &tag, int memPrice, int cusPrice, int point, int stock)
+{
+    Q_D(OperateItem);
+
+    d->m_subTitle->setText("Rp " + d->m_locale.toString(cusPrice));
 }
 
 void OperateItem::setImage(const QImage &image)
@@ -116,16 +122,21 @@ void OperateItem::setSubTitleColor(const QColor &color)
     d->m_subTitle->setPalette(palette);
 }
 
-void OperateItem::setIndex(int index)
+void
+OperateItem::setUUID(QUuid uuid)
 {
     Q_D(OperateItem);
 
-    d->m_index = index;
+    d->m_uuid = uuid;
+
+    QObject::connect(d->m_editButton, &QPushButton::clicked, [=]() { s_editButton(this->uuid()); });
+    QObject::connect(d->m_deleteButton, &QPushButton::clicked, [=]() { s_deleteButton(this->uuid()); });
 }
 
-int OperateItem::index() const
+QUuid
+OperateItem::uuid() const
 {
     Q_D(const OperateItem);
 
-    return d->m_index;
+    return d->m_uuid;
 }

@@ -16,6 +16,7 @@ public:
     ~SearchItem();
 
     void Update(const QImage&, const QString&, const QString&) override;
+    void ExtraUpdate(const QUuid&, int, int, int, int) override;
 
     void setImage(const QImage&) override;
 
@@ -25,14 +26,14 @@ public:
     void setSubTitle(const QString&) override;
     void setSubTitleColor(const QColor&) override;
 
-    void setIndex(int);
-    [[nodiscard]] int index() const;
+    void setUUID(const QUuid&);
+    [[nodiscard]] QUuid uuid() const;
 
     void changeStat();
 
 signals:
-    void addedToOrder(int);
-    void deleteToOrder(int);
+    void addedToOrder(const QUuid&);
+    void deleteToOrder(const QUuid&);
 
 protected:
     const QScopedPointer<SearchItemPrivate> d_ptr;

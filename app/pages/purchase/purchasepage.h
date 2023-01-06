@@ -18,8 +18,8 @@ public:
     ~PurchasePage();
 
 public slots:
-    void addedShowProduct(int);
-    void deletedShowProduct(int);
+    void addedShowProduct(ProductObject*);
+    void deletedShowProduct(QUuid);
 
 protected:
     const QScopedPointer<PurchasePagePrivate> d_ptr;
@@ -31,8 +31,8 @@ private:
     Q_DECLARE_PRIVATE(PurchasePage)
 
 private slots:
-    void addOrderItem(int);
-    void removeOrderItem(int);
+    void addOrderItem(QUuid);
+    void removeOrderItem(QUuid);
 };
 
 #endif //QTHNI_PURCHASEPAGE_H

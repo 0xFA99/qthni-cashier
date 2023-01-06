@@ -52,7 +52,8 @@ void MinimalItem::Update(const QImage& image, const QString& title, const QStrin
     setTitle(title);
 }
 
-void MinimalItem::extraItem(int stock)
+// void MinimalItem::extraItem(int stock)
+void MinimalItem::ExtraUpdate(const QUuid &tagUUID, int memPrice, int cusPrice, int point, int stock)
 {
     Q_D(MinimalItem);
 

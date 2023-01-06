@@ -15,7 +15,8 @@ public:
     ~MinimalItem();
 
     void Update(const QImage&, const QString&, const QString&) override;
-    void extraItem(int) override;
+    //void extraItem(int) override;
+    void ExtraUpdate(const QUuid&, int, int, int, int) override;
 
     void setImage(const QImage&) override;
 

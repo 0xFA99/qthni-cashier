@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class MemberObject;
+class MemberObjectManager;
 
 class MemberDialogPrivate;
 class MemberDialog : public QWidget
@@ -17,15 +18,20 @@ public:
     enum Mode { Edit, Add };
     void setMode(Mode mode);
 
+    /*
     void setImageField(const QImage &image);
     void setNameField(const QString &name);
     void setIDField(const QString &id);
     void setIndex(int index);
+    */
+
+    void setMemberFromUUID(QUuid uuid);
+    void addMemberManager(MemberObjectManager*);
 
 signals:
     void closedMemberDialog();
-    void addedMember(MemberObject *);
-    void editedMember(int, MemberObject *);
+    void addedMember(MemberObject&);
+    void editedMember(const QUuid &uuid, MemberObject&);
     void showProfileDialog();
 
 protected:

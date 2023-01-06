@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class ProductObject;
+class ProductObjectManager;
 
 class ProductDialogPrivate;
 class ProductDialog : public QWidget
@@ -17,17 +18,13 @@ public:
     enum Mode { Edit, Add };
     void setMode(Mode mode);
 
-    void setImageField(const QImage&);
-    void setNameField(const QString&);
-    void setPriceField(const QString&);
-    void setStockField(int);
-    void setPointField(int);
-    void setIndex(int);
+    void setProductFromUUID(QUuid);
+    void addProductManager(ProductObjectManager*);
 
 signals:
     void closedProductDialog();
-    void addedProduct(ProductObject*);
-    void editedProduct(int, ProductObject*);
+    void addedProduct(ProductObject&);
+    void editedProduct(QUuid, ProductObject&);
 
 protected:
     const QScopedPointer<ProductDialogPrivate> d_ptr;
@@ -36,7 +33,6 @@ private:
     void clearField();
     void addMode();
     void editMode();
-
     void chooseImage();
 
     Q_DISABLE_COPY(ProductDialog)

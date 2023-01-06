@@ -27,6 +27,20 @@ MemberObject::MemberObject(QObject *parent)
 
 MemberObject::~MemberObject() = default;
 
+void MemberObject::setUUID(QUuid uuid) // Copy UUID
+{
+    Q_D(MemberObject);
+
+    d->m_uuid = uuid;
+}
+
+QUuid MemberObject::uuid() const
+{
+    Q_D(const MemberObject);
+
+    return d->m_uuid;
+}
+
 void MemberObject::setImage(const QImage &image)
 {
     Q_D(MemberObject);
@@ -95,9 +109,9 @@ void MemberObject::Update()
 }
 
 void
-MemberObject::editMember(MemberObject *member)
+MemberObject::editMember(MemberObject& member)
 {
-    setImage(member->image());
-    setName(member->name());
-    setID(member->id());
+    setImage(member.image());
+    setName(member.name());
+    setID(member.id());
 }

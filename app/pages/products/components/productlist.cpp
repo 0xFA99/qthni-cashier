@@ -2,6 +2,7 @@
 #include "products/components/productlist_p.h"
 
 #include <QVBoxLayout>
+#include <QUuid>
 
 #include "widgets/items/OperateItem.h"
 
@@ -41,7 +42,7 @@ void ProductList::addProductItem(OperateItem *item)
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
 }
 
-void ProductList::deleteProductItem(int index)
+void ProductList::deleteProductItem(const QUuid& uuid)
 {
     Q_D(ProductList);
 
@@ -49,13 +50,12 @@ void ProductList::deleteProductItem(int index)
     for (int i = 0; i < d->m_layout->count(); i++) {
         QLayoutItem *litem = d->m_layout->itemAt(i);
 
-        if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
-            item->setIndex(item->index() - 1);
-        }
-    }
+        if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
 
-    QLayoutItem *litem = d->m_layout->itemAt(index);
-    if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
-        item->deleteLater();
+            if (item->uuid() == uuid) {
+                item->deleteLater();
+                break;
+            }
+        }
     }
 }

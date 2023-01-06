@@ -21,7 +21,10 @@ void PriceWidgetPrivate::init()
     m_button    = new QtMaterialFlatButton("SUBMIT", q);
 
     m_locale    = QLocale("id_ID");
-    m_priceMapList  = QMap<int, int>();
+    // m_priceMapList  = QMap<int, int>();
+    m_memPriceList     = QMap<QUuid, int>();
+    m_cusPriceList     = QMap<QUuid, int>();
+    m_hasMember        = false;
 
     m_total->setLabel("TOTAL");
     m_total->setText("Rp 0");
@@ -41,6 +44,10 @@ void PriceWidgetPrivate::init()
     m_layout->addWidget(m_discount);
     m_layout->addWidget(m_total);
     m_layout->addWidget(m_button);
+
+    QObject::connect(m_button, &QPushButton::clicked, [q]() {
+        emit q->s_submitButton();
+    });
 }
 
 PriceWidget::PriceWidget(QWidget *parent)
@@ -52,14 +59,27 @@ PriceWidget::PriceWidget(QWidget *parent)
 
 PriceWidget::~PriceWidget() = default;
 
-void PriceWidget::changeSubTotal(int index, int price)
+void PriceWidget::changeSubTotal(QUuid uuid, int price)
 {
     Q_D(PriceWidget);
 
-    if (d->m_priceMapList.find(index) != d->m_priceMapList.end()) {
-        d->m_priceMapList.insert(index, price);
+    if (d->m_memPriceList.find(uuid) != d->m_memPriceList.end()) {
+        d->m_memPriceList.insert(uuid, price);
     } else {
-        d->m_priceMapList[index] = price;
+        d->m_memPriceList[uuid] = price;
+    }
+
+    updateTotal();
+}
+
+void PriceWidget::changeDiscount(QUuid uuid, int price)
+{
+    Q_D(PriceWidget);
+
+    if (d->m_cusPriceList.find(uuid) != d->m_cusPriceList.end()) {
+        d->m_cusPriceList.insert(uuid, price);
+    } else {
+        d->m_cusPriceList[uuid] = price;
     }
 
     updateTotal();
@@ -69,21 +89,43 @@ void PriceWidget::updateTotal()
 {
     Q_D(PriceWidget);
 
-    int subTotal = 0;
+    int subTotal = 0, discount = 0, total = 0;
 
-    if (!d->m_priceMapList.isEmpty()) {
-        for (int i: d->m_priceMapList.values()) {
-            subTotal += i;
+    for (auto i : d->m_memPriceList.values()) {
+        subTotal += i;
+    }
+
+    if (d->m_hasMember) {
+        for (auto i: d->m_cusPriceList.values()) {
+            discount += i;
         }
     }
 
+    total = subTotal - discount;
+
+    d->m_total->setText("Rp " + d->m_locale.toString(total));
     d->m_subTotal->setText("Rp " + d->m_locale.toString(subTotal));
+    d->m_discount->setText("Rp " + d->m_locale.toString(discount));
+
+    updateSubTotal(d->m_subTotal->text());
+    updateDiscount(d->m_discount->text());
 }
 
-void PriceWidget::deleteItemPrice(int index)
+void PriceWidget::deleteItemPrice(QUuid uuid)
 {
     Q_D(PriceWidget);
 
-    d->m_priceMapList.remove(index);
+    d->m_memPriceList.remove(uuid);
+    d->m_cusPriceList.remove(uuid);
+
+    updateTotal();
+}
+
+void PriceWidget::memberChoosen(bool status)
+{
+    Q_D(PriceWidget);
+
+    d->m_hasMember = status;
+
     updateTotal();
 }

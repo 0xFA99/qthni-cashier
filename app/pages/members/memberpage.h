@@ -16,17 +16,24 @@ public:
     explicit MemberPage(MemberObjectManager *manager, QWidget *parent = nullptr);
     ~MemberPage();
 
+    void syncMemberFromDB();
+
 public slots:
-    void addingMember(MemberObject *);
-    void editMember(int);
-    void updateMember(int, MemberObject*);
-    void deleteMember(int);
+    void addingMember(MemberObject&);
+    void editMember(QUuid);
+    void updateMember(QUuid, MemberObject&);
+    void deleteMember(QUuid);
 
 protected:
     const QScopedPointer<MemberPagePrivate> d_ptr;
 
 private:
     void addMemberManager(MemberObjectManager *manager);
+
+    void addMemberToManager(MemberObject&);
+    void addMemberToItemList(MemberObject*);
+
+    void addMemberToDB(MemberObject&);
 
     Q_DISABLE_COPY(MemberPage)
     Q_DECLARE_PRIVATE(MemberPage)

@@ -4,6 +4,9 @@
 #include "qtmaterial/components/qtmaterialavatar.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 
+#include <QUuid>
+#include <QLocale>
+
 class QGridLayout;
 class QLabel;
 
@@ -27,7 +30,8 @@ public:
     QtMaterialFlatButton    *m_deleteButton;
     QLabel                  *m_title;
     QLabel                  *m_subTitle;
-    int                     m_index;
+    QUuid                   m_uuid;
+    QLocale                 m_locale;
 };
 
 #endif //QTHNI_OPERATEITEM_P_H

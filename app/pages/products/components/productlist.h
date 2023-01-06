@@ -15,7 +15,7 @@ public:
     ~ProductList();
 
     void addProductItem(OperateItem *item);
-    void deleteProductItem(int index);
+    void deleteProductItem(const QUuid&);
 
 protected:
     const QScopedPointer<ProductListPrivate> d_ptr;

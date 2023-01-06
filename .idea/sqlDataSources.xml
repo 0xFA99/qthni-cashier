@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="09d76ea9-0b36-43f8-a7fb-1026287c3075" name="hnidb Mapping">
+      <data-sources db="f7a5e833-159d-4981-96a6-a5dcbcd2ee68" ddl="6c520a53-8af8-4a92-867e-779a49059012" />
+      <scope>
+        <node kind="database" negative="1" />
+      </scope>
+    </mapping>
+    <mapping uuid="52b2992c-3cc7-4e26-b6a1-49fd6eeafd21" name="DDL data source Mapping">
+      <data-sources db="f7a5e833-159d-4981-96a6-a5dcbcd2ee68" ddl="6c520a53-8af8-4a92-867e-779a49059012" />
+      <scope>
+        <node kind="database" negative="1">
+          <node kind="schema" negative="1" />
+        </node>
+      </scope>
+    </mapping>
+  </component>
+</project>

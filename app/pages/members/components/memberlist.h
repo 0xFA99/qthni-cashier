@@ -15,7 +15,7 @@ public:
     ~MemberList();
 
     void addMemberItem(OperateItem *item);
-    void deleteMemberItem(int index);
+    void deleteMemberItem(QUuid);
 
 protected:
     const QScopedPointer<MemberListPrivate> d_ptr;

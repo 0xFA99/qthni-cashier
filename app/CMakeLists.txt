@@ -100,7 +100,10 @@ set(PRODUCT_FILES
         pages/products/components/productdialog_p.h
         pages/products/components/productlist.cpp
         pages/products/components/productlist.h
-        pages/products/components/productlist_p.h)
+        pages/products/components/productlist_p.h
+        pages/products/product_tag.cpp
+        pages/products/product_tag.h
+        pages/products/product_tag_p.h)
 
 set(PURCHASE_FILES
         pages/purchase/purchasepage.cpp
@@ -126,12 +129,12 @@ set(PURCHASE_FILES
         pages/purchase/components/resultpurchase_p.h
         pages/purchase/components/searchfield.cpp
         pages/purchase/components/searchfield.h
-        pages/purchase/components/searchfield_p.h)
+        pages/purchase/components/searchfield_p.h pages/purchase/components/purchase_order_dialog.cpp pages/purchase/components/purchase_order_dialog.h pages/purchase/components/purchase_order_dialog_item.cpp pages/purchase/components/purchase_order_dialog_item.h pages/purchase/components/choosememberwidget.cpp pages/purchase/components/choosememberwidget.h pages/purchase/components/choosememberwidget_p.h pages/purchase/components/membernamewidget.cpp pages/purchase/components/membernamewidget.h pages/purchase/components/membernamewidget_p.h)
 
 set(RESOURCE_FILES
         resources/hni_resources.qrc
         resources/database/HNIDatabase.cpp
-        resources/database/HNIDatabase.h)
+        resources/database/HNIDatabase.h pages/purchase/components/purchase_order_dialog_p.h)
 
 add_library(${PROJECT_NAME} SHARED
         ${INTERFACE_FILES}
@@ -158,7 +161,6 @@ target_sources(
         include/widgets/panel.h
         include/widgets/panel_p.h
         include/widgets/panel_internal.h
-
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

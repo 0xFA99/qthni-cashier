@@ -15,7 +15,7 @@ public:
     ~ExtendItem();
 
     void Update(const QImage&, const QString&, const QString&) override;
-    void extraItem(int) override;
+    void ExtraUpdate(const QUuid&, int, int, int, int) override;
 
     void setImage(const QImage&) override;
 
@@ -25,14 +25,22 @@ public:
     void setSubTitle(const QString&) override;
     void setSubTitleColor(const QColor&) override;
 
-    void setPrice(int);
+    void setMemberPrice(int);
+    [[nodiscard]] int memberPrice() const;
+
+    void setCustomerPrice(int);
+    [[nodiscard]] int customerPrice() const;
+
     void setStock(int);
 
-    void setIndex(int);
-    [[nodiscard]] int index() const;
+    void setUUID(const QUuid&);
+    [[nodiscard]] QUuid uuid() const;
 
 signals:
-    void changeSubPrice(int, int);
+    // void changeSubPrice(int, int);
+    void changeSubPrice(QUuid, int);
+    void changeDiscount(QUuid, int);
+    void updateAmount(int);
 
 protected:
     const QScopedPointer<ExtendItemPrivate> d_ptr;

@@ -13,9 +13,12 @@ public:
     explicit OrderList(QWidget *parent = nullptr);
     ~OrderList();
 
+signals:
+    void deleteItem(int);
+
 public slots:
     void addProduct(ExtendItem*);
-    void removeProduct(int);
+    void removeProduct(QUuid);
 
 protected:
     const QScopedPointer<OrderListPrivate> d_ptr;

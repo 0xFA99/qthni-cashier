@@ -99,7 +99,7 @@ void AnalysicPage::addProductManager(ProductObjectManager *manager)
 
     d->m_productManager = manager;
 }
-
+/*
 void AnalysicPage::addRemaindStockItem(int index)
 {
     Q_D(AnalysicPage);
@@ -114,6 +114,7 @@ void AnalysicPage::addRemaindStockItem(int index)
 
     d->m_remainingStockWidget->addRemaindItem(item);
 }
+ */
 
 void AnalysicPage::deleteRemainStockItem(int index)
 {

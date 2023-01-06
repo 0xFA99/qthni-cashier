@@ -16,7 +16,7 @@ public:
     ~ResultList();
 
     void addProductObjectShow(SearchItem*);
-    void deleteProductObjectShow(int);
+    void deleteProductObjectShow(QUuid);
 
 signals:
     void addToOrder(ProductObject *);

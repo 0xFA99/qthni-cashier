@@ -3,7 +3,9 @@
 
 #include "interfaces/IItem.h"
 #include "interfaces/IObserver.h"
+
 #include <QWidget>
+#include <QUuid>
 
 class OperateItemPrivate;
 class OperateItem : public QWidget, public IObserver, public IItem
@@ -15,6 +17,7 @@ public:
     ~OperateItem();
 
     void Update(const QImage &, const QString &, const QString &) override;
+    void ExtraUpdate(const QUuid&, int, int, int, int) override;
 
     void setImage(const QImage &) override;
 
@@ -24,12 +27,12 @@ public:
     void setSubTitle(const QString &) override;
     void setSubTitleColor(const QColor &) override;
 
-    void setIndex(int);
-    [[nodiscard]] int index() const;
+    void setUUID(QUuid);
+    [[nodiscard]] QUuid uuid() const;
 
 signals:
-    void s_editButton(int);
-    void s_deleteButton(int);
+    void s_editButton(const QUuid &uuid);
+    void s_deleteButton(const QUuid &uuid);
 
 protected:
     const QScopedPointer<OperateItemPrivate> d_ptr;

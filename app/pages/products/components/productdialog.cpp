@@ -4,8 +4,10 @@
 #include <QGridLayout>
 #include <QFileDialog>
 #include <QLocale>
+#include <QDebug>
 
 #include "products/ProductObject.h"
+#include "products/ProductObjectManager.h"
 
 ProductDialogPrivate::ProductDialogPrivate(ProductDialog *q)
     : q_ptr(q)
@@ -22,14 +24,15 @@ void ProductDialogPrivate::init()
     m_avatar                = new QtMaterialAvatar(q);
     m_changeAvatarButton    = new QtMaterialIconButton(QtMaterialTheme::icon("image", "add_a_photo"), q);
     m_nameField             = new QtMaterialTextField(q);
-    m_priceField            = new QtMaterialTextField(q);
+    m_memberPriceField      = new QtMaterialTextField(q);
+    m_customerPriceField    = new QtMaterialTextField(q);
     m_stockField            = new QtMaterialTextField(q);
     m_pointField            = new QtMaterialTextField(q);
     m_cancelButton          = new QtMaterialFlatButton("CLOSE", q);
     m_submitButton          = new QtMaterialFlatButton("SUBMIT", q);
     m_locale                = QLocale("id_ID");
     m_mode                  = ProductDialog::Mode::Add;
-    m_index                 = 0;
+    m_uuid                  = nullptr;
 
     m_avatar->setImage(QImage(":/images/images/profiles/defaultimage.png"));
     m_avatar->setSize(72);
@@ -41,9 +44,13 @@ void ProductDialogPrivate::init()
     m_nameField->setFont(font);
     m_nameField->setLabel("Nama Produk");
 
-    m_priceField->setFont(font);
-    m_priceField->setText("Rp 0");
-    m_priceField->setLabel("Harga Produk");
+    m_memberPriceField->setFont(font);
+    m_memberPriceField->setText("Rp 0");
+    m_memberPriceField->setLabel("Harga Member");
+
+    m_customerPriceField->setFont(font);
+    m_customerPriceField->setText("Rp 0");
+    m_customerPriceField->setLabel("Harga Konsumen");
 
     m_stockField->setFont(font);
     m_stockField->setLabel("Stock Produk");
@@ -60,26 +67,35 @@ void ProductDialogPrivate::init()
     m_layout->addWidget(m_avatar, 0, 0, 1, 2);
     m_layout->addWidget(m_changeAvatarButton, 1, 0, 1, 2, Qt::AlignCenter);
     m_layout->addWidget(m_nameField, 2, 0, 1, 2);
-    m_layout->addWidget(m_priceField, 3, 0, 1, 2);
-    m_layout->addWidget(m_stockField, 4, 0, 1, 2);
-    m_layout->addWidget(m_pointField, 5, 0, 1, 2);
-    m_layout->addWidget(m_cancelButton, 6, 0, 1, 1);
-    m_layout->addWidget(m_submitButton, 6, 1, 1, 1);
+    m_layout->addWidget(m_memberPriceField, 3, 0, 1, 2);
+    m_layout->addWidget(m_customerPriceField, 4, 0, 1, 2);
+    m_layout->addWidget(m_stockField, 5, 0, 1, 2);
+    m_layout->addWidget(m_pointField, 6, 0, 1, 2);
+    m_layout->addWidget(m_cancelButton, 7, 0, 1, 1);
+    m_layout->addWidget(m_submitButton, 7, 1, 1, 1);
     m_layout->setSpacing(18);
 
     QObject::connect(m_changeAvatarButton, &QPushButton::clicked, [q]() {
         q->chooseImage();
     });
 
-    QObject::connect(m_priceField, &QLineEdit::textChanged, [=](const QString &string) {
+    QObject::connect(m_memberPriceField, &QLineEdit::textChanged, [=](const QString &string) {
         if (string == "") {
-            m_priceField->setText("Rp 0");
+            m_memberPriceField->setText("Rp 0");
         } else {
-            QString temp = string.split(" ")[1];
-            temp.replace('.', "");
+            int price = string.split(" ")[1].replace('.', "").toInt();
 
-            int value = temp.toInt();
-            m_priceField->setText("Rp " + m_locale.toString(value));
+            m_memberPriceField->setText("Rp " + m_locale.toString(price));
+        }
+    });
+
+    QObject::connect(m_customerPriceField, &QLineEdit::textChanged, [=](const QString &string) {
+        if (string == "") {
+            m_customerPriceField->setText("Rp 0");
+        } else {
+            int price = string.split(" ")[1].replace('.', "").toInt();
+
+            m_customerPriceField->setText("Rp " + m_locale.toString(price));
         }
     });
 
@@ -104,9 +120,11 @@ void ProductDialog::clearField()
     Q_D(ProductDialog);
     d->m_avatar->setImage(QImage(":/images/images/profiles/defaultimage.png"));
     d->m_nameField->clear();
-    d->m_priceField->setText("Rp 0");
+    d->m_memberPriceField->setText("Rp 0");
+    d->m_customerPriceField->setText("Rp 0");
     d->m_pointField->clear();
     d->m_stockField->clear();
+    d->m_uuid = nullptr;
 }
 
 void ProductDialog::addSlot() {
@@ -114,12 +132,16 @@ void ProductDialog::addSlot() {
 
     ProductObject newProduct;
 
+    // Generate new UUID
+    QUuid newUUID = QUuid::createUuid();
+    qDebug() << "App - Success - Create new Product UUID: " << newUUID;
+
+    newProduct.setUUID(newUUID);
     newProduct.setImage(d->m_avatar->image());
     newProduct.setName(d->m_nameField->text());
 
-    QString price = d->m_priceField->text().split(" ")[1];
-    price.replace('.', "");
-    newProduct.setPrice(price.toInt());
+    newProduct.setMemberPrice(d->m_memberPriceField->text().split(" ")[1].replace('.', "").toInt());
+    newProduct.setCustomerPrice(d->m_customerPriceField->text().split(" ")[1].replace('.', "").toInt());
 
     if (d->m_stockField->text() == "") newProduct.setStock(0);
     newProduct.setStock(d->m_stockField->text().toInt());
@@ -127,7 +149,7 @@ void ProductDialog::addSlot() {
     if (d->m_pointField->text() == "") newProduct.setPoint(0);
     newProduct.setPoint(d->m_pointField->text().toInt());
 
-    addedProduct(&newProduct);
+    addedProduct(newProduct);
 
     closedProductDialog();
     clearField();
@@ -141,9 +163,8 @@ void ProductDialog::editSlot()
     tempProduct.setImage(d->m_avatar->image());
     tempProduct.setName(d->m_nameField->text());
 
-    QString price = d->m_priceField->text().split(" ")[1];
-    price.replace('.', "");
-    tempProduct.setPrice(price.toInt());
+    tempProduct.setMemberPrice(d->m_memberPriceField->text().split(" ")[1].replace('.', "").toInt());
+    tempProduct.setCustomerPrice(d->m_customerPriceField->text().split(" ")[1].replace('.', "").toInt());
 
     if (d->m_stockField->text() == "") tempProduct.setStock(0);
     tempProduct.setStock(d->m_stockField->text().toInt());
@@ -151,7 +172,7 @@ void ProductDialog::editSlot()
     if (d->m_pointField->text() == "") tempProduct.setPoint(0);
     tempProduct.setPoint(d->m_pointField->text().toInt());
 
-    editedProduct(d->m_index, &tempProduct);
+    editedProduct(d->m_uuid, tempProduct);
 
     closedProductDialog();
     clearField();
@@ -192,47 +213,6 @@ void ProductDialog::editMode()
                      this, &ProductDialog::editSlot);
 }
 
-void ProductDialog::setImageField(const QImage &image)
-{
-    Q_D(ProductDialog);
-
-    d->m_avatar->setImage(image);
-}
-
-void ProductDialog::setNameField(const QString &name)
-{
-    Q_D(ProductDialog);
-
-    d->m_nameField->setText(name);
-}
-
-void ProductDialog::setPriceField(const QString& price)
-{
-    Q_D(ProductDialog);
-
-    d->m_priceField->setText(price);
-}
-
-void ProductDialog::setPointField(int point)
-{
-    Q_D(ProductDialog);
-
-    d->m_pointField->setText(QString::number(point));
-}
-
-void ProductDialog::setStockField(int stock)
-{
-    Q_D(ProductDialog);
-
-    d->m_stockField->setText(QString::number(stock));
-}
-
-void ProductDialog::setIndex(int index)
-{
-    Q_D(ProductDialog);
-
-    d->m_index = index;
-}
 
 void ProductDialog::chooseImage()
 {
@@ -245,4 +225,27 @@ void ProductDialog::chooseImage()
             );
 
     d->m_avatar->setImage(QImage(filename.toUtf8()));
+}
+
+void ProductDialog::setProductFromUUID(QUuid uuid)
+{
+    Q_D(ProductDialog);
+
+    d->m_uuid = uuid;
+
+    ProductObject *product = d->m_productManager->getProductObject(uuid);
+
+    d->m_avatar->setImage(product->image());
+    d->m_nameField->setText(product->name());
+    d->m_memberPriceField->setText("Rp " + d->m_locale.toString(product->memberPrice()));
+    d->m_customerPriceField->setText("Rp " + d->m_locale.toString(product->customerPrice()));
+    d->m_stockField->setText(QString::number(product->stock()));
+    d->m_pointField->setText(QString::number(product->point()));
+}
+
+void ProductDialog::addProductManager(ProductObjectManager* productManager)
+{
+    Q_D(ProductDialog);
+
+    d->m_productManager = productManager;
 }

@@ -2,6 +2,7 @@
 #include "members/components/memberlist_p.h"
 
 #include <QVBoxLayout>
+#include <QUuid>
 
 #include "widgets/items/OperateItem.h"
 
@@ -41,21 +42,21 @@ void MemberList::addMemberItem(OperateItem *item)
     d->m_layout->insertWidget(d->m_layout->count() - 1, item);
 }
 
-void MemberList::deleteMemberItem(int index)
+void
+MemberList::deleteMemberItem(QUuid uuid)
 {
     Q_D(MemberList);
 
     OperateItem *item;
+
     for (int i = 0; i < d->m_layout->count(); i++) {
         QLayoutItem *litem = d->m_layout->itemAt(i);
 
-        if (i > index && (item = dynamic_cast<OperateItem *>(litem->widget()))) {
-            item->setIndex(item->index() - 1);
-        }
-    }
+        if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
 
-    QLayoutItem *litem = d->m_layout->itemAt(index);
-    if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
-        item->deleteLater();
+            if (item->uuid() == uuid) {
+                item->deleteLater();
+            }
+        }
     }
 }

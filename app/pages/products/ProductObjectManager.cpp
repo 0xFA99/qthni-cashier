@@ -4,7 +4,7 @@
 #include "products/ProductObject.h"
 
 #include <QImage>
-#include "database/HNIDatabase.h"
+#include <QDebug>
 
 ProductObjectManagerPrivate::ProductObjectManagerPrivate(ProductObjectManager *q)
     : q_ptr(q)
@@ -29,14 +29,6 @@ ProductObjectManager::ProductObjectManager(QObject *parent)
 
 ProductObjectManager::~ProductObjectManager() = default;
 
-int
-ProductObjectManager::lastItemIndex() const
-{
-    Q_D(const ProductObjectManager);
-
-    return d->m_productList.size();
-}
-
 void
 ProductObjectManager::addProduct(ProductObject *product)
 {
@@ -47,37 +39,50 @@ ProductObjectManager::addProduct(ProductObject *product)
 }
 
 ProductObject*
-ProductObjectManager::getProductObject(int index)
+ProductObjectManager::getProductObject(const QUuid& uuid)
 {
     Q_D(ProductObjectManager);
 
-    return d->m_productList.at(index);
+    ProductObject *product;
+    for (ProductObject *pro : d->m_productList) {
+        if (pro->uuid() == uuid) {
+            product = pro;
+        }
+    }
+
+    return product;
 }
 
 void
-ProductObjectManager::updateProduct(int index, ProductObject *product)
+ProductObjectManager::updateProduct(QUuid uuid, ProductObject& product)
 {
     Q_D(ProductObjectManager);
 
-    ProductObject* updateProduct = d->m_productList.at(index);
+    for (ProductObject *pro : d->m_productList) {
+        if (pro->uuid() == uuid) {
+            pro->editProduct(product);
+            pro->Update();
 
-    // Update Product to DB
-    HNIDatabase::tryUpdateProduct(updateProduct->name(), product);
+            HNIDatabase::tryUpdateProduct(uuid, product);
 
-    updateProduct->editProduct(product);
-    updateProduct->Update();
+            break;
+        }
+    }
 }
 
 void
-ProductObjectManager::deleteProduct(int index)
+ProductObjectManager::deleteProduct(QUuid uuid)
 {
     Q_D(ProductObjectManager);
 
-    ProductObject* deleteProduct = d->m_productList.at(index);
+    for (ProductObject *pro : d->m_productList) {
+        if (pro->uuid() == uuid) {
+            d->m_productList.removeOne(pro);
+            pro->deleteLater();
 
-    // Delete Product to DB
-    HNIDatabase::tryDeleteProduct(deleteProduct->name());
+            HNIDatabase::tryDeleteProduct(uuid);
 
-    d->m_productList.removeAt(index);
-    delete deleteProduct;
+            break;
+        }
+    }
 }
