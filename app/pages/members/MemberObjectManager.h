@@ -13,13 +13,11 @@ public:
     explicit MemberObjectManager(QObject *parent = nullptr);
     ~MemberObjectManager();
 
-    [[nodiscard]] int lastItemIndex() const;
-
-    MemberObject* getMemberObject(int);
+    MemberObject* getMemberObject(const QUuid &);
 
     void addMember(MemberObject*);
-    void updateMember(int, MemberObject*);
-    void deleteMember(int);
+    void updateMember(QUuid, MemberObject&);
+    void deleteMember(QUuid);
 
 protected:
     const QScopedPointer<MemberObjectManagerPrivate> d_ptr;

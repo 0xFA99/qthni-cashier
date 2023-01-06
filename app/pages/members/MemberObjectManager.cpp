@@ -3,7 +3,11 @@
 
 #include "members/MemberObject.h"
 
+#include "database/HNIDatabase.h"
+
 #include <QImage>
+#include <QUuid>
+#include <QDebug>
 
 MemberObjectManagerPrivate::MemberObjectManagerPrivate(MemberObjectManager *q)
     : q_ptr(q)
@@ -28,12 +32,14 @@ MemberObjectManager::MemberObjectManager(QObject *parent)
 
 MemberObjectManager::~MemberObjectManager() = default;
 
+/*
 int MemberObjectManager::lastItemIndex() const
 {
     Q_D(const MemberObjectManager);
 
     return d->m_memberList.size();
 }
+*/
 
 void MemberObjectManager::addMember(MemberObject *member_object)
 {
@@ -44,31 +50,51 @@ void MemberObjectManager::addMember(MemberObject *member_object)
 }
 
 MemberObject*
-MemberObjectManager::getMemberObject(int index)
+MemberObjectManager::getMemberObject(const QUuid &uuid)
 {
-    Q_D(MemberObjectManager);
+    Q_D(static MemberObjectManager);
 
-    return d->m_memberList.at(index);
+    MemberObject *member;
+    for (MemberObject *mem : d->m_memberList) {
+        if (mem->uuid() == uuid) {
+            member = mem;
+        }
+    }
+
+    return member;
 }
 
 void
-MemberObjectManager::updateMember(int index, MemberObject *member)
+MemberObjectManager::updateMember(QUuid uuid, MemberObject& member)
 {
     Q_D(MemberObjectManager);
 
-    MemberObject *updateMember = d->m_memberList.at(index);
+    for (MemberObject *mem : d->m_memberList) {
+        if (mem->uuid() == uuid) {
+            mem->editMember(member);
+            mem->Update();
 
-    updateMember->editMember(member);
-    updateMember->Update();
+            HNIDatabase::updateMember(uuid, member);
+
+            break;
+        }
+    }
 }
 
 void
-MemberObjectManager::deleteMember(int index)
+MemberObjectManager::deleteMember(QUuid uuid)
 {
     Q_D(MemberObjectManager);
 
-    MemberObject *deleteMember = d->m_memberList.at(index);
+    for (MemberObject *mem : d->m_memberList) {
+        if (mem->uuid() == uuid) {
+            qDebug() << "App - Success - Delete Member UUID: " << uuid;
+            d->m_memberList.removeOne(mem);
+            mem->deleteLater();
 
-    d->m_memberList.removeAt(index);
-    delete deleteMember;
+            HNIDatabase::deleteMember(uuid);
+
+            break;
+        }
+    }
 }

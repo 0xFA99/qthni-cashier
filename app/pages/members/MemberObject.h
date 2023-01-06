@@ -15,7 +15,10 @@ public:
     explicit MemberObject(QObject *parent = nullptr);
     ~MemberObject();
 
-    void editMember(MemberObject*);
+    void editMember(MemberObject&);
+
+    void setUUID(QUuid);
+    [[nodiscard]] QUuid uuid() const;
 
     void setImage(const QImage &image);
     [[nodiscard]] QImage image() const;

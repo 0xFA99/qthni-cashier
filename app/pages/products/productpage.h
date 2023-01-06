@@ -18,18 +18,17 @@ public:
     explicit ProductPage(ProductObjectManager *manager, QWidget *parent = nullptr);
     ~ProductPage();
 
-    // void addDatabase(HNIDatabase&);
     void syncProductFromDB();
 
 public slots:
-    void addingProduct(ProductObject*);
-    void editProduct(int);
-    void updateProduct(int, ProductObject*);
-    void deleteProduct(int);
+    void addingProduct(ProductObject&);
+    void editProduct(QUuid);
+    void updateProduct(QUuid, ProductObject&);
+    void deleteProduct(QUuid);
 
 signals:
-    void addedToPurchase(int);
-    void deleteShowProduct(int);
+    void addedToPurchase(ProductObject*);
+    void deleteShowProduct(QUuid);
 
 protected:
     const QScopedPointer<ProductPagePrivate> d_ptr;
@@ -37,9 +36,10 @@ protected:
 private:
     void addProductManager(ProductObjectManager *manager);
 
-    void addProductToManager(ProductObject*);
-    void addProductToItemList(ProductObject*, ProductObject*);
-    void addProductToDB(ProductObject*);
+    void addProductToManager(ProductObject&);
+    void addProductToItemList(ProductObject*);
+
+    void addProductToDB(ProductObject&);
 
     Q_DISABLE_COPY(ProductPage)
     Q_DECLARE_PRIVATE(ProductPage)

@@ -10,7 +10,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    HNIDatabase m_db("/home/margaretha/QTHNI/app/resources/database/hnidb.sqlite");
+    HNIDatabase m_db("/home/margaretha/QTHNI/app/resources/database/HNIDB.sqlite");
 
     m_centralWidget     = new QWidget(this);
     m_layout            = new QHBoxLayout(m_centralWidget);
@@ -55,10 +55,11 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(m_panel, &Panel::currentChanged, m_stackedWidget, &QStackedWidget::setCurrentIndex);
     QObject::connect(m_productPage, &ProductPage::addedToPurchase, m_purchasePage, &PurchasePage::addedShowProduct);
     QObject::connect(m_productPage, &ProductPage::deleteShowProduct, m_purchasePage, &PurchasePage::deletedShowProduct);
-    QObject::connect(m_productPage, &ProductPage::addedToPurchase, m_analysicPage, &AnalysicPage::addRemaindStockItem);
-    QObject::connect(m_productPage, &ProductPage::deleteShowProduct, m_analysicPage, &AnalysicPage::deleteRemainStockItem);
+    // QObject::connect(m_productPage, &ProductPage::addedToPurchase, m_analysicPage, &AnalysicPage::addRemaindStockItem);
+    // QObject::connect(m_productPage, &ProductPage::deleteShowProduct, m_analysicPage, &AnalysicPage::deleteRemainStockItem);
 
     m_productPage->syncProductFromDB();
+    m_memberPage->syncMemberFromDB();
 }
 
 MainWindow::~MainWindow() = default;

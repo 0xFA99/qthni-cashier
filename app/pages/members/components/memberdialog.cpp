@@ -2,8 +2,10 @@
 #include "members/components/memberdialog_p.h"
 
 #include <QGridLayout>
+#include <QDebug>
 
 #include "members/MemberObject.h"
+#include "members/MemberObjectManager.h"
 
 MemberDialogPrivate::MemberDialogPrivate(MemberDialog *q)
     : q_ptr(q)
@@ -24,7 +26,6 @@ void MemberDialogPrivate::init()
     m_closeButton           = new QtMaterialFlatButton("CLOSE", q);
     m_submitButton          = new QtMaterialFlatButton("SUBMIT", q);
     m_mode                  = MemberDialog::Mode::Add;
-    m_index                 = 0;
 
     m_avatar->setImage(QImage(":/images/images/profiles/defaultimage.png"));
     m_avatar->setSize(72);
@@ -87,11 +88,16 @@ void MemberDialog::addSlot()
     Q_D(MemberDialog);
 
     MemberObject newMember;
+
+    QUuid newUUID = QUuid::createUuid();
+    qDebug() << "App - Success - Create new Member UUID: " << newUUID;
+
+    newMember.setUUID(newUUID);
     newMember.setImage(d->m_avatar->image());
     newMember.setName(d->m_nameField->text());
     newMember.setID(d->m_idField->text());
 
-    addedMember(&newMember);
+    addedMember(newMember);
 
     closedMemberDialog();
     clearField();
@@ -106,7 +112,7 @@ void MemberDialog::editSlot()
     tempMember.setName(d->m_nameField->text());
     tempMember.setID(d->m_idField->text());
 
-    editedMember(d->m_index, &tempMember);
+    editedMember(d->m_uuid, tempMember);
     closedMemberDialog();
     clearField();
 }
@@ -146,6 +152,7 @@ void MemberDialog::editMode()
                      this, &MemberDialog::editSlot);
 }
 
+/*
 void MemberDialog::setImageField(const QImage &image)
 {
     Q_D(MemberDialog);
@@ -172,4 +179,25 @@ void MemberDialog::setIndex(int index)
     Q_D(MemberDialog);
 
     d->m_index = index;
+}
+*/
+
+void MemberDialog::setMemberFromUUID(QUuid uuid)
+{
+    Q_D(MemberDialog);
+
+    d->m_uuid = uuid;
+
+    MemberObject *member = d->m_memberManager->getMemberObject(uuid);
+
+    d->m_avatar->setImage(member->image());
+    d->m_nameField->setText(member->name());
+    d->m_idField->setText(member->id());
+}
+
+void MemberDialog::addMemberManager(MemberObjectManager* manager)
+{
+    Q_D(MemberDialog);
+
+    d->m_memberManager = manager;
 }

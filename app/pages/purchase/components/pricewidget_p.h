@@ -5,6 +5,7 @@
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 
 #include <QLocale>
+#include <QUuid>
 
 class QVBoxLayout;
 class PriceWidget;
@@ -29,7 +30,10 @@ public:
     QtMaterialFlatButton    *m_button;
 
     QLocale                 m_locale;
-    QMap<int, int>      m_priceMapList;
+    // QMap<int, int>      m_priceMapList;
+    QMap<QUuid, int>        m_memPriceList;
+    QMap<QUuid, int>        m_cusPriceList;
+    bool                    m_hasMember;
 };
 
 #endif //QTHNI_PRICEWIDGET_P_H

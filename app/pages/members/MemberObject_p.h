@@ -1,6 +1,7 @@
 #ifndef QTHNI_MEMBEROBJECT_P_H
 #define QTHNI_MEMBEROBJECT_P_H
 
+#include <QUuid>
 #include <QImage>
 #include <QVector>
 
@@ -17,6 +18,7 @@ public:
     void init();
 
     MemberObject *const     q_ptr;
+    QUuid                   m_uuid;
     QImage                  m_image;
     QString                 m_name;
     QString                 m_id;

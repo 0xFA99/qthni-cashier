@@ -1,6 +1,8 @@
 #include "products/ProductObject.h"
 #include "products/ProductObject_p.h"
 
+#include <QUuid>
+
 ProductObjectPrivate::ProductObjectPrivate(ProductObject *q)
     : q_ptr(q)
 {
@@ -12,13 +14,16 @@ void ProductObjectPrivate::init()
 {
     Q_Q(ProductObject);
 
-    m_image         = QImage(":/images/images/profiles/defaultimage.png");
-    m_name          = QString("No Name");
-    m_price         = 0;
-    m_point         = 0;
-    m_stock         = 0;
-    m_locale        = QLocale("id_ID");
-    m_observerList  = QVector<IObserver *>();
+    m_uuid              = nullptr;
+    m_tag               = nullptr;
+    m_image             = QImage(":/images/images/profiles/defaultimage.png");
+    m_name              = QString("No Name");
+    m_member_price      = 0;
+    m_customer_price    = 0;
+    m_point             = 0;
+    m_stock             = 0;
+    m_locale            = QLocale("id_ID");
+    m_observerList      = QVector<IObserver *>();
 }
 
 ProductObject::ProductObject(QObject *parent)
@@ -29,6 +34,20 @@ ProductObject::ProductObject(QObject *parent)
 }
 
 ProductObject::~ProductObject() = default;
+
+void ProductObject::setUUID(QUuid uuid)
+{
+    Q_D(ProductObject);
+
+    d->m_uuid = uuid;
+}
+
+QUuid ProductObject::uuid() const
+{
+    Q_D(const ProductObject);
+
+    return d->m_uuid;
+}
 
 void ProductObject::setImage(const QImage &image)
 {
@@ -58,18 +77,68 @@ QString ProductObject::name() const
     return d->m_name;
 }
 
-void ProductObject::setPrice(const int price)
+void
+ProductObject::setTagUUID(const QUuid &uuid)
 {
     Q_D(ProductObject);
 
-    d->m_price = price;
+    d->m_tag = uuid;
 }
 
-int ProductObject::price() const
+QUuid
+ProductObject::tagUUID() const
 {
     Q_D(const ProductObject);
 
-    return d->m_price;
+    return d->m_tag;
+}
+
+void
+ProductObject::setStatus(const QString &status)
+{
+    Q_D(ProductObject);
+
+    d->m_status = status;
+}
+
+QString
+ProductObject::status() const
+{
+    Q_D(const ProductObject);
+
+    return d->m_status;
+}
+
+void
+ProductObject::setMemberPrice(int price)
+{
+    Q_D(ProductObject);
+
+    d->m_member_price = price;
+}
+
+int
+ProductObject::memberPrice() const
+{
+    Q_D(const ProductObject);
+
+    return d->m_member_price;
+}
+
+void
+ProductObject::setCustomerPrice(int price)
+{
+    Q_D(ProductObject);
+
+    d->m_customer_price = price;
+}
+
+int
+ProductObject::customerPrice() const
+{
+    Q_D(const ProductObject);
+
+    return d->m_customer_price;
 }
 
 void ProductObject::setPoint(const int point)
@@ -121,22 +190,22 @@ ProductObject::Update()
 {
     Q_D(ProductObject);
 
-    int price_format;
     QVector<IObserver *>::iterator iterator = d->m_observerList.begin();
     while (iterator != d->m_observerList.end()) {
-        price_format = price();
-        (*iterator)->Update(image(), name(), QString("Rp " + d->m_locale.toString(price_format)));
-        (*iterator)->extraItem(stock());
+        (*iterator)->Update(image(), name(), "");
+        (*iterator)->ExtraUpdate(tagUUID(), memberPrice(), customerPrice(), point(), stock());
         ++iterator;
     }
 }
 
 void
-ProductObject::editProduct(ProductObject *product)
+ProductObject::editProduct(ProductObject& product)
 {
-    setImage(product->image());
-    setName(product->name());
-    setPrice(product->price());
-    setStock(product->stock());
-    setPoint(product->point());
+    setImage(product.image());
+    setName(product.name());
+    // setTagUUID(product.tagUUID());
+    setMemberPrice(product.memberPrice());
+    setCustomerPrice(product.customerPrice());
+    setStock(product.stock());
+    setPoint(product.point());
 }

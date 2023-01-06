@@ -2,6 +2,7 @@
 #define QTHNI_EXTENDITEM_P_H
 
 #include <QLabel>
+#include <QUuid>
 
 #include "qtmaterial/components/qtmaterialavatar.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
@@ -29,9 +30,10 @@ public:
 
     QLabel                  *m_title;
     QLabel                  *m_amount;
-    int                     m_price;
+    int                     m_memberPrice;
+    int                     m_customerPrice;
     int                     m_stock;
-    int                     m_index;
+    QUuid                   m_uuid;
 };
 
 #endif //QTHNI_EXTENDITEM_P_H

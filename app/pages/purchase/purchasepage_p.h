@@ -6,8 +6,12 @@
 #include "purchase/components/orderlist.h"
 #include "purchase/components/pricewidgets.h"
 #include "purchase/components/searchfield.h"
-
+#include "purchase/components/purchase_order_dialog.h"
+#include "purchase/components/choosememberwidget.h"
+#include "purchase/components/membernamewidget.h"
 #include "products/ProductObjectManager.h"
+
+#include "qtmaterial/components/qtmaterialdialog.h"
 
 #include <QScrollArea>
 #include <QLocale>
@@ -43,6 +47,7 @@ public:
     FrameTitle              *m_searchFieldFrame;
     FrameTitle              *m_orderFrame;
     FrameTitle              *m_totalFrame;
+    FrameTitle              *m_memberFrame;
 
     QScrollArea             *m_orderScrollArea;
 
@@ -54,6 +59,13 @@ public:
 
     PriceWidget             *m_priceWidget;
     QLocale                 m_locale;
+
+    QtMaterialDialog        *m_purchaseOrderDialog;
+    PurchaseOrderDialog     *m_purchaseOrder;
+
+    QtMaterialDialog        *m_chooseMemberDialog;
+    ChooseMemberWidget      *m_chooseMemberWidget;
+    MemberNameWidget        *m_memberNameWidget;
 };
 
 #endif //QTHNI_PURCHASEPAGE_P_H

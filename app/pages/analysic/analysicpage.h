@@ -15,7 +15,7 @@ public:
     ~AnalysicPage();
 
 public slots:
-    void addRemaindStockItem(int);
+    // void addRemaindStockItem(int);
     void deleteRemainStockItem(int);
 
 protected:

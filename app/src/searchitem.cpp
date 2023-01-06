@@ -22,7 +22,7 @@ void SearchItemPrivate::init()
     m_subTitle      = new QLabel("0", q);
     m_button        = new QtMaterialFlatButton("TAMBAH PESANAN", q);
     m_hasAdded      = false;
-    m_amount        = 0;
+    m_locale        = QLocale("id_ID");
 
     m_avatar->setSize(72);
     m_avatar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -69,13 +69,13 @@ void SearchItem::changeStat()
         d->m_button->setRole(Material::Secondary);
         d->m_hasAdded = true;
 
-        addedToOrder(d->m_index);
+        addedToOrder(uuid());
     } else {
         d->m_button->setText("TAMBAH PESANAN");
         d->m_button->setRole(Material::Primary);
         d->m_hasAdded = false;
 
-        deleteToOrder(d->m_index);
+        deleteToOrder(uuid());
     }
 }
 
@@ -84,6 +84,13 @@ void SearchItem::Update(const QImage &image, const QString &title, const QString
     setImage(image);
     setTitle(title);
     setSubTitle(subTitle);
+}
+
+void SearchItem::ExtraUpdate(const QUuid &tag, int memPrice, int cusPrice, int point, int stock)
+{
+    Q_D(SearchItem);
+
+    d->m_subTitle->setText("Rp " + d->m_locale.toString(cusPrice));
 }
 
 void SearchItem::setImage(const QImage &image)
@@ -125,16 +132,16 @@ void SearchItem::setSubTitleColor(const QColor &color)
     d->m_subTitle->setPalette(palette);
 }
 
-void SearchItem::setIndex(int index)
+void SearchItem::setUUID(const QUuid &uuid)
 {
     Q_D(SearchItem);
 
-    d->m_index = index;
+    d->m_uuid = uuid;
 }
 
-int SearchItem::index() const
+QUuid SearchItem::uuid() const
 {
     Q_D(const SearchItem);
 
-    return d->m_index;
+    return d->m_uuid;
 }

@@ -4,6 +4,9 @@
 #include "qtmaterial/components/qtmaterialavatar.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 
+#include <QUuid>
+#include <QLocale>
+
 class QLabel;
 class QVBoxLayout;
 
@@ -26,8 +29,9 @@ public:
     QLabel                  *m_subTitle;
     QtMaterialFlatButton    *m_button;
     bool                    m_hasAdded;
-    int                     m_index;
-    int                     m_amount;
+
+    QUuid                   m_uuid;
+    QLocale                 m_locale;
 };
 
 #endif //QTHNI_SEARCHITEM_P_H

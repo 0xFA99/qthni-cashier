@@ -62,7 +62,10 @@ void ExtendItemPrivate::init()
         if (temp > 1) {
             temp--;
             m_amount->setText(QString::number(temp));
-            q->changeSubPrice(m_index, (m_price * temp));
+            q->updateAmount(temp);
+            // q->changeSubPrice(m_index, (m_price * temp));
+            q->changeSubPrice(m_uuid, (m_memberPrice * temp));
+            q->changeDiscount(m_uuid, (m_customerPrice * temp));
         }
     });
 
@@ -72,7 +75,10 @@ void ExtendItemPrivate::init()
         if (temp < m_stock) {
             temp++;
             m_amount->setText(QString::number(temp));
-            q->changeSubPrice(m_index, (m_price * temp));
+            q->updateAmount(temp);
+            // q->changeSubPrice(m_index, (m_price * temp));
+            q->changeSubPrice(m_uuid, (m_memberPrice * temp));
+            q->changeDiscount(m_uuid, (m_customerPrice * temp));
         }
     });
 }
@@ -86,7 +92,7 @@ ExtendItem::ExtendItem(QWidget *parent)
 
 ExtendItem::~ExtendItem() = default;
 
-void ExtendItem::extraItem(int stock)
+void ExtendItem::ExtraUpdate(const QUuid &tagUUID, int memPrice, int cusPrice, int point, int stock)
 {
     Q_D(ExtendItem);
     if (d->m_amount->text().toInt() > stock) {
@@ -94,6 +100,8 @@ void ExtendItem::extraItem(int stock)
     }
 
     setStock(stock);
+    setMemberPrice(memPrice);
+    setCustomerPrice(cusPrice);
 }
 
 void ExtendItem::Update(const QImage &image, const QString& title, const QString& subTitle)
@@ -102,11 +110,6 @@ void ExtendItem::Update(const QImage &image, const QString& title, const QString
 
     setImage(image);
     setTitle(title);
-
-    int price = subTitle.split(" ")[1].replace('.', "").toInt();
-    setPrice(price);
-
-    changeSubPrice(d->m_index, (d->m_price * d->m_amount->text().toInt()));
 }
 
 void ExtendItem::setImage(const QImage &image)
@@ -149,24 +152,44 @@ void ExtendItem::setStock(int stock)
     d->m_stock = stock;
 }
 
-void ExtendItem::setIndex(int index)
+void ExtendItem::setMemberPrice(int price)
 {
     Q_D(ExtendItem);
 
-    d->m_index = index;
+    d->m_memberPrice = price;
 }
 
-int ExtendItem::index() const
+int ExtendItem::memberPrice() const
 {
     Q_D(const ExtendItem);
 
-    return d->m_index;
+    return d->m_memberPrice;
 }
 
-void ExtendItem::setPrice(int price)
+void ExtendItem::setCustomerPrice(int price)
 {
     Q_D(ExtendItem);
 
-    d->m_price = price;
+    d->m_customerPrice = price;
 }
 
+int ExtendItem::customerPrice() const
+{
+    Q_D(const ExtendItem);
+
+    return d->m_customerPrice;
+}
+
+void ExtendItem::setUUID(const QUuid &uuid)
+{
+    Q_D(ExtendItem);
+
+    d->m_uuid = uuid;
+}
+
+QUuid ExtendItem::uuid() const
+{
+    Q_D(const ExtendItem);
+
+    return d->m_uuid;
+}

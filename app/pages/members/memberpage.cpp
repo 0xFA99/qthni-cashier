@@ -2,10 +2,13 @@
 #include "members/memberpage_p.h"
 
 #include <QHBoxLayout>
+#include <QUuid>
+#include <QDebug>
 
 #include "members/MemberObject.h"
 #include "members/MemberObjectManager.h"
 #include "widgets/items/OperateItem.h"
+#include "database/HNIDatabase.h"
 
 MemberPagePrivate::MemberPagePrivate(MemberPage *q)
     : q_ptr(q)
@@ -50,7 +53,6 @@ void MemberPagePrivate::init()
 
     QObject::connect(m_memberDialogWidget, &MemberDialog::closedMemberDialog,
                      m_memberDialog, &QtMaterialDialog::hideDialog);
-
 
     QObject::connect(m_memberDialogWidget, &MemberDialog::addedMember,
                      q, &MemberPage::addingMember);
@@ -102,59 +104,42 @@ MemberPage::MemberPage(MemberObjectManager *manager, QWidget *parent)
 
 MemberPage::~MemberPage() = default;
 
-void MemberPage::addingMember(MemberObject *member)
+void MemberPage::addingMember(MemberObject& member)
 {
     Q_D(MemberPage);
 
-    auto newMemberObject = new MemberObject;    // As Subject
-    newMemberObject->editMember(member);
-    d->m_memberManager->addMember(newMemberObject);
+    addMemberToManager(member);
+    addMemberToDB(member);
 
-    auto newItemManager = new OperateItem;      // As Observer
-    newItemManager->setImage(member->image());
-    newItemManager->setTitle(member->name());
-    newItemManager->setSubTitle(member->id());
-    newItemManager->setIndex(d->m_memberManager->lastItemIndex() - 1);
-
-    QObject::connect(newItemManager, &OperateItem::s_editButton, this, &MemberPage::editMember);
-    QObject::connect(newItemManager, &OperateItem::s_deleteButton, this, &MemberPage::deleteMember);
-
-    newMemberObject->Attach(newItemManager);    // Subject Attach Observer
-    d->m_memberList->addMemberItem(newItemManager);
-
-    d->m_snackBar->addMessage(QString("Berhasil Menambahkan Member"));
+    d->m_snackBar->addInstantMessage(QString("Berhasil Menambahkan Member"));
 }
 
-void MemberPage::editMember(int index)
+void MemberPage::editMember(QUuid uuid)
 {
     Q_D(MemberPage);
 
     d->m_memberDialogWidget->setMode(MemberDialog::Edit);
 
-    MemberObject *member_object = d->m_memberManager->getMemberObject(index);
-
-    d->m_memberDialogWidget->setImageField(member_object->image());
-    d->m_memberDialogWidget->setNameField(member_object->name());
-    d->m_memberDialogWidget->setIDField(member_object->id());
-    d->m_memberDialogWidget->setIndex(index);
+    d->m_memberDialogWidget->setMemberFromUUID(uuid);
 
     d->m_memberDialog->showDialog();
 }
-void MemberPage::updateMember(int index, MemberObject* member)
+void MemberPage::updateMember(QUuid uuid, MemberObject& member)
 {
     Q_D(MemberPage);
 
-    d->m_memberManager->updateMember(index, member);
+    d->m_memberManager->updateMember(uuid, member);
 
     d->m_snackBar->addInstantMessage(QString("Berhasil Mengedit Member"));
 }
 
-void MemberPage::deleteMember(int index)
+void MemberPage::deleteMember(QUuid uuid)
 {
     Q_D(MemberPage);
 
-    d->m_memberManager->deleteMember(index);
-    d->m_memberList->deleteMemberItem(index);
+    d->m_memberList->deleteMemberItem(uuid);
+
+    d->m_memberManager->deleteMember(uuid);
 
     d->m_snackBar->addInstantMessage(QString("Berhasil Menghapus Member"));
 }
@@ -164,4 +149,63 @@ void MemberPage::addMemberManager(MemberObjectManager *manager)
     Q_D(MemberPage);
 
     d->m_memberManager = manager;
+    d->m_memberDialogWidget->addMemberManager(d->m_memberManager);
+}
+
+void MemberPage::addMemberToManager(MemberObject &member)
+{
+    Q_D(MemberPage);
+
+    auto newMemberObject = new MemberObject;
+    newMemberObject->editMember(member);
+    newMemberObject->setUUID(member.uuid());
+
+    d->m_memberManager->addMember(newMemberObject);
+
+    addMemberToItemList(newMemberObject);
+}
+
+void MemberPage::addMemberToItemList(MemberObject *member)
+{
+    Q_D(MemberPage);
+
+    auto newItemMember = new OperateItem;
+    newItemMember->setUUID(member->uuid());
+    newItemMember->setImage(member->image());
+    newItemMember->setTitle(member->name());
+    newItemMember->setSubTitle(member->id());
+
+    QObject::connect(newItemMember, &OperateItem::s_editButton, this, &MemberPage::editMember);
+    QObject::connect(newItemMember, &OperateItem::s_deleteButton, this, &MemberPage::deleteMember);
+
+    member->Attach(newItemMember);
+
+    d->m_memberList->addMemberItem(newItemMember);
+}
+
+void MemberPage::addMemberToDB(MemberObject &member)
+{
+    Q_D(MemberPage);
+
+    if (HNIDatabase::addMember(member)) {
+        qDebug() << "DB - Success - Insert Member " << member.name();
+    } else {
+        qDebug() << "DB - Error - Insert Member" << member.name();
+    }
+}
+
+void MemberPage::syncMemberFromDB()
+{
+    QVector<MemberObject *> getAllMember = HNIDatabase::getAllMember();
+    for (auto i : getAllMember) {
+        MemberObject loadMember;
+        loadMember.setUUID(i->uuid());
+        loadMember.setImage(i->image());
+        loadMember.setName(i->name());
+        loadMember.setID(i->id());
+
+        delete i;
+
+        addMemberToManager(loadMember);
+    }
 }

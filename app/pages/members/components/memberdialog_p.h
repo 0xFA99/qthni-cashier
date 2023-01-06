@@ -6,6 +6,10 @@
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 #include "qtmaterial/components/qtmaterialtextfield.h"
 
+#include <QUuid>
+
+#include "members/MemberObjectManager.h"
+
 class OperateItem;
 class QGridLayout;
 
@@ -31,7 +35,9 @@ public:
     QtMaterialFlatButton    *m_submitButton;
 
     MemberDialog::Mode      m_mode;
-    int                     m_index;
+
+    QUuid                   m_uuid;
+    MemberObjectManager     *m_memberManager;
 };
 
 #endif //QTHNI_MEMBERDIALOG_P_H

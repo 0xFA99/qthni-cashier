@@ -3,7 +3,11 @@
 
 #include "interfaces/IObserver.h"
 #include "interfaces/ISubject.h"
+
 #include <QObject>
+#include <QUuid>
+
+#include "products/product_tag.h"
 
 class ProductObjectPrivate;
 class ProductObject : public QObject, public ISubject
@@ -12,7 +16,10 @@ public:
     explicit ProductObject(QObject *parent = nullptr);
     ~ProductObject();
 
-    void editProduct(ProductObject*);
+    void editProduct(ProductObject&);
+
+    void setUUID(QUuid);
+    [[nodiscard]] QUuid uuid() const;
 
     void setImage(const QImage &image);
     [[nodiscard]] QImage image() const;
@@ -20,8 +27,17 @@ public:
     void setName(const QString &name);
     [[nodiscard]] QString name() const;
 
-    void setPrice(int price);
-    [[nodiscard]] int price() const;
+    void setTagUUID(const QUuid &uuid);
+    [[nodiscard]] QUuid tagUUID() const;
+
+    void setStatus(const QString &status);
+    QString status() const;
+
+    void setMemberPrice(int);
+    [[nodiscard]] int memberPrice() const;
+
+    void setCustomerPrice(int);
+    [[nodiscard]] int customerPrice() const;
 
     void setPoint(int point);
     [[nodiscard]] int point() const;

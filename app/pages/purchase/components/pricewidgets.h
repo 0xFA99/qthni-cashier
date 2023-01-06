@@ -12,10 +12,19 @@ public:
     explicit PriceWidget(QWidget *parent = nullptr);
     ~PriceWidget();
 
-    void deleteItemPrice(int);
+    void deleteItemPrice(QUuid);
+
+signals:
+    void s_submitButton();
+    void updateSubTotal(const QString&);
+    void updateDiscount(const QString&);
+    // void updateTotal(const QString&);
 
 public slots:
-    void changeSubTotal(int,int);
+    // void changeSubTotal(int,int);
+    void changeSubTotal(QUuid, int);
+    void changeDiscount(QUuid, int);
+    void memberChoosen(bool);
 
 protected:
     const QScopedPointer<PriceWidgetPrivate> d_ptr;
