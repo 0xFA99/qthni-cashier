@@ -63,7 +63,6 @@ void ExtendItemPrivate::init()
             temp--;
             m_amount->setText(QString::number(temp));
             q->updateAmount(temp);
-            // q->changeSubPrice(m_index, (m_price * temp));
             q->changeSubPrice(m_uuid, (m_memberPrice * temp));
             q->changeDiscount(m_uuid, (m_customerPrice * temp));
         }
@@ -76,18 +75,20 @@ void ExtendItemPrivate::init()
             temp++;
             m_amount->setText(QString::number(temp));
             q->updateAmount(temp);
-            // q->changeSubPrice(m_index, (m_price * temp));
             q->changeSubPrice(m_uuid, (m_memberPrice * temp));
             q->changeDiscount(m_uuid, (m_customerPrice * temp));
         }
     });
 }
 
-ExtendItem::ExtendItem(QWidget *parent)
+ExtendItem::ExtendItem(ISubject &subject, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new ExtendItemPrivate(this))
+    , m_subject(subject)
 {
     d_func()->init();
+
+    this->m_subject.Attach(this);
 }
 
 ExtendItem::~ExtendItem() = default;
@@ -110,6 +111,11 @@ void ExtendItem::Update(const QImage &image, const QString& title, const QString
 
     setImage(image);
     setTitle(title);
+}
+
+void ExtendItem::removeFromSubject()
+{
+    m_subject.Detach(this);
 }
 
 void ExtendItem::setImage(const QImage &image)

@@ -55,7 +55,10 @@ void OrderList::removeProduct(QUuid uuid)
         if ((item = dynamic_cast<ExtendItem *>(litem->widget()))) {
 
             if (item->uuid() == uuid) {
-                item->deleteLater();
+                // item->deleteLater();
+                d->m_layout->removeWidget(item);
+                item->removeFromSubject();
+                delete item;
                 break;
             }
         }

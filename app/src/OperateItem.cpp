@@ -59,11 +59,14 @@ void OperateItemPrivate::init()
     m_layout->setContentsMargins(0, 10, 0, 0);
 }
 
-OperateItem::OperateItem(QWidget *parent)
+OperateItem::OperateItem(ISubject &subject, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new OperateItemPrivate(this))
+    , m_subject(subject)
 {
     d_func()->init();
+
+    this->m_subject.Attach(this);
 }
 
 OperateItem::~OperateItem() = default;
@@ -120,6 +123,12 @@ void OperateItem::setSubTitleColor(const QColor &color)
     QPalette palette = d->m_subTitle->palette();
     palette.setColor(d->m_subTitle->foregroundRole(), color);
     d->m_subTitle->setPalette(palette);
+}
+
+void
+OperateItem::removeFromSubject()
+{
+    m_subject.Detach(this);
 }
 
 void

@@ -6,10 +6,8 @@
 #include "purchase/components/orderlist.h"
 #include "qtmaterial/components/qtmaterialscrollbar.h"
 #include "widgets/items/extenditem.h"
-
+#include "widgets/items/finalwidget.h"
 #include "products/ProductObjectManager.h"
-
-#include "purchase/components/purchase_order_dialog_item.h"
 
 // TEST
 #include "purchase/components/searchfield.h"
@@ -60,6 +58,7 @@ void PurchasePagePrivate::init()
     chooseMemLayout->addWidget(m_chooseMemberWidget);
 
     auto dialogLayout = new QVBoxLayout;
+    dialogLayout->setContentsMargins(0, 0, 0, 0);
     m_purchaseOrderDialog->setParent(q);
     m_purchaseOrderDialog->setWindowLayout(dialogLayout);
 
@@ -158,7 +157,7 @@ void PurchasePage::addOrderItem(QUuid uuid)
 
     ProductObject *product = d->m_productManager->getProductObject(uuid);
 
-    auto *item = new ExtendItem;
+    auto *item = new ExtendItem(*product);
     item->setImage(product->image());
     item->setTitle(product->name());
     item->setMemberPrice(product->memberPrice());
@@ -166,7 +165,7 @@ void PurchasePage::addOrderItem(QUuid uuid)
     item->setStock(product->stock());
     item->setUUID(product->uuid());
 
-    product->Attach(item);
+    // product->Attach(item);
 
     QObject::connect(item, &ExtendItem::changeSubPrice, d->m_priceWidget, &PriceWidget::changeSubTotal);
     QObject::connect(item, &ExtendItem::changeDiscount, d->m_priceWidget, &PriceWidget::changeDiscount);
@@ -178,6 +177,7 @@ void PurchasePage::addOrderItem(QUuid uuid)
     d->m_orderList->addProduct(item);
 
     // OrderPrice Dialog
+    /*
     auto orderDialogItem = new PurchaseOrderDialogItem;
     orderDialogItem->setImage(product->image());
     orderDialogItem->setName(product->name());
@@ -185,10 +185,22 @@ void PurchasePage::addOrderItem(QUuid uuid)
     orderDialogItem->setDiscount(product->memberPrice());
     orderDialogItem->setUUID(product->uuid());
     orderDialogItem->setQuantity(1);
+    */
 
-    QObject::connect(item, &ExtendItem::updateAmount, orderDialogItem, &PurchaseOrderDialogItem::updateQuantity);
+    auto finalItemWidget = new FinalWidget(*product);
+    finalItemWidget->setImage(product->image());
+    finalItemWidget->setTitle(product->name());
+    finalItemWidget->setSubTitle("Rp " + d->m_locale.toString(product->customerPrice()));
+    finalItemWidget->changeAmount(1);
+    finalItemWidget->changeTotal("", product->customerPrice());
+    finalItemWidget->setUUID(product->uuid());
 
-    d->m_purchaseOrder->addItem(orderDialogItem);
+    // product->Attach(finalItemWidget);
+
+    QObject::connect(item, &ExtendItem::updateAmount, finalItemWidget, &FinalWidget::changeAmount);
+    QObject::connect(item, &ExtendItem::changeSubPrice, finalItemWidget, &FinalWidget::changeTotal);
+
+    d->m_purchaseOrder->addItem(finalItemWidget);
 }
 
 void PurchasePage::removeOrderItem(QUuid uuid)
@@ -204,13 +216,13 @@ void PurchasePage::addedShowProduct(ProductObject* product)
 {
     Q_D(PurchasePage);
 
-    auto item = new SearchItem(this);
+    auto item = new SearchItem(*product);
     item->setImage(product->image());
     item->setTitle(product->name());
     item->setSubTitle("Rp " +  d->m_locale.toString(product->customerPrice()));
     item->setUUID(product->uuid());
 
-    product->Attach(item);
+    //product->Attach(item);
 
     QObject::connect(item, &SearchItem::addedToOrder, this, &PurchasePage::addOrderItem);
     QObject::connect(item, &SearchItem::deleteToOrder, this, &PurchasePage::removeOrderItem);

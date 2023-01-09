@@ -50,12 +50,15 @@ void SearchItemPrivate::init()
     QObject::connect(m_button, &QPushButton::clicked, [q]() { q->changeStat(); });
 }
 
-SearchItem::SearchItem(QWidget *parent)
+SearchItem::SearchItem(ISubject &subject, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new SearchItemPrivate(this))
+    , m_subject(subject)
 {
     d_func()->init();
     setMinimumSize(160, 200);
+
+    this->m_subject.Attach(this);
 }
 
 SearchItem::~SearchItem() = default;
@@ -130,6 +133,12 @@ void SearchItem::setSubTitleColor(const QColor &color)
     QPalette palette = d->m_subTitle->palette();
     palette.setColor(d->m_subTitle->foregroundRole(), color);
     d->m_subTitle->setPalette(palette);
+}
+
+void
+SearchItem::removeFromSubject()
+{
+    m_subject.Detach(this);
 }
 
 void SearchItem::setUUID(const QUuid &uuid)

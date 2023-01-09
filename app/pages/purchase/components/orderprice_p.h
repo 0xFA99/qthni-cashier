@@ -1,5 +1,0 @@
-#ifndef QTHNI_ORDERPRICE_P_H
-#define QTHNI_ORDERPRICE_P_H
-
-
-#endif //QTHNI_ORDERPRICE_P_H

@@ -175,6 +175,7 @@ ProductObject::Attach(IObserver *observer)
     Q_D(ProductObject);
 
     d->m_observerList.push_back(observer);
+    Update();
 }
 
 void

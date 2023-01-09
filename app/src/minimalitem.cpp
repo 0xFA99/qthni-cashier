@@ -35,13 +35,15 @@ void MinimalItemPrivate::init()
     m_layout->setContentsMargins(0, 0, 0, 0);
 }
 
-MinimalItem::MinimalItem(QWidget *parent)
+MinimalItem::MinimalItem(ISubject &subject, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new MinimalItemPrivate(this))
+    , m_subject(subject)
 {
     d_func()->init();
 
     setMinimumHeight(54);
+    this->m_subject.Attach(this);
 }
 
 MinimalItem::~MinimalItem() = default;
@@ -99,16 +101,8 @@ void MinimalItem::setSubTitleColor(const QColor &color)
     d->m_subTitle->setPalette(palette);
 }
 
-void MinimalItem::setIndex(int index)
+void
+MinimalItem::removeFromSubject()
 {
-    Q_D(MinimalItem);
-
-    d->m_index = index;
-}
-
-int MinimalItem::index() const
-{
-    Q_D(const MinimalItem);
-
-    return d->m_index;
+    m_subject.Detach(this);
 }

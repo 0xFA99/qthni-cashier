@@ -169,7 +169,7 @@ void MemberPage::addMemberToItemList(MemberObject *member)
 {
     Q_D(MemberPage);
 
-    auto newItemMember = new OperateItem;
+    auto newItemMember = new OperateItem(*member);
     newItemMember->setUUID(member->uuid());
     newItemMember->setImage(member->image());
     newItemMember->setTitle(member->name());
@@ -178,7 +178,7 @@ void MemberPage::addMemberToItemList(MemberObject *member)
     QObject::connect(newItemMember, &OperateItem::s_editButton, this, &MemberPage::editMember);
     QObject::connect(newItemMember, &OperateItem::s_deleteButton, this, &MemberPage::deleteMember);
 
-    member->Attach(newItemMember);
+    // member->Attach(newItemMember);
 
     d->m_memberList->addMemberItem(newItemMember);
 }

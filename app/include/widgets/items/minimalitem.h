@@ -3,6 +3,8 @@
 
 #include "interfaces/IItem.h"
 #include "interfaces/IObserver.h"
+#include "interfaces/ISubject.h"
+
 #include <QWidget>
 
 class MinimalItemPrivate;
@@ -11,7 +13,7 @@ class MinimalItem : public QWidget, public IObserver, public IItem
     Q_OBJECT
 
 public:
-    explicit MinimalItem(QWidget *parent = nullptr);
+    explicit MinimalItem(ISubject &, QWidget *parent = nullptr);
     ~MinimalItem();
 
     void Update(const QImage&, const QString&, const QString&) override;
@@ -26,8 +28,7 @@ public:
     void setSubTitle(const QString&) override;
     void setSubTitleColor(const QColor&) override;
 
-    void setIndex(int);
-    [[nodiscard]] int index() const;
+    void removeFromSubject() override;
 
 protected:
     const QScopedPointer<MinimalItemPrivate> d_ptr;
@@ -35,6 +36,8 @@ protected:
 private:
     Q_DISABLE_COPY(MinimalItem)
     Q_DECLARE_PRIVATE(MinimalItem)
+
+    ISubject &m_subject;
 };
 
 #endif //QTHNI_MINIMALITEM_H

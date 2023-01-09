@@ -16,6 +16,8 @@ public:
 
     virtual void setSubTitle(const QString &) = 0;
     virtual void setSubTitleColor(const QColor &) = 0;
+
+    virtual void removeFromSubject() = 0;
 };
 
 #endif //QTHNI_IITEM_H

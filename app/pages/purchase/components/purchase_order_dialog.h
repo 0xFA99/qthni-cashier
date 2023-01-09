@@ -1,7 +1,7 @@
 #ifndef QTHNI_PURCHASE_ORDER_DIALOG_H
 #define QTHNI_PURCHASE_ORDER_DIALOG_H
 
-#include "purchase/components/purchase_order_dialog_item.h"
+#include "widgets/items/finalwidget.h"
 #include <QWidget>
 
 class ProductObject;
@@ -14,7 +14,7 @@ public:
     explicit PurchaseOrderDialog(QWidget *parent = nullptr);
     ~PurchaseOrderDialog();
 
-    void addItem(PurchaseOrderDialogItem*);
+    void addItem(FinalWidget*);
 
 public slots:
     void updateSubTotal(const QString&);

@@ -3,6 +3,8 @@
 
 #include "interfaces/IItem.h"
 #include "interfaces/IObserver.h"
+#include "interfaces/ISubject.h"
+
 #include <QWidget>
 
 class ExtendItemPrivate;
@@ -11,7 +13,7 @@ class ExtendItem : public QWidget, public IObserver, public IItem
     Q_OBJECT
 
 public:
-    explicit ExtendItem(QWidget *parent = nullptr);
+    explicit ExtendItem(ISubject &, QWidget *parent = nullptr);
     ~ExtendItem();
 
     void Update(const QImage&, const QString&, const QString&) override;
@@ -25,6 +27,8 @@ public:
     void setSubTitle(const QString&) override;
     void setSubTitleColor(const QColor&) override;
 
+    void removeFromSubject() override;
+
     void setMemberPrice(int);
     [[nodiscard]] int memberPrice() const;
 
@@ -37,7 +41,6 @@ public:
     [[nodiscard]] QUuid uuid() const;
 
 signals:
-    // void changeSubPrice(int, int);
     void changeSubPrice(QUuid, int);
     void changeDiscount(QUuid, int);
     void updateAmount(int);
@@ -48,6 +51,8 @@ protected:
 private:
     Q_DISABLE_COPY(ExtendItem)
     Q_DECLARE_PRIVATE(ExtendItem)
+
+    ISubject &m_subject;
 };
 
 #endif //QTHNI_EXTENDITEM_H

@@ -88,7 +88,10 @@ void ResultList::deleteProductObjectShow(QUuid uuid)
         if ((item = dynamic_cast<SearchItem *>(litem->widget()))) {
 
             if (item->uuid() == uuid) {
-                item->deleteLater();
+                d->m_layout->removeWidget(item);
+                item->removeFromSubject();
+                delete item;
+                break;
             }
         }
     }

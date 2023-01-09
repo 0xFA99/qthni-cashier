@@ -53,7 +53,9 @@ void ProductList::deleteProductItem(const QUuid& uuid)
         if ((item = dynamic_cast<OperateItem *>(litem->widget()))) {
 
             if (item->uuid() == uuid) {
-                item->deleteLater();
+                d->m_layout->removeWidget(item);
+                item->removeFromSubject();
+                delete item;
                 break;
             }
         }

@@ -89,7 +89,7 @@ void PriceWidget::updateTotal()
 {
     Q_D(PriceWidget);
 
-    int subTotal = 0, discount = 0, total = 0;
+    int subTotal = 0, discount = 0, total;
 
     for (auto i : d->m_memPriceList.values()) {
         subTotal += i;
