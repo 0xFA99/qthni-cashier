@@ -117,7 +117,7 @@ set(PURCHASE_FILES
         pages/purchase/components/orderlist_p.h
         pages/purchase/components/pricewidgets.cpp
         pages/purchase/components/pricewidgets.h
-        pages/purchase/components/pricewidget_p.h
+        pages/purchase/components/pricewidgets_p.h
         pages/purchase/components/resultlist.cpp
         pages/purchase/components/resultlist.h
         pages/purchase/components/resultlist_p.h

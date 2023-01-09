@@ -63,8 +63,8 @@ void ExtendItemPrivate::init()
             temp--;
             m_amount->setText(QString::number(temp));
             q->updateAmount(temp);
-            q->changeSubPrice(m_uuid, (m_memberPrice * temp));
-            q->changeDiscount(m_uuid, (m_customerPrice * temp));
+            q->changeSubPrice(m_uuid, (m_customerPrice* temp));
+            q->changeMemPrice(m_uuid, (m_memberPrice * temp));
         }
     });
 
@@ -75,8 +75,8 @@ void ExtendItemPrivate::init()
             temp++;
             m_amount->setText(QString::number(temp));
             q->updateAmount(temp);
-            q->changeSubPrice(m_uuid, (m_memberPrice * temp));
-            q->changeDiscount(m_uuid, (m_customerPrice * temp));
+            q->changeSubPrice(m_uuid, (m_customerPrice* temp));
+            q->changeMemPrice(m_uuid, (m_memberPrice * temp));
         }
     });
 }

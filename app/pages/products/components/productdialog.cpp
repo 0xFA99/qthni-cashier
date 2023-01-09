@@ -60,9 +60,13 @@ void ProductDialogPrivate::init()
 
     m_cancelButton->setHaloVisible(false);
     m_cancelButton->setRole(Material::Secondary);
+    m_cancelButton->setRippleStyle(Material::NoRipple);
+    m_cancelButton->setOverlayStyle(Material::TintedOverlay);
 
     m_submitButton->setHaloVisible(false);
     m_submitButton->setRole(Material::Primary);
+    m_submitButton->setRippleStyle(Material::NoRipple);
+    m_submitButton->setOverlayStyle(Material::TintedOverlay);
 
     m_layout->addWidget(m_avatar, 0, 0, 1, 2);
     m_layout->addWidget(m_changeAvatarButton, 1, 0, 1, 2, Qt::AlignCenter);

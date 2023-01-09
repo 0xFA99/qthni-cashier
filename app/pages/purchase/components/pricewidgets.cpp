@@ -1,5 +1,5 @@
 #include "purchase/components/pricewidgets.h"
-#include "purchase/components/pricewidget_p.h"
+#include "purchase/components/pricewidgets_p.h"
 
 #include <QVBoxLayout>
 
@@ -24,6 +24,7 @@ void PriceWidgetPrivate::init()
     // m_priceMapList  = QMap<int, int>();
     m_memPriceList     = QMap<QUuid, int>();
     m_cusPriceList     = QMap<QUuid, int>();
+    m_disPriceList     = QMap<QUuid, int>();
     m_hasMember        = false;
 
     m_total->setLabel("TOTAL");
@@ -63,25 +64,61 @@ void PriceWidget::changeSubTotal(QUuid uuid, int price)
 {
     Q_D(PriceWidget);
 
-    if (d->m_memPriceList.find(uuid) != d->m_memPriceList.end()) {
-        d->m_memPriceList.insert(uuid, price);
-    } else {
-        d->m_memPriceList[uuid] = price;
-    }
-
-    updateTotal();
-}
-
-void PriceWidget::changeDiscount(QUuid uuid, int price)
-{
-    Q_D(PriceWidget);
-
     if (d->m_cusPriceList.find(uuid) != d->m_cusPriceList.end()) {
         d->m_cusPriceList.insert(uuid, price);
     } else {
         d->m_cusPriceList[uuid] = price;
     }
 
+    int subTotal = 0;
+    for (auto i : d->m_cusPriceList.values()) {
+        subTotal += i;
+    }
+
+    d->m_subTotalInt = subTotal;
+
+    updateDiscount(uuid, (price - d->m_memPriceList[uuid]));
+    updateTotal();
+}
+
+void PriceWidget::changeMemTotal(QUuid uuid, int price)
+{
+    Q_D(PriceWidget);
+
+    if (d->m_memPriceList.find(uuid) != d->m_memPriceList.end()) {
+        d->m_memPriceList.insert(uuid, price);
+    } else {
+        d->m_memPriceList[uuid] = price;
+    }
+
+    int memTotal = 0;
+    for (auto i : d->m_memPriceList.values()) {
+        memTotal += i;
+    }
+
+    d->m_memTotalInt = memTotal;
+
+    updateDiscount(uuid, (d->m_cusPriceList[uuid] - price));
+    updateTotal();
+}
+
+void
+PriceWidget::updateDiscount(QUuid uuid, int price)
+{
+    Q_D(PriceWidget);
+
+    if (d->m_disPriceList.find(uuid) != d->m_disPriceList.end()) {
+        d->m_disPriceList.insert(uuid, price);
+    } else {
+        d->m_disPriceList[uuid] = price;
+    }
+
+    int discount = 0;
+    for (auto i : d->m_disPriceList.values()) {
+        discount += i;
+    }
+
+    d->m_disTotalInt = discount;
     updateTotal();
 }
 
@@ -89,23 +126,15 @@ void PriceWidget::updateTotal()
 {
     Q_D(PriceWidget);
 
-    int subTotal = 0, discount = 0, total;
-
-    for (auto i : d->m_memPriceList.values()) {
-        subTotal += i;
-    }
+    d->m_subTotal->setText("Rp " + d->m_locale.toString(d->m_subTotalInt));
 
     if (d->m_hasMember) {
-        for (auto i: d->m_cusPriceList.values()) {
-            discount += i;
-        }
+        d->m_discount->setText("Rp " + d->m_locale.toString(d->m_disTotalInt));
+        d->m_total->setText("Rp " + d->m_locale.toString(d->m_memTotalInt));
+    } else {
+        d->m_discount->setText("Rp 0");
+        d->m_total->setText("Rp " + d->m_locale.toString(d->m_subTotalInt));
     }
-
-    total = subTotal - discount;
-
-    d->m_total->setText("Rp " + d->m_locale.toString(total));
-    d->m_subTotal->setText("Rp " + d->m_locale.toString(subTotal));
-    d->m_discount->setText("Rp " + d->m_locale.toString(discount));
 
     updateSubTotal(d->m_subTotal->text());
     updateDiscount(d->m_discount->text());
@@ -117,6 +146,25 @@ void PriceWidget::deleteItemPrice(QUuid uuid)
 
     d->m_memPriceList.remove(uuid);
     d->m_cusPriceList.remove(uuid);
+    d->m_disPriceList.remove(uuid);
+
+    int x = 0;
+    for (auto i : d->m_cusPriceList.values()) {
+        x += i;
+    }
+    d->m_subTotalInt = x;
+
+    x = 0;
+    for (auto i : d->m_disPriceList.values()) {
+        x += i;
+    }
+    d->m_disTotalInt = x;
+
+    x = 0;
+    for (auto i : d->m_memPriceList.values()) {
+        x += i;
+    }
+    d->m_memTotalInt = x;
 
     updateTotal();
 }

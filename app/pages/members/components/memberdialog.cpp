@@ -42,9 +42,13 @@ void MemberDialogPrivate::init()
 
     m_closeButton->setHaloVisible(false);
     m_closeButton->setRole(Material::Secondary);
+    m_closeButton->setRippleStyle(Material::NoRipple);
+    m_closeButton->setOverlayStyle(Material::TintedOverlay);
 
     m_submitButton->setHaloVisible(false);
     m_submitButton->setRole(Material::Primary);
+    m_submitButton->setRippleStyle(Material::NoRipple);
+    m_submitButton->setOverlayStyle(Material::TintedOverlay);
 
     m_layout->addWidget(m_avatar, 0, 0, 1, 2);
     m_layout->addWidget(m_changeAvatarButton, 1, 0, 1, 2, Qt::AlignCenter);

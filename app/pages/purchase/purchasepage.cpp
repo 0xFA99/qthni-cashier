@@ -168,11 +168,11 @@ void PurchasePage::addOrderItem(QUuid uuid)
     // product->Attach(item);
 
     QObject::connect(item, &ExtendItem::changeSubPrice, d->m_priceWidget, &PriceWidget::changeSubTotal);
-    QObject::connect(item, &ExtendItem::changeDiscount, d->m_priceWidget, &PriceWidget::changeDiscount);
+    QObject::connect(item, &ExtendItem::changeMemPrice, d->m_priceWidget, &PriceWidget::changeMemTotal);
 
     // First init
     d->m_priceWidget->changeSubTotal(product->uuid(), product->customerPrice());
-    d->m_priceWidget->changeDiscount(product->uuid(), product->memberPrice());
+    d->m_priceWidget->changeMemTotal(product->uuid(), product->memberPrice());
 
     d->m_orderList->addProduct(item);
 

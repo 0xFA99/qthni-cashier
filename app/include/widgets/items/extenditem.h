@@ -42,7 +42,7 @@ public:
 
 signals:
     void changeSubPrice(QUuid, int);
-    void changeDiscount(QUuid, int);
+    void changeMemPrice(QUuid, int);
     void updateAmount(int);
 
 protected:
