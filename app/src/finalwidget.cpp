@@ -16,7 +16,7 @@ void FinalWidgetPrivate::init()
     Q_Q(FinalWidget);
 
     m_layout    = new QHBoxLayout(q);
-    m_avatar    = new QtMaterialAvatar(q);
+    m_avatar    = new QtMaterialImage(q);
     m_name      = new QLabel(q);
     m_price     = new QLabel(q);
     m_discount  = new QLabel(q);

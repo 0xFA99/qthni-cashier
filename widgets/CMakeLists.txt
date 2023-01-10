@@ -25,6 +25,7 @@ target_sources(qtmaterial PRIVATE
         material/qtmaterial/components/qtmaterialautocomplete.cpp
         material/qtmaterial/components/qtmaterialautocomplete_internal.cpp
         material/qtmaterial/components/qtmaterialavatar.cpp
+        material/qtmaterial/components/qtmaterialimage.cpp
         material/qtmaterial/components/qtmaterialbadge.cpp
         material/qtmaterial/components/qtmaterialcheckbox.cpp
         material/qtmaterial/components/qtmaterialcircularprogress.cpp

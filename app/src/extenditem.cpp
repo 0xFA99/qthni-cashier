@@ -15,7 +15,7 @@ void ExtendItemPrivate::init()
     Q_Q(ExtendItem);
 
     m_layout            = new QHBoxLayout(q);
-    m_avatar            = new QtMaterialAvatar(QImage(":/images/images/profiles/defaultimage.png"), q);
+    m_avatar            = new QtMaterialImage(QImage(":/images/images/profiles/defaultimage.png"), q);
     m_title             = new QLabel("Untitled", q);
     m_amount            = new QLabel("1", q);
     m_decreaseButton    = new QtMaterialFlatButton(q);
@@ -129,7 +129,9 @@ void ExtendItem::setTitle(const QString &text)
 {
     Q_D(ExtendItem);
 
-    d->m_title->setText(text);
+    QFontMetrics metrics(d->m_title->font());
+    QString elidedText = metrics.elidedText(text, Qt::ElideRight, d->m_title->width());
+    d->m_title->setText(elidedText);
 }
 
 void ExtendItem::setTitleColor(const QColor &color)

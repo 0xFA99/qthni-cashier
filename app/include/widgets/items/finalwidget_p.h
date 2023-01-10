@@ -1,7 +1,7 @@
 #ifndef QTHNI_FINALWIDGET_P_H
 #define QTHNI_FINALWIDGET_P_H
 
-#include "qtmaterial/components/qtmaterialavatar.h"
+#include "qtmaterial/components/qtmaterialimage.h"
 
 #include <QUuid>
 #include <QLocale>
@@ -24,7 +24,7 @@ public:
     FinalWidget *const q_ptr;
 
     QHBoxLayout                 *m_layout;
-    QtMaterialAvatar            *m_avatar;
+    QtMaterialImage             *m_avatar;
     QLabel                      *m_name;
     QLabel                      *m_price;
     QLabel                      *m_discount;
