@@ -48,8 +48,10 @@ void RemainingStock::deleteRemaindItem(int index)
     for (int i = 0; i < d->m_layout->count(); i++) {
         QLayoutItem *litem = d->m_layout->itemAt(i);
         if ((item = dynamic_cast<MinimalItem *>(litem->widget()))) {
+            /*
             if (item->index() == index)
                 item->deleteLater();
+            */
         }
     }
 }

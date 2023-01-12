@@ -1,6 +1,5 @@
 #include "purchase/components/purchase_order_dialog.h"
 #include "purchase/components/purchase_order_dialog_p.h"
-#include "purchase/components/purchase_order_dialog_item.h"
 
 #include <QGridLayout>
 #include <QDebug>
@@ -35,6 +34,7 @@ void PurchaseOrderDialogPrivate::init()
     m_locale            = QLocale("id_ID");
 
     m_orderWidgetLayout->addStretch(1);
+    m_orderWidgetLayout->setContentsMargins(0, 0, 0, 0);
 
     auto subtotalLabel = new QLabel("Sub Total", q);
     auto discountLabel = new QLabel("Discount", q);
@@ -96,7 +96,7 @@ PurchaseOrderDialog::PurchaseOrderDialog(QWidget *parent)
 
 PurchaseOrderDialog::~PurchaseOrderDialog() = default;
 
-void PurchaseOrderDialog::addItem(PurchaseOrderDialogItem *item)
+void PurchaseOrderDialog::addItem(FinalWidget *item)
 {
     Q_D(PurchaseOrderDialog);
 
@@ -115,14 +115,17 @@ void PurchaseOrderDialog::deleteItem(QUuid uuid)
 {
     Q_D(PurchaseOrderDialog);
 
-    PurchaseOrderDialogItem *item;
+    FinalWidget *item;
     for (int i = 0; i < d->m_orderWidgetLayout->count(); i++) {
         QLayoutItem *litem = d->m_orderWidgetLayout->itemAt(i);
 
-        if ((item = dynamic_cast<PurchaseOrderDialogItem *>(litem->widget()))) {
+        if ((item = dynamic_cast<FinalWidget *>(litem->widget()))) {
 
             if (item->uuid() == uuid) {
-                item->deleteLater();
+                d->m_layout->removeWidget(item);
+                item->removeFromSubject();
+                delete item;
+                break;
             }
         }
     }

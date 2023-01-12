@@ -63,6 +63,14 @@ bool HNIDatabase::tryAddProduct(ProductObject& product)
         qDebug() << "DB - Error - Insert Member: " << query.lastError();
     }
 
+    query.prepare("INSERT INTO suppliers(product_id, quantity) VALUES(:pro_id, :quantity);");
+    query.bindValue(":pro_id", product.uuid());
+    query.bindValue(":quantity", product.stock());
+
+    if (!query.exec()) {
+        qDebug() << "Error: " << query.lastError();
+    }
+
     return success;
 }
 

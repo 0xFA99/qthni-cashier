@@ -1,20 +1,21 @@
-#ifndef QTHNI_SEARCHITEM_H
-#define QTHNI_SEARCHITEM_H
+#ifndef QTHNI_FINALWIDGET_H
+#define QTHNI_FINALWIDGET_H
 
 #include "interfaces/IItem.h"
 #include "interfaces/IObserver.h"
 #include "interfaces/ISubject.h"
 
 #include <QWidget>
+#include <QUuid>
 
-class SearchItemPrivate;
-class SearchItem : public QWidget, public IObserver, public IItem
+class FinalWidgetPrivate;
+class FinalWidget : public QWidget, public IObserver, public IItem
 {
     Q_OBJECT
 
 public:
-    explicit SearchItem(ISubject &, QWidget *parent = nullptr);
-    ~SearchItem();
+    explicit FinalWidget(ISubject &, QWidget *parent = nullptr);
+    ~FinalWidget();
 
     void Update(const QImage&, const QString&, const QString&) override;
     void ExtraUpdate(const QUuid&, int, int, int, int) override;
@@ -29,23 +30,21 @@ public:
 
     void removeFromSubject() override;
 
-    void setUUID(const QUuid&);
+    void setUUID(QUuid);
     [[nodiscard]] QUuid uuid() const;
 
-    void changeStat();
-
-signals:
-    void addedToOrder(const QUuid&);
-    void deleteToOrder(const QUuid&);
+public slots:
+    void changeAmount(int);
+    void changeTotal(QUuid, int);
 
 protected:
-    const QScopedPointer<SearchItemPrivate> d_ptr;
+    const QScopedPointer<FinalWidgetPrivate> d_ptr;
 
 private:
-    Q_DISABLE_COPY(SearchItem)
-    Q_DECLARE_PRIVATE(SearchItem)
+    Q_DISABLE_COPY(FinalWidget)
+    Q_DECLARE_PRIVATE(FinalWidget);
 
     ISubject &m_subject;
 };
 
-#endif //QTHNI_SEARCHITEM_H
+#endif //QTHNI_FINALWIDGET_H

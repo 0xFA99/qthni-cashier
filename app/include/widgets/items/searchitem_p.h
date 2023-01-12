@@ -1,7 +1,7 @@
 #ifndef QTHNI_SEARCHITEM_P_H
 #define QTHNI_SEARCHITEM_P_H
 
-#include "qtmaterial/components/qtmaterialavatar.h"
+#include "qtmaterial/components/qtmaterialimage.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 
 #include <QUuid>
@@ -24,7 +24,7 @@ public:
 
     SearchItem *const       q_ptr;
     QVBoxLayout             *m_layout;
-    QtMaterialAvatar        *m_avatar;
+    QtMaterialImage         *m_avatar;
     QLabel                  *m_title;
     QLabel                  *m_subTitle;
     QtMaterialFlatButton    *m_button;

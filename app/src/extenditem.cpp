@@ -15,7 +15,7 @@ void ExtendItemPrivate::init()
     Q_Q(ExtendItem);
 
     m_layout            = new QHBoxLayout(q);
-    m_avatar            = new QtMaterialAvatar(QImage(":/images/images/profiles/defaultimage.png"), q);
+    m_avatar            = new QtMaterialImage(QImage(":/images/images/profiles/defaultimage.png"), q);
     m_title             = new QLabel("Untitled", q);
     m_amount            = new QLabel("1", q);
     m_decreaseButton    = new QtMaterialFlatButton(q);
@@ -63,9 +63,8 @@ void ExtendItemPrivate::init()
             temp--;
             m_amount->setText(QString::number(temp));
             q->updateAmount(temp);
-            // q->changeSubPrice(m_index, (m_price * temp));
-            q->changeSubPrice(m_uuid, (m_memberPrice * temp));
-            q->changeDiscount(m_uuid, (m_customerPrice * temp));
+            q->changeSubPrice(m_uuid, (m_customerPrice* temp));
+            q->changeMemPrice(m_uuid, (m_memberPrice * temp));
         }
     });
 
@@ -76,18 +75,20 @@ void ExtendItemPrivate::init()
             temp++;
             m_amount->setText(QString::number(temp));
             q->updateAmount(temp);
-            // q->changeSubPrice(m_index, (m_price * temp));
-            q->changeSubPrice(m_uuid, (m_memberPrice * temp));
-            q->changeDiscount(m_uuid, (m_customerPrice * temp));
+            q->changeSubPrice(m_uuid, (m_customerPrice* temp));
+            q->changeMemPrice(m_uuid, (m_memberPrice * temp));
         }
     });
 }
 
-ExtendItem::ExtendItem(QWidget *parent)
+ExtendItem::ExtendItem(ISubject &subject, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new ExtendItemPrivate(this))
+    , m_subject(subject)
 {
     d_func()->init();
+
+    this->m_subject.Attach(this);
 }
 
 ExtendItem::~ExtendItem() = default;
@@ -112,6 +113,11 @@ void ExtendItem::Update(const QImage &image, const QString& title, const QString
     setTitle(title);
 }
 
+void ExtendItem::removeFromSubject()
+{
+    m_subject.Detach(this);
+}
+
 void ExtendItem::setImage(const QImage &image)
 {
     Q_D(ExtendItem);
@@ -123,7 +129,9 @@ void ExtendItem::setTitle(const QString &text)
 {
     Q_D(ExtendItem);
 
-    d->m_title->setText(text);
+    QFontMetrics metrics(d->m_title->font());
+    QString elidedText = metrics.elidedText(text, Qt::ElideRight, d->m_title->width());
+    d->m_title->setText(elidedText);
 }
 
 void ExtendItem::setTitleColor(const QColor &color)

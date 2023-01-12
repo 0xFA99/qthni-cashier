@@ -23,7 +23,7 @@ signals:
 public slots:
     // void changeSubTotal(int,int);
     void changeSubTotal(QUuid, int);
-    void changeDiscount(QUuid, int);
+    void changeMemTotal(QUuid, int);
     void memberChoosen(bool);
 
 protected:
@@ -31,6 +31,7 @@ protected:
 
 private:
     void updateTotal();
+    void updateDiscount(QUuid, int);
 
     Q_DISABLE_COPY(PriceWidget)
     Q_DECLARE_PRIVATE(PriceWidget)

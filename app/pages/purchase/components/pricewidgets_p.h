@@ -1,5 +1,5 @@
-#ifndef QTHNI_PRICEWIDGET_P_H
-#define QTHNI_PRICEWIDGET_P_H
+#ifndef QTHNI_PRICEWIDGETS_P_H
+#define QTHNI_PRICEWIDGETS_P_H
 
 #include "qtmaterial/components/qtmaterialtextfield.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
@@ -33,7 +33,13 @@ public:
     // QMap<int, int>      m_priceMapList;
     QMap<QUuid, int>        m_memPriceList;
     QMap<QUuid, int>        m_cusPriceList;
+    QMap<QUuid, int>        m_disPriceList;
     bool                    m_hasMember;
+
+    int                     m_subTotalInt;
+    int                     m_memTotalInt;
+    int                     m_disTotalInt;
+
 };
 
-#endif //QTHNI_PRICEWIDGET_P_H
+#endif //QTHNI_PRICEWIDGETS_P_H

@@ -4,7 +4,7 @@
 #include <QLabel>
 #include <QUuid>
 
-#include "qtmaterial/components/qtmaterialavatar.h"
+#include "qtmaterial/components/qtmaterialimage.h"
 #include "qtmaterial/components/qtmaterialflatbutton.h"
 
 class QHBoxLayout;
@@ -23,7 +23,7 @@ public:
 
     ExtendItem *const       q_ptr;
     QHBoxLayout             *m_layout;
-    QtMaterialAvatar        *m_avatar;
+    QtMaterialImage         *m_avatar;
 
     QtMaterialFlatButton    *m_decreaseButton;
     QtMaterialFlatButton    *m_increaseButton;

@@ -18,6 +18,7 @@ void LastPurchasePrivate::init()
 
     m_layout    = new QVBoxLayout(q);
 
+    /*
     DefaultItem *item1 = new DefaultItem(q);
     DefaultItem *item2 = new DefaultItem(q);
     DefaultItem *item3 = new DefaultItem(q);
@@ -41,6 +42,7 @@ void LastPurchasePrivate::init()
     m_layout->addWidget(item9);
     m_layout->addWidget(item10);
     m_layout->addWidget(item11);
+     */
 
     m_layout->setContentsMargins(0, 0, 0, 0);
 }

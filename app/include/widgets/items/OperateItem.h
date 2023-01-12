@@ -3,6 +3,7 @@
 
 #include "interfaces/IItem.h"
 #include "interfaces/IObserver.h"
+#include "interfaces/ISubject.h"
 
 #include <QWidget>
 #include <QUuid>
@@ -13,7 +14,7 @@ class OperateItem : public QWidget, public IObserver, public IItem
     Q_OBJECT
 
 public:
-    explicit OperateItem(QWidget *parent = nullptr);
+    explicit OperateItem(ISubject &, QWidget *parent = nullptr);
     ~OperateItem();
 
     void Update(const QImage &, const QString &, const QString &) override;
@@ -26,6 +27,8 @@ public:
 
     void setSubTitle(const QString &) override;
     void setSubTitleColor(const QColor &) override;
+
+    void removeFromSubject() override;
 
     void setUUID(QUuid);
     [[nodiscard]] QUuid uuid() const;
@@ -40,6 +43,8 @@ protected:
 private:
     Q_DISABLE_COPY(OperateItem)
     Q_DECLARE_PRIVATE(OperateItem)
+
+    ISubject &m_subject;
 };
 
 

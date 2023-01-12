@@ -17,15 +17,15 @@ void SearchItemPrivate::init()
     Q_Q(SearchItem);
 
     m_layout        = new QVBoxLayout(q);
-    m_avatar        = new QtMaterialAvatar(QImage(":/images/images/profiles/defaultimage.png"), q);
+    m_avatar        = new QtMaterialImage(QImage(":/images/images/profiles/defaultimage.png"), q);
     m_title         = new QLabel("Untitled", q);
     m_subTitle      = new QLabel("0", q);
     m_button        = new QtMaterialFlatButton("TAMBAH PESANAN", q);
     m_hasAdded      = false;
     m_locale        = QLocale("id_ID");
 
-    m_avatar->setSize(72);
-    m_avatar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    m_avatar->setSize(80);
+    m_avatar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     m_title->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
     m_subTitle->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
@@ -42,7 +42,7 @@ void SearchItemPrivate::init()
     m_button->setRippleStyle(Material::NoRipple);
     m_button->setRole(Material::Primary);
 
-    m_layout->addWidget(m_avatar);
+    m_layout->addWidget(m_avatar, Qt::AlignHCenter);
     m_layout->addWidget(m_title);
     m_layout->addWidget(m_subTitle);
     m_layout->addWidget(m_button);
@@ -50,12 +50,16 @@ void SearchItemPrivate::init()
     QObject::connect(m_button, &QPushButton::clicked, [q]() { q->changeStat(); });
 }
 
-SearchItem::SearchItem(QWidget *parent)
+SearchItem::SearchItem(ISubject &subject, QWidget *parent)
     : QWidget(parent)
     , d_ptr(new SearchItemPrivate(this))
+    , m_subject(subject)
 {
     d_func()->init();
-    setMinimumSize(160, 200);
+    // setMinimumSize(160, 160);
+    setFixedSize(160, 200);
+
+    this->m_subject.Attach(this);
 }
 
 SearchItem::~SearchItem() = default;
@@ -104,7 +108,9 @@ void SearchItem::setTitle(const QString &title)
 {
     Q_D(SearchItem);
 
-    d->m_title->setText(title);
+    QFontMetrics metrics(d->m_title->font());
+    QString elidedText = metrics.elidedText(title, Qt::ElideRight, d->m_title->width());
+    d->m_title->setText(elidedText);
 }
 
 void SearchItem::setTitleColor(const QColor &color)
@@ -130,6 +136,12 @@ void SearchItem::setSubTitleColor(const QColor &color)
     QPalette palette = d->m_subTitle->palette();
     palette.setColor(d->m_subTitle->foregroundRole(), color);
     d->m_subTitle->setPalette(palette);
+}
+
+void
+SearchItem::removeFromSubject()
+{
+    m_subject.Detach(this);
 }
 
 void SearchItem::setUUID(const QUuid &uuid)

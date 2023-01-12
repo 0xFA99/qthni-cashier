@@ -39,7 +39,7 @@ set(WIDGETS_FILES
         include/widgets/items/OperateItem_p.h
         src/searchitem.cpp
         include/widgets/items/searchitem.h
-        include/widgets/items/searchitem_p.h)
+        include/widgets/items/searchitem_p.h include/widgets/items/finalwidget.h include/widgets/items/finalwidget_p.h src/finalwidget.cpp)
 
 set(ANALYSIS_FILES
         pages/analysic/analysicpage.cpp
@@ -115,12 +115,9 @@ set(PURCHASE_FILES
         pages/purchase/components/orderlist.cpp
         pages/purchase/components/orderlist.h
         pages/purchase/components/orderlist_p.h
-        pages/purchase/components/orderprice.cpp
-        pages/purchase/components/orderprice.h
-        pages/purchase/components/orderprice_p.h
         pages/purchase/components/pricewidgets.cpp
         pages/purchase/components/pricewidgets.h
-        pages/purchase/components/pricewidget_p.h
+        pages/purchase/components/pricewidgets_p.h
         pages/purchase/components/resultlist.cpp
         pages/purchase/components/resultlist.h
         pages/purchase/components/resultlist_p.h
@@ -129,7 +126,15 @@ set(PURCHASE_FILES
         pages/purchase/components/resultpurchase_p.h
         pages/purchase/components/searchfield.cpp
         pages/purchase/components/searchfield.h
-        pages/purchase/components/searchfield_p.h pages/purchase/components/purchase_order_dialog.cpp pages/purchase/components/purchase_order_dialog.h pages/purchase/components/purchase_order_dialog_item.cpp pages/purchase/components/purchase_order_dialog_item.h pages/purchase/components/choosememberwidget.cpp pages/purchase/components/choosememberwidget.h pages/purchase/components/choosememberwidget_p.h pages/purchase/components/membernamewidget.cpp pages/purchase/components/membernamewidget.h pages/purchase/components/membernamewidget_p.h)
+        pages/purchase/components/searchfield_p.h
+        pages/purchase/components/purchase_order_dialog.cpp
+        pages/purchase/components/purchase_order_dialog.h
+        pages/purchase/components/choosememberwidget.cpp
+        pages/purchase/components/choosememberwidget.h
+        pages/purchase/components/choosememberwidget_p.h
+        pages/purchase/components/membernamewidget.cpp
+        pages/purchase/components/membernamewidget.h
+        pages/purchase/components/membernamewidget_p.h)
 
 set(RESOURCE_FILES
         resources/hni_resources.qrc

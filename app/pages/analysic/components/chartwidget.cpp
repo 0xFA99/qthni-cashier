@@ -32,8 +32,10 @@ void ChartWidgetPrivate::init()
     m_chart->createDefaultAxes();
     m_chart->setTitle("Grafik Penjualan HNI");
 
+    /*
     m_chartLine->append(0.4, 0.6);
     m_chartLine->append(0.1, 0.5);
+     */
 
     m_layout->addWidget(m_chartView, 0, 0, 1, 2);
     m_layout->addWidget(m_pointButton, 1, 0, 1, 1);

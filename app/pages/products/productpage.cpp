@@ -145,8 +145,6 @@ void ProductPage::addProductToManager(ProductObject& product)
     newProductObject->editProduct(product);
     newProductObject->setUUID(product.uuid());
 
-    qDebug() << "App - Success - Receive UUID: " << newProductObject->uuid();
-
     // Add To Product Manager - Product Page
     d->m_productManager->addProduct(newProductObject);
 
@@ -161,7 +159,7 @@ void ProductPage::addProductToItemList(ProductObject *product)
 {
     Q_D(ProductPage);
 
-    auto newItemProduct = new OperateItem;
+    auto newItemProduct = new OperateItem(*product);
     newItemProduct->setUUID(product->uuid());
     newItemProduct->setImage(product->image());
     newItemProduct->setTitle(product->name());
@@ -170,7 +168,7 @@ void ProductPage::addProductToItemList(ProductObject *product)
     QObject::connect(newItemProduct, &OperateItem::s_editButton, this, &ProductPage::editProduct);
     QObject::connect(newItemProduct, &OperateItem::s_deleteButton, this, &ProductPage::deleteProduct);
 
-    product->Attach(newItemProduct);
+    // product->Attach(newItemProduct);
 
     d->m_productList->addProductItem(newItemProduct);
 }
