@@ -137,9 +137,8 @@ void MemberPage::deleteMember(QUuid uuid)
 {
     Q_D(MemberPage);
 
-    d->m_memberList->deleteMemberItem(uuid);
-
     d->m_memberManager->deleteMember(uuid);
+    d->m_memberList->deleteMemberItem(uuid);
 
     d->m_snackBar->addInstantMessage(QString("Berhasil Menghapus Member"));
 }

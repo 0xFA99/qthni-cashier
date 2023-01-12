@@ -88,7 +88,6 @@ MemberObjectManager::deleteMember(QUuid uuid)
 
     for (MemberObject *mem : d->m_memberList) {
         if (mem->uuid() == uuid) {
-            qDebug() << "App - Success - Delete Member UUID: " << uuid;
             d->m_memberList.removeOne(mem);
             mem->deleteLater();
 

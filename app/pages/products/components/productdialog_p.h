@@ -8,9 +8,11 @@
 #include "qtmaterial/components/qtmaterialdialog.h"
 
 #include <QLocale>
+#include <QLabel>
 #include <QUuid>
 
 #include "products/ProductObjectManager.h"
+#include "qtmaterial/components/qtmaterialradiobutton.h"
 
 class OperateItem;
 class QGridLayout;

@@ -145,8 +145,6 @@ void ProductPage::addProductToManager(ProductObject& product)
     newProductObject->editProduct(product);
     newProductObject->setUUID(product.uuid());
 
-    qDebug() << "App - Success - Receive UUID: " << newProductObject->uuid();
-
     // Add To Product Manager - Product Page
     d->m_productManager->addProduct(newProductObject);
 

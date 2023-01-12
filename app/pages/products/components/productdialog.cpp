@@ -68,6 +68,10 @@ void ProductDialogPrivate::init()
     m_submitButton->setRippleStyle(Material::NoRipple);
     m_submitButton->setOverlayStyle(Material::TintedOverlay);
 
+    auto secondWidget = new QFrame(q);
+    auto secondWidgetLayout = new QVBoxLayout(secondWidget);
+    secondWidgetLayout->setContentsMargins(0, 0, 0, 0);
+
     m_layout->addWidget(m_avatar, 0, 0, 1, 2);
     m_layout->addWidget(m_changeAvatarButton, 1, 0, 1, 2, Qt::AlignCenter);
     m_layout->addWidget(m_nameField, 2, 0, 1, 2);

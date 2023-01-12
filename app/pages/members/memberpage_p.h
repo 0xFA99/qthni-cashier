@@ -53,6 +53,7 @@ public:
 
     // TEST
     MemberObjectManager             *m_memberManager;
+
 };
 
 #endif //QTHNI_MEMBERPAGE_P_H
